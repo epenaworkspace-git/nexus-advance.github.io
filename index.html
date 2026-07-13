@@ -19634,13 +19634,22 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     const r = field.getBoundingClientRect();
     if(r.width === 0 && r.height === 0){ micBtn.style.display='none'; return; }
     const size = CONFIG.buttonSize;
-    // Siempre en la esquina superior derecha del campo, pegado al borde
-    // interior (nunca cambia de lado, nunca se va a la izquierda).
-    let left = r.right - size - 6;
-    // Centrado verticalmente respecto al campo (si es muy alto, como un
-    // textarea, se centra en la franja superior de tamaño similar al botón).
-    let top = r.top + Math.min(r.height, size + 12) / 2 - size / 2;
-    // Se mantiene dentro del viewport sin invertir el lado.
+    const pad = 4; // margen interior mínimo respecto al borde del campo
+    // Siempre pegado al borde derecho interior del campo (nunca cambia de
+    // lado) y centrado verticalmente respecto a la altura real del campo.
+    let left = r.right - size - pad;
+    let top = r.top + (r.height - size) / 2;
+    // Ajuste "duro": se fuerza a quedar DENTRO del rectángulo del propio
+    // campo (mismas coordenadas r, sin mezclar con otras referencias).
+    // Esto garantiza que nunca se salga del cuadro, incluso en campos muy
+    // bajos como los chats de las academias o del analizador, donde un
+    // margen de error de pocos píxeles se nota mucho más que en un cuadro
+    // grande.
+    if(left < r.left + pad) left = r.left + pad;
+    if(left + size > r.right - pad) left = r.right - size - pad;
+    if(top < r.top + pad) top = r.top + pad;
+    if(top + size > r.bottom - pad) top = r.bottom - size - pad;
+    // Después, ajuste adicional para que tampoco se salga de la pantalla.
     const vw = window.innerWidth, vh = window.innerHeight;
     if(left + size > vw - 2) left = vw - size - 2;
     if(left < 2) left = 2;
@@ -19670,27 +19679,45 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     recognition.lang = CONFIG.lang;
     recognition.continuous = true;
     recognition.interimResults = true;
-    let finalTranscript = '';
     micBtn.style.background = CONFIG.colorRecording;
     micBtn.textContent = CONFIG.iconRecording;
     recognition.onresult = function(event){
-      // Reconstruimos el texto finalizado completo desde 0 en cada evento,
-      // en vez de ir acumulando con resultIndex. En modo continuo, Chrome
-      // a veces reinicia el motor de reconocimiento internamente y vuelve a
-      // emitir resultados ya finalizados desde el índice 0; si se seguían
-      // sumando a una variable que solo crecía, la frase quedaba repetida
-      // muchas veces. Al recalcular todo el tramo final desde cero se evita
-      // la duplicación sin importar cómo reinicie el navegador el motor.
+      // Reconstruimos el texto finalizado completo en cada evento (nunca
+      // vamos sumando incrementalmente a una variable que solo crece).
+      //
+      // En Android, el motor de reconocimiento no entrega un único
+      // resultado final por frase: entrega varios resultados marcados
+      // como "final" que son versiones cada vez más completas de la MISMA
+      // frase (p. ej. "el", luego "el cliente", luego "el cliente busca
+      // una camioneta"). Si simplemente se concatenan todos los
+      // resultados finales, la frase queda repetida en cascada. Por eso
+      // cada nuevo fragmento final se compara contra lo ya acumulado:
+      // - si el nuevo fragmento ya CONTIENE lo acumulado (es una versión
+      //   más completa de la misma frase), lo reemplaza en vez de sumarse.
+      // - si lo acumulado ya CONTIENE al nuevo fragmento (es una versión
+      //   más corta/vieja de lo mismo), se ignora.
+      // - si son realmente distintos (frases separadas, como en Chrome de
+      //   escritorio), se concatenan normalmente.
       let final = '';
       let interim = '';
       for(let i = 0; i < event.results.length; i++){
-        const t = event.results[i][0].transcript;
-        if(event.results[i].isFinal) final += t + ' ';
-        else interim += t;
+        const t = (event.results[i][0].transcript || '').trim();
+        if(!t) continue;
+        if(event.results[i].isFinal){
+          if(!final){
+            final = t;
+          } else {
+            const fLow = final.toLowerCase(), tLow = t.toLowerCase();
+            if(tLow.startsWith(fLow)) final = t;               // versión más completa: reemplaza
+            else if(fLow.startsWith(tLow)) { /* ya lo tenemos, se ignora */ }
+            else final = final + ' ' + t;                      // segmento nuevo y distinto: se suma
+          }
+        } else {
+          interim += t;
+        }
       }
-      finalTranscript = final;
       const sep = baseValue && !/\s$/.test(baseValue) ? ' ' : '';
-      const newVal = (baseValue + sep + finalTranscript + interim).trim();
+      const newVal = (baseValue + sep + final + (final && interim ? ' ' : '') + interim).trim();
       setFieldValue(activeField, newVal);
       activeField.dispatchEvent(new Event('input', {bubbles:true}));
     };
