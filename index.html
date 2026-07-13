@@ -19614,7 +19614,14 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
       'line-height:1;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:pointer;display:none;' +
       'align-items:center;justify-content:center;transition:transform .15s,background .2s;' +
       'touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
-    document.body.appendChild(btn);
+    // Se agrega a <html> (documentElement) y NO a <body>: en escritorio
+    // hay una regla CSS "body { zoom: 1.2 }" para agrandar la app. Si el
+    // botón fuera hijo de <body>, sus propios left/top en px se volverían
+    // a escalar por ese mismo zoom (doble escalado), y por eso aparecía
+    // desalineado, fuera del cuadro de texto o detrás del chat flotante.
+    // Al ser hijo de <html> queda fuera de ese zoom y coincide siempre
+    // con las coordenadas reales calculadas por getBoundingClientRect().
+    document.documentElement.appendChild(btn);
     // En touch, mousedown/click pueden disparar dos veces o robar el foco
     // del teclado virtual: usamos pointerdown con preventDefault y un
     // solo manejador para todos los dispositivos.
@@ -19644,8 +19651,8 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     micBtn.style.display = 'flex';
     // Reinsertarlo al final del body asegura que siempre quede por encima
     // de cualquier panel o modal que se abra después (chat flotante, etc.)
-    if(micBtn.parentNode === document.body && document.body.lastElementChild !== micBtn){
-      document.body.appendChild(micBtn);
+    if(micBtn.parentNode === document.documentElement && document.documentElement.lastElementChild !== micBtn){
+      document.documentElement.appendChild(micBtn);
     }
   }
 
