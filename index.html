@@ -5480,21 +5480,24 @@ function crmMostrarToast(msg='✓ Listo'){
 
 function guardarConfigSheets(){
   const url = (document.getElementById('sheetsUrl').value||'').trim();
-  if(url) localStorage.setItem('nexus_sheets_url', url);
+  if(url){
+    localStorage.setItem('nexus_sheets_url', url);
+    fbQueueWrite({sheetsUrl:url});
+  }
 }
 
 function guardarApiKeyConfig(){
   const key = (document.getElementById('apiKeyConfig').value||'').trim();
   if(!key){ crmMostrarToast('Ingresa una API key válida.'); return; }
   localStorage.setItem('avapro_apikey', key);
-  fbQueueApiKeysWrite();
+  fbSyncApiKeys();
   crmMostrarToast('✓ API key de Anthropic guardada. Verificando conexión…');
   probarConexionAnthropic();
 }
 
 function borrarApiKey(){
   localStorage.removeItem('avapro_apikey');
-  fbQueueApiKeysWrite();
+  fbSyncApiKeys();
   const el = document.getElementById('apiKeyConfig');
   if(el) el.value='';
   const est = document.getElementById('anthropicEstado');
@@ -5523,7 +5526,7 @@ function guardarGeminiKeyConfig(){
   if(!key){ crmMostrarToast('Ingresa una API key de Gemini válida.'); return; }
   localStorage.setItem('avapro_gemini_key', key);
   localStorage.setItem('nexus_gemini_modelo', modelo);
-  fbQueueApiKeysWrite();
+  fbSyncApiKeys();
   crmMostrarToast('✓ API key de Gemini guardada. Verificando conexión…');
   probarConexionGemini();
 }
@@ -5531,7 +5534,7 @@ function guardarGeminiKeyConfig(){
 function borrarGeminiKey(){
   localStorage.removeItem('avapro_gemini_key');
   localStorage.removeItem('nexus_gemini_modelo');
-  fbQueueApiKeysWrite();
+  fbSyncApiKeys();
   const el = document.getElementById('geminiApiKeyConfig');
   if(el) el.value='';
   const elModelo = document.getElementById('geminiModeloConfig');
@@ -6918,6 +6921,11 @@ function fbApplyRemoteData(d){
       analysisHistory = d.history;
       try{ if(window.storage) window.storage.set(HISTORY_KEY, JSON.stringify(analysisHistory)).catch(()=>{}); }catch(e){}
       if(typeof renderHistory==='function') renderHistory();
+    }
+    if(typeof d.sheetsUrl==='string' && d.sheetsUrl && d.sheetsUrl!==localStorage.getItem('nexus_sheets_url')){
+      localStorage.setItem('nexus_sheets_url', d.sheetsUrl);
+      const el = document.getElementById('sheetsUrl');
+      if(el) el.value = d.sheetsUrl;
     }
     if(d.apiKeys && typeof d.apiKeys==='object' && typeof ALL_PROVIDERS!=='undefined'){
       ALL_PROVIDERS.forEach(p=>{
@@ -19618,13 +19626,27 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
   function positionBtn(field){
     const r = field.getBoundingClientRect();
     if(r.width === 0 && r.height === 0){ micBtn.style.display='none'; return; }
-    let left = r.right - (CONFIG.buttonSize + 8);
-    let top = r.top + 6;
-    if(left < 4) left = r.left + 4;
-    if(top < 4) top = r.top;
-    micBtn.style.left = left + 'px';
-    micBtn.style.top = top + 'px';
+    const size = CONFIG.buttonSize;
+    // Siempre en la esquina superior derecha del campo, pegado al borde
+    // interior (nunca cambia de lado, nunca se va a la izquierda).
+    let left = r.right - size - 6;
+    // Centrado verticalmente respecto al campo (si es muy alto, como un
+    // textarea, se centra en la franja superior de tamaño similar al botón).
+    let top = r.top + Math.min(r.height, size + 12) / 2 - size / 2;
+    // Se mantiene dentro del viewport sin invertir el lado.
+    const vw = window.innerWidth, vh = window.innerHeight;
+    if(left + size > vw - 2) left = vw - size - 2;
+    if(left < 2) left = 2;
+    if(top < 2) top = 2;
+    if(top + size > vh - 2) top = vh - size - 2;
+    micBtn.style.left = Math.round(left) + 'px';
+    micBtn.style.top = Math.round(top) + 'px';
     micBtn.style.display = 'flex';
+    // Reinsertarlo al final del body asegura que siempre quede por encima
+    // de cualquier panel o modal que se abra después (chat flotante, etc.)
+    if(micBtn.parentNode === document.body && document.body.lastElementChild !== micBtn){
+      document.body.appendChild(micBtn);
+    }
   }
 
   function notify(msg){
@@ -19645,12 +19667,21 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     micBtn.style.background = CONFIG.colorRecording;
     micBtn.textContent = CONFIG.iconRecording;
     recognition.onresult = function(event){
+      // Reconstruimos el texto finalizado completo desde 0 en cada evento,
+      // en vez de ir acumulando con resultIndex. En modo continuo, Chrome
+      // a veces reinicia el motor de reconocimiento internamente y vuelve a
+      // emitir resultados ya finalizados desde el índice 0; si se seguían
+      // sumando a una variable que solo crecía, la frase quedaba repetida
+      // muchas veces. Al recalcular todo el tramo final desde cero se evita
+      // la duplicación sin importar cómo reinicie el navegador el motor.
+      let final = '';
       let interim = '';
-      for(let i = event.resultIndex; i < event.results.length; i++){
+      for(let i = 0; i < event.results.length; i++){
         const t = event.results[i][0].transcript;
-        if(event.results[i].isFinal) finalTranscript += t + ' ';
+        if(event.results[i].isFinal) final += t + ' ';
         else interim += t;
       }
+      finalTranscript = final;
       const sep = baseValue && !/\s$/.test(baseValue) ? ' ' : '';
       const newVal = (baseValue + sep + finalTranscript + interim).trim();
       setFieldValue(activeField, newVal);
@@ -19728,11 +19759,22 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     });
   }
 
+  // Loop continuo de seguimiento: mientras haya un campo activo, se
+  // recalcula la posición en cada frame. Esto corrige el botón durante
+  // animaciones CSS (paneles/modales que se abren con transform/transition,
+  // como el chat flotante), donde los eventos de scroll/resize no bastan
+  // y el botón se quedaba desalineado o "atrapado" en la posición vieja.
+  (function trackLoop(){
+    if(activeField && micBtn && micBtn.style.display === 'flex'){
+      positionBtn(activeField);
+    }
+    requestAnimationFrame(trackLoop);
+  })();
+
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ micBtn = createMicBtn(); console.log('✅ Dictado por voz v2 cargado. Botón creado:', !!micBtn, '| Soporte del navegador:', !!SR); });
+    document.addEventListener('DOMContentLoaded', function(){ micBtn = createMicBtn(); });
   } else {
     micBtn = createMicBtn();
-    console.log('✅ Dictado por voz v2 cargado. Botón creado:', !!micBtn, '| Soporte del navegador:', !!SR);
   }
 
 })();
