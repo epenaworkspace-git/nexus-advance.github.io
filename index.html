@@ -758,6 +758,16 @@
   .pcm-user { align-self: flex-end; background: var(--gold-dim); border: 1px solid rgba(0,245,196,0.25); border-radius: 14px 14px 4px 14px; padding: 10px 14px; font-size: 14px; color: var(--cream); max-width: 85%; line-height: 1.5; }
   .pcm-ai { align-self: flex-start; background: var(--panel-2); border: 1px solid var(--line); border-radius: 4px 14px 14px 14px; padding: 12px 14px; font-size: 14px; color: var(--cream); max-width: 92%; line-height: 1.6; position: relative; }
   .pcm-ai-inner { white-space: pre-wrap; word-break: break-word; }
+  .pcm-ai-inner strong { color: var(--menta,#00F5C4); font-weight: 700; }
+  .pcm-ai-inner ul { margin: 6px 0 6px 18px; padding: 0; white-space: normal; }
+  .pcm-ai-inner li { margin-bottom: 4px; }
+  .pcm-ai-inner code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; }
+  .pcm-ai-inner pre.chat-code { background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; overflow-x: auto; margin: 6px 0; white-space: pre-wrap; }
+  #ieChatHistory strong, #pnlChatHistory strong, #presChatHistory strong, #cierreChatHistory strong { font-weight: 700; }
+  #ieChatHistory ul, #pnlChatHistory ul, #presChatHistory ul, #cierreChatHistory ul { margin: 6px 0 6px 18px; padding: 0; }
+  #ieChatHistory li, #pnlChatHistory li, #presChatHistory li, #cierreChatHistory li { margin-bottom: 4px; }
+  #ieChatHistory code, #pnlChatHistory code, #presChatHistory code, #cierreChatHistory code { background: rgba(255,255,255,0.1); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; }
+  #ieChatHistory pre.chat-code, #pnlChatHistory pre.chat-code, #presChatHistory pre.chat-code, #cierreChatHistory pre.chat-code { background: rgba(0,0,0,0.25); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; overflow-x: auto; margin: 6px 0; white-space: pre-wrap; }
   .pcm-copy-btn { display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; font-size: 11px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; cursor: pointer; transition: all 0.2s; font-family: var(--font-body); }
   .pcm-copy-btn:hover { border-color: var(--gold); color: var(--gold); }
   /* ── Avatares predefinidos (usuario masculino/femenino, asistente IA) ── */
@@ -1585,6 +1595,11 @@
     border: 1px solid var(--borde);
     line-height: 1.55;
   }
+  .msg-ai-bubble strong { color: var(--menta); font-weight: 700; }
+  .msg-ai-bubble ul { margin: 6px 0 6px 18px; padding: 0; }
+  .msg-ai-bubble li { margin-bottom: 4px; }
+  .msg-ai-bubble code { background: rgba(255,255,255,0.08); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; }
+  .msg-ai-bubble pre.chat-code { background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 8px; font-size: 12px; font-family: 'SFMono-Regular', Consolas, monospace; overflow-x: auto; margin: 6px 0; white-space: pre-wrap; }
   .chat-input-row {
     display: flex;
     gap: 8px;
@@ -11420,14 +11435,14 @@ sendProChat._send=async function(){
   if(messagesDiv){
     messagesDiv.innerHTML=proChatHistory.map(m=>{
       if(m.role==='user') return `<div class="chat-row row-user">${chatAvatarHtml('user')}<div class="pcm-user">${escHtml(m.content)}</div></div>`;
-      return `<div class="chat-row row-ai">${chatAvatarHtml('ai')}<div class="pcm-ai"><div class="pcm-ai-inner">${escHtml(m.content)}</div><button class="pcm-copy-btn" data-copy="${escAttr(m.content)}">📋 Copiar</button></div></div>`;
+      return `<div class="chat-row row-ai">${chatAvatarHtml('ai')}<div class="pcm-ai"><div class="pcm-ai-inner">${formatChatText(m.content)}</div><button class="pcm-copy-btn" data-copy="${escAttr(m.content)}">📋 Copiar</button></div></div>`;
     }).join('')+`<div class="pcm-loading"><div class="pcm-dots"><span></span><span></span><span></span></div></div>`;
     messagesDiv.scrollTop=messagesDiv.scrollHeight;
   }
 
   const analysisCtx=buildAnalysisContext();
   const langName=getOutputLangName();
-  const systemPrompt=`Eres un asistente experto en análisis de texto, ventas, psicología y comunicación. Tienes acceso a los resultados completos de un análisis de texto realizado con IA. Responde SIEMPRE en ${langName}. Sé específico, útil y directo. Si te piden redactar algo, hazlo adaptado al perfil y datos detectados.
+  const systemPrompt=`Eres un asistente experto en análisis de texto, ventas, psicología y comunicación. Tienes acceso a los resultados completos de un análisis de texto realizado con IA. Responde SIEMPRE en ${langName}. Sé específico, útil y directo. Si te piden redactar algo, hazlo adaptado al perfil y datos detectados. Responde en tono conversacional natural, sin markdown crudo (nada de ### ni bloques de código salvo que pidan código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez o énfasis, sin abusar.
 
 CONTEXTO DEL ANÁLISIS:
 ${analysisCtx}`;
@@ -12632,6 +12647,47 @@ function fbCopy(text,cb){const ta=document.createElement('textarea');ta.value=te
 function escHtml(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function escAttr(str){return String(str).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 
+// Convierte el markdown que pueda devolver la IA (negritas, listas, código)
+// en HTML legible y con buen formato, en vez de mostrar los símbolos crudos.
+// Usada por todas las ventanas de chat de la app (burbuja global, Ventas Pro,
+// Chat Pro del analizador, Academia IE, Academia PNL, Academia Presentación/Cierre).
+function formatChatText(raw) {
+  if (!raw) return '';
+  let t = String(raw)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  // Bloques de código ```...```
+  t = t.replace(/```([\s\S]*?)```/g, function(m, code){ return '<pre class="chat-code">'+code.trim()+'</pre>'; });
+  // Código inline `...`
+  t = t.replace(/`([^`\n]+)`/g, '<code>$1</code>');
+  // Negrita **texto**
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Cursiva *texto* o _texto_
+  t = t.replace(/(^|[^\w*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+  t = t.replace(/(^|[^\w_])_([^_\n]+)_(?!_)/g, '$1<em>$2</em>');
+  // Encabezados estilo markdown (### Título)
+  t = t.replace(/^#{1,6}\s*(.+)$/gm, '<strong>$1</strong>');
+
+  // Listas: líneas "- item", "• item" o "1. item" -> <li>
+  const lines = t.split('\n');
+  let html = '';
+  let inList = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const bullet = line.match(/^\s*[\-\*•]\s+(.+)/);
+    const numbered = line.match(/^\s*\d+[\.\)]\s+(.+)/);
+    if (bullet || numbered) {
+      if (!inList) { html += '<ul>'; inList = true; }
+      html += '<li>' + (bullet ? bullet[1] : numbered[1]) + '</li>';
+    } else {
+      if (inList) { html += '</ul>'; inList = false; }
+      html += (line.trim() === '' ? '<br>' : line + '<br>');
+    }
+  }
+  if (inList) html += '</ul>';
+  return html;
+}
+
 // ─── Otro Idioma Modal eliminado — japonés y coreano agregados directamente ──
 
 // ─── API Key UI helpers (multi-proveedor, unificado) ──────────────────────────
@@ -13560,13 +13616,13 @@ async function sendChat() {
 - Urgencia del cliente: ${datos.urgencia}/5
 ${datos.tipoOp === 'auto' && datos.hizoPrueba > 0 ? `- Prueba de manejo: ${datos.hizoPrueba === 3 ? `Sí realizó. Reacción: ${['','negativa','poco convencido','neutral','positiva','muy entusiasmado'][datos.reaccionPrueba]}. Percepción vendedor: ${['','no convencido','dudó','sin reacción','interés real','lo imaginó suyo'][datos.notaVendedor]}. Comentario: "${datos.comentariosPrueba}"` : datos.hizoPrueba === 2 ? 'Prueba pendiente/programada' : 'No quiso realizar prueba'}` : ''}
 
-Responde de forma directa, concreta y accionable en español. Máximo 120 palabras. Da consejos específicos para esta situación.`;
+Responde de forma directa, concreta y accionable en español, en tono conversacional natural (no un informe). Máximo 120 palabras. Da consejos específicos para esta situación. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez o énfasis, sin abusar.`;
 
   try {
     const r = await callAIChatConFallback({ system: contexto, messages: [{ role: 'user', content: msg }], maxTokens: 1000 });
     const respuesta = r.text || 'Hubo un error. Intenta de nuevo.';
     const bubble = document.getElementById(typId).querySelector('.msg-ai-bubble');
-    bubble.innerHTML = respuesta.replace(/\n/g, '<br>');
+    bubble.innerHTML = formatChatText(respuesta);
     const copyBtn = document.createElement('button');
     copyBtn.className = 'pcm-copy-btn';
     copyBtn.innerHTML = '📋 Copiar';
@@ -13636,13 +13692,13 @@ OBJECIÓN PRINCIPAL: ${['','Precio','Tiempo','Necesita aprobación','Duda del pr
 COMENTARIOS DEL CLIENTE: "${datos.comentarios || 'Sin comentarios'}"
 ${datos.tipoOp === 'auto' && datos.hizoPrueba > 0 ? `PRUEBA DE MANEJO: ${datos.hizoPrueba === 3 ? `Sí realizó. Reacción: ${['','negativa','poco convencido','neutral','positiva','muy entusiasmado'][datos.reaccionPrueba]}. "${datos.comentariosPrueba}"` : 'No realizó / pendiente'}` : ''}
 
-Responde de forma DIRECTA, CONCRETA y ACCIONABLE. Máximo 100 palabras. Da consejos específicos para esta situación real. No hagas preguntas, da la respuesta.`;
+Responde de forma DIRECTA, CONCRETA y ACCIONABLE. Máximo 100 palabras. Da consejos específicos para esta situación real. No hagas preguntas, da la respuesta. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez o énfasis, sin abusar.`;
 
   try {
     const r = await callAIChatConFallback({ system: contexto, messages: [{ role: 'user', content: msg }], maxTokens: 1000 });
     const respuesta = r.text || 'Hubo un error. Intenta de nuevo.';
     const bubble = document.getElementById(typId).querySelector('.msg-ai-bubble');
-    bubble.innerHTML = respuesta.replace(/\n/g, '<br>');
+    bubble.innerHTML = formatChatText(respuesta);
     const copyBtn = document.createElement('button');
     copyBtn.className = 'pcm-copy-btn';
     copyBtn.innerHTML = '📋 Copiar';
@@ -18600,12 +18656,12 @@ async function ieSendChat() {
       system: `Eres un coach de Inteligencia Emocional experto, empático y práctico. Basas tus respuestas en los modelos de Daniel Goleman, Paul Ekman, Kristin Neff y otras fuentes científicas de IE. 
 El usuario puede plantearte situaciones personales (relaciones, estrés, familia) o profesionales (ventas, clientes difíciles, rechazo, presión). 
 Responde siempre: 1) Validando su emoción o situación. 2) Dando una perspectiva de IE clara. 3) Una técnica o acción concreta y aplicable. 
-Usa un tono cálido, directo y sin tecnicismos innecesarios. Responde en español. Máximo 250 palabras.`,
+Usa un tono cálido, directo y sin tecnicismos innecesarios. Responde en español. Máximo 250 palabras. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez, sin abusar.`,
       messages: ieChatHistory.map(m => ({ role: m.role, content: m.content })),
       maxTokens: 600
     });
     const reply = r.text || 'Lo siento, hubo un error. Intenta de nuevo.';
-    loadDiv.querySelector('div').innerHTML = reply.replace(/\n/g,'<br>');
+    loadDiv.querySelector('div').innerHTML = formatChatText(reply);
     ieChatHistory.push({ role: 'assistant', content: reply });
   } catch(e) {
     loadDiv.querySelector('div').innerHTML = '⚠️ ' + (e?.message || 'Error de conexión') + '. Verifica tu API key en Configuración.';
@@ -19040,12 +19096,12 @@ async function pnlSendChat() {
       system: `Eres un coach experto en Programación Neurolingüística (PNL) y Neuroventas. Tienes un conocimiento profundo de los modelos de Bandler, Grinder, Robbins y Jürgen Deckert sobre neuroventas. 
 El usuario puede preguntarte sobre técnicas de PNL, sistemas representacionales (VAK), rapport, reencuadre, anclaje, lenguaje estratégico y cómo aplicar todo esto en ventas de autos, inmuebles, servicios o negocios. 
 Responde siempre: 1) Explicando el principio de PNL relevante. 2) Dando un ejemplo concreto adaptado a la situación de ventas. 3) Una frase o técnica lista para usar. 
-Tono: práctico, directo, sin tecnicismos innecesarios. Responde en español. Máximo 280 palabras.`,
+Tono: práctico, directo, sin tecnicismos innecesarios. Responde en español. Máximo 280 palabras. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez, sin abusar.`,
       messages: pnlChatHistory.map(m => ({ role: m.role, content: m.content })),
       maxTokens: 600
     });
     const reply = r.text || 'Lo siento, hubo un error. Intenta de nuevo.';
-    loadDiv.querySelector('div').innerHTML = reply.replace(/\n/g, '<br>');
+    loadDiv.querySelector('div').innerHTML = formatChatText(reply);
     pnlChatHistory.push({ role: 'assistant', content: reply });
   } catch (e) {
     loadDiv.querySelector('div').innerHTML = '⚠️ ' + (e?.message || 'Error de conexión') + '. Verifica tu API key en Configuración.';
@@ -19120,7 +19176,7 @@ const ACADEMIA_CHAT_CONFIG = {
     system: `Eres un coach experto en presentaciones de ventas de alto impacto. Conoces a fondo las técnicas de apertura, diagnóstico, demostración, manejo de temperatura y objeciones en venta de productos de ticket medio y alto (autos, inmuebles, servicios, B2B).
 El usuario puede preguntarte sobre cómo estructurar su presentación, captar atención, manejar el ritmo, conectar con el cliente emocionalmente, hacer demos memorables y detectar señales de compra.
 Responde siempre: 1) Identificando el punto clave de la situación. 2) Dando una técnica concreta con nombre. 3) Un ejemplo o frase lista para usar.
-Tono: práctico, directo, como un mentor de campo. Responde en español. Máximo 280 palabras.`
+Tono: práctico, directo, como un mentor de campo. Responde en español. Máximo 280 palabras. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez, sin abusar.`
   },
   cierre: {
     emoji: '🎯',
@@ -19143,7 +19199,7 @@ Tono: práctico, directo, como un mentor de campo. Responde en español. Máximo
     system: `Eres un coach experto en técnicas de cierre de ventas. Dominas los 7 tipos de cierre clásicos, el manejo de objeciones de último momento, la psicología de la decisión de compra y el seguimiento postventa.
 El usuario puede preguntarte sobre cómo y cuándo intentar el cierre, qué hacer ante objeciones de precio o tiempo, cómo recuperar ventas perdidas, o cómo usar el silencio estratégico.
 Responde siempre: 1) Identificando el tipo de situación de cierre. 2) Dando la técnica más adecuada con nombre. 3) Las palabras exactas o guion listo para usar.
-Tono: seguro, concreto, orientado a resultados. Responde en español. Máximo 280 palabras.`
+Tono: seguro, concreto, orientado a resultados. Responde en español. Máximo 280 palabras. No uses markdown crudo (nada de ### ni bloques de código); si necesitas resaltar algo usa negritas con ** o listas con "-". Agrega algún emoji cuando aporte calidez, sin abusar.`
   }
 };
 
@@ -19220,7 +19276,7 @@ async function academiaChat_send(type) {
       maxTokens: 600
     });
     const reply = r.text || 'Lo siento, hubo un error. Intenta de nuevo.';
-    loadDiv.querySelector('div').innerHTML = reply.replace(/\n/g, '<br>');
+    loadDiv.querySelector('div').innerHTML = formatChatText(reply);
     hist.push({ role: 'assistant', content: reply });
   } catch (e) {
     loadDiv.querySelector('div').innerHTML = '⚠️ ' + (e?.message || 'Error de conexión') + '. Verifica tu API key en Configuración.';
@@ -19357,7 +19413,7 @@ ${lastResult ? `
 ÚLTIMO ANÁLISIS REALIZADO:
 "${lastResult.slice(0,600)}"` : ''}
 
-Responde en español, directo, accionable. Máximo 120 palabras.`;
+Responde en español, de forma directa, accionable y en tono conversacional natural (como un chat real, no un informe). Máximo 120 palabras. No uses formato markdown crudo (nada de ### ni bloques de código a menos que el usuario pida código); si necesitas resaltar algo usa negritas simples con ** o listas con "-". Agrega algún emoji cuando aporte calidez o énfasis, sin abusar.`;
   }
 
   // Sobreescribir sendChatPanel globalmente
@@ -19382,7 +19438,7 @@ Responde en español, directo, accionable. Máximo 120 palabras.`;
       const r = await callAIChatConFallback({ system: contexto, messages: [{ role: 'user', content: msg }], maxTokens: 1000 });
       const respuesta = r.text || 'Hubo un error. Intenta de nuevo.';
       const bubble = document.getElementById(typId).querySelector('.msg-ai-bubble');
-      bubble.innerHTML = respuesta.replace(/\n/g, '<br>');
+      bubble.innerHTML = formatChatText(respuesta);
       const copyBtn = document.createElement('button');
       copyBtn.className = 'pcm-copy-btn';
       copyBtn.innerHTML = '📋 Copiar';
@@ -19478,6 +19534,207 @@ Responde en español, directo, accionable. Máximo 120 palabras.`;
   </div>
 </div>
 
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   DICTADO POR VOZ GLOBAL (Web Speech API) — MÓDULO GENÉRICO REUTILIZABLE
+   Integrado en Nexus Advance: cubre TODOS los <input>, <textarea> y
+   elementos contenteditable de la app — incluidos los generados
+   dinámicamente (fichas de cliente, gestiones, chats de las academias,
+   widget flotante de chat, etc.) sin necesidad de tocar cada campo.
+
+   El botón 🎤 SIEMPRE se muestra al enfocar un campo, en cualquier
+   navegador/dispositivo. Si el navegador no soporta dictado por voz
+   (p. ej. Safari en iPhone/iPad, o vistas previas en iframes con
+   permisos restringidos), al tocarlo se explica el motivo en vez de
+   ocultarse sin avisar. Funciona con clic de mouse y con toque en
+   pantallas táctiles, y reubica el botón cuando aparece el teclado
+   virtual en móvil.
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+
+  /* ─────────────── CONFIG: ajusta aquí si lo necesitas ─────────────── */
+  const CONFIG = {
+    lang: 'es-MX',              // idioma de dictado. Ej: 'en-US', 'es-ES'
+    colorIdle: 'linear-gradient(135deg,#22D3EE,#3B82F6)', // color botón en reposo
+    colorRecording: '#EF4444',  // color botón mientras graba
+    iconIdle: '🎤',
+    iconRecording: '⏺️',
+    buttonSize: 38,             // px
+    notifyFnNames: ['mostrarToast', 'showToast', 'toast', 'notify']
+  };
+  /* ───────────────────────────────────────────────────────────────── */
+
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  // Ya NO hacemos "return" si no hay soporte: el botón se muestra igual
+  // en todos lados (PC, teléfono, Safari, artefacto, etc.) y explica el
+  // motivo si el usuario lo toca donde el navegador no lo permite.
+
+  let recognition = null;
+  let activeField = null;
+  let micBtn = null;
+  let baseValue = '';
+
+  function isTextField(el){
+    if(!el) return false;
+    if(el.tagName === 'TEXTAREA') return true;
+    if(el.tagName === 'INPUT'){
+      const t = (el.type || 'text').toLowerCase();
+      return ['text','search','email','url','tel'].includes(t);
+    }
+    if(el.isContentEditable) return true;
+    return false;
+  }
+
+  function getFieldValue(el){
+    return el.isContentEditable ? el.textContent : (el.value || '');
+  }
+  function setFieldValue(el, val){
+    if(el.isContentEditable) el.textContent = val;
+    else el.value = val;
+  }
+
+  function createMicBtn(){
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'globalVoiceMicBtn';
+    btn.title = 'Dictar por voz';
+    btn.textContent = CONFIG.iconIdle;
+    btn.style.cssText =
+      'position:fixed;z-index:999999;width:' + CONFIG.buttonSize + 'px;height:' + CONFIG.buttonSize + 'px;' +
+      'border-radius:50%;border:none;background:' + CONFIG.colorIdle + ';color:#fff;font-size:16px;' +
+      'line-height:1;box-shadow:0 4px 14px rgba(0,0,0,0.4);cursor:pointer;display:none;' +
+      'align-items:center;justify-content:center;transition:transform .15s,background .2s;' +
+      'touch-action:manipulation;-webkit-tap-highlight-color:transparent;';
+    document.body.appendChild(btn);
+    // En touch, mousedown/click pueden disparar dos veces o robar el foco
+    // del teclado virtual: usamos pointerdown con preventDefault y un
+    // solo manejador para todos los dispositivos.
+    btn.addEventListener('pointerdown', (e)=>e.preventDefault());
+    btn.addEventListener('click', toggleDictation);
+    return btn;
+  }
+
+  function positionBtn(field){
+    const r = field.getBoundingClientRect();
+    if(r.width === 0 && r.height === 0){ micBtn.style.display='none'; return; }
+    let left = r.right - (CONFIG.buttonSize + 8);
+    let top = r.top + 6;
+    if(left < 4) left = r.left + 4;
+    if(top < 4) top = r.top;
+    micBtn.style.left = left + 'px';
+    micBtn.style.top = top + 'px';
+    micBtn.style.display = 'flex';
+  }
+
+  function notify(msg){
+    for(const fnName of CONFIG.notifyFnNames){
+      if(typeof window[fnName] === 'function'){ window[fnName](msg); return; }
+    }
+    console.warn(msg);
+  }
+
+  function startDictation(){
+    if(!activeField) return;
+    baseValue = getFieldValue(activeField);
+    recognition = new SR();
+    recognition.lang = CONFIG.lang;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    let finalTranscript = '';
+    micBtn.style.background = CONFIG.colorRecording;
+    micBtn.textContent = CONFIG.iconRecording;
+    recognition.onresult = function(event){
+      let interim = '';
+      for(let i = event.resultIndex; i < event.results.length; i++){
+        const t = event.results[i][0].transcript;
+        if(event.results[i].isFinal) finalTranscript += t + ' ';
+        else interim += t;
+      }
+      const sep = baseValue && !/\s$/.test(baseValue) ? ' ' : '';
+      const newVal = (baseValue + sep + finalTranscript + interim).trim();
+      setFieldValue(activeField, newVal);
+      activeField.dispatchEvent(new Event('input', {bubbles:true}));
+    };
+    recognition.onerror = function(e){
+      if(e.error === 'not-allowed' || e.error === 'permission-denied' || e.error === 'service-not-allowed'){
+        notify('🎤 Permiso de micrófono denegado. Actívalo en los ajustes del navegador.');
+      } else if(e.error === 'no-speech'){
+        // silencio: no molestar con un toast, simplemente se detiene
+      } else {
+        notify('🎤 No se pudo usar el micrófono (' + e.error + ')');
+      }
+      stopDictation();
+    };
+    recognition.onend = function(){ stopDictation(); };
+    try{
+      recognition.start();
+    }catch(err){
+      notify('🎤 No se pudo iniciar el dictado.');
+      stopDictation();
+    }
+  }
+
+  function stopDictation(){
+    if(recognition){
+      try{ recognition.onresult=null; recognition.onerror=null; recognition.onend=null; recognition.stop(); }catch(e){}
+      recognition = null;
+    }
+    if(micBtn){
+      micBtn.style.background = CONFIG.colorIdle;
+      micBtn.textContent = CONFIG.iconIdle;
+    }
+  }
+
+  function toggleDictation(){
+    if(!activeField) return;
+    if(!SR){
+      // Explica por qué aquí no funciona, en vez de desaparecer en silencio.
+      let motivo = '🎤 El dictado por voz no está disponible en este navegador. Funciona en Chrome o Edge (PC y Android). En iPhone/iPad (Safari) esta función no existe. Si lo estás probando dentro de una vista previa/artefacto, ábrelo como página normal en el navegador.';
+      notify(motivo);
+      return;
+    }
+    if(recognition){ stopDictation(); return; }
+    startDictation();
+  }
+
+  document.addEventListener('focusin', function(e){
+    if(isTextField(e.target)){
+      if(activeField !== e.target && recognition) stopDictation();
+      activeField = e.target;
+      positionBtn(activeField);
+    }
+  });
+  document.addEventListener('focusout', function(e){
+    setTimeout(function(){
+      const a = document.activeElement;
+      if(a !== micBtn && !isTextField(a)){
+        if(micBtn) micBtn.style.display = 'none';
+        if(recognition) stopDictation();
+        activeField = null;
+      }
+    }, 150);
+  });
+  window.addEventListener('scroll', function(){ if(activeField && micBtn && micBtn.style.display==='flex') positionBtn(activeField); }, true);
+  window.addEventListener('resize', function(){ if(activeField && micBtn && micBtn.style.display==='flex') positionBtn(activeField); });
+  // En móvil, el teclado virtual cambia el viewport sin disparar 'resize'
+  // normal en todos los navegadores — visualViewport lo cubre en Chrome/Safari.
+  if(window.visualViewport){
+    window.visualViewport.addEventListener('resize', function(){
+      if(activeField && micBtn && micBtn.style.display==='flex') positionBtn(activeField);
+    });
+    window.visualViewport.addEventListener('scroll', function(){
+      if(activeField && micBtn && micBtn.style.display==='flex') positionBtn(activeField);
+    });
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ micBtn = createMicBtn(); });
+  } else {
+    micBtn = createMicBtn();
+  }
+
+})();
+</script>
 
 </body>
 </html>
