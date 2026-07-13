@@ -6,7 +6,7 @@
 <title>Nexus Advance — Ventas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
     /* ── Base surfaces ── */
@@ -2061,19 +2061,11 @@
   .wrap, .page-body, .app-wrap, .nav-bottom { max-width: 952px; }
   #sec-7 { max-width: 952px !important; }
 
-  /* Se eliminó el zoom de escritorio (body{zoom:1.2}) que causaba que el
-     cursor de texto se desalineara en TODOS los cuadros de texto de la
-     app (chats de las academias, analizador de texto, chat flotante,
-     fichas, etc.). Esa propiedad no está estandarizada y el motor de
-     Chrome/Edge no siempre recalcula bien la posición del cursor dentro
-     de <textarea>/<input> mientras está activa. Quitarla de raíz es la
-     única forma de garantizar que el cursor nunca más se salga de su
-     caja. Si se quiere recuperar el tamaño de letra más grande en
-     escritorio más adelante, hay que hacerlo con font-size real (no con
-     zoom), campo por campo, para no repetir este bug. */
+  /* Zoom uniforme del 20%: agranda letras, botones, campos, íconos y
+     gráficos por igual en toda la aplicación, sin tocar la vista móvil. */
+  body { zoom: 1.2; }
 }
 </style>
-
 
   <!-- CDN requeridos por VentaMinds PRO (Gestión Comercial) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
@@ -2085,7 +2077,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=optional" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <style>
