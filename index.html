@@ -2064,6 +2064,29 @@
   /* Zoom uniforme del 20%: agranda letras, botones, campos, íconos y
      gráficos por igual en toda la aplicación, sin tocar la vista móvil. */
   body { zoom: 1.2; }
+
+  /* ── Corrección: cursor de texto fuera de la caja en escritorio ──
+     Bug del motor Chrome/Edge: cuando un ancestro tiene "zoom" distinto
+     de 1, el cursor de texto (caret) dentro de <textarea>/<input> se
+     puede dibujar en una posición incorrecta, fuera del cuadro visible.
+     Solo pasa en escritorio (aquí es donde se aplica el zoom) y es más
+     notorio en cajas pequeñas como los chats de las academias.
+     Solución: estos campos anulan el zoom heredado del body (zoom neto
+     = 1, cursor calculado de forma nativa) y compensan directamente en
+     su propio tamaño de fuente/relleno para verse exactamente igual
+     que antes. */
+  #presChatInput, #cierreChatInput, #ieChatInput, #pnlChatInput {
+    zoom: 0.8333333 !important;
+    font-size: 16.8px !important;
+    padding: 12px 15.6px !important;
+    border-radius: 14.4px !important;
+  }
+  .chat-input, #chatPanelInput {
+    zoom: 0.8333333 !important;
+    font-size: 15.6px !important;
+    padding: 12px 15.6px !important;
+    border-radius: 12px !important;
+  }
 }
 </style>
 
