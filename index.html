@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexus Pro — Ventas</title>
+<title>Nexus Advance — Ventas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -2121,7 +2121,7 @@
   <div class="topbar-left">
     <div class="app-logo">⚡</div>
     <div>
-      <div class="app-name">Nexus Pro</div>
+      <div class="app-name">Nexus Advance</div>
       <div class="app-subtitle">Ventas · IA</div>
     </div>
   </div>
@@ -2222,7 +2222,8 @@
       <div class="input-actions">
         <span id="fileIndicator" style="display:none;"></span>
         <label class="attach-btn" id="attachLabel" title="Adjuntar documento">
-          📎 Adjuntar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;display:block;"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+          <span id="attachLabelText">Adjuntar</span>
           <input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.md" style="display:none;">
         </label>
         <button class="clear-btn" id="replyBtn" style="color:var(--gold);">↩ Responder</button>
@@ -2417,7 +2418,7 @@
 
 
 <!-- ══════════════════════════════════════════════════════════════════════
-     MODO: CRM (Nexus CRM Pro) — integrado dentro de Nexus Pro 2.0
+     MODO: CRM (Nexus CRM Pro) — integrado dentro de Nexus Advance
      Estilos propios de Nexus CRM Pro, encapsulados bajo #crm-root para no
      interferir con el resto de la app. Lógica y funcionamiento intactos.
      ══════════════════════════════════════════════════════════════════════ -->
@@ -3472,7 +3473,7 @@ function confirmarNuevaFicha(){
 <script>
 /* ─── THEME ───
    Unificado: el tema (claro/oscuro) ahora lo controla exclusivamente
-   setTheme()/#themeToggle de la topbar global de Nexus Pro 2.0. Como
+   setTheme()/#themeToggle de la topbar global de Nexus Advance. Como
    ambos usan el mismo atributo document.documentElement[data-theme],
    y el CSS de CRM está scopeado bajo [data-theme="light"] #crm-root,
    CRM responde automáticamente sin necesitar su propio control. */
@@ -8587,7 +8588,7 @@ function applyUiLang(){
   var catLabel=document.getElementById('catSectionLabel'); if(catLabel) catLabel.textContent=ui.quickActionsLabel;
   // Input area buttons
   var attachLabel=document.getElementById('attachLabel');
-  if(attachLabel){ attachLabel.childNodes.forEach(function(n){ if(n.nodeType===3) n.textContent=' '+(ui.attachBtn||'📎 Adjuntar').replace(/^📎\s*/,''); }); attachLabel.innerHTML='📎 '+(ui.attachBtn||'📎 Adjuntar').replace(/^📎\s*/,'')+'<input type="file" id="fileInput" accept=".txt,.pdf,.doc,.docx,.md" style="display:none;">'; }
+  if(attachLabel){ var attachTextSpan=document.getElementById('attachLabelText'); if(attachTextSpan) attachTextSpan.textContent=(ui.attachBtn||'📎 Adjuntar').replace(/^📎\s*/,''); }
   var replyBtnEl=document.getElementById('replyBtn'); if(replyBtnEl) replyBtnEl.textContent=ui.replyBtn||'↩ Responder';
   var pasteBtnEl=document.getElementById('pasteBtn'); if(pasteBtnEl) pasteBtnEl.textContent=ui.pasteBtn||'📋 Pegar';
   var clearBtnEl=document.getElementById('clearBtn'); if(clearBtnEl) clearBtnEl.textContent=ui.clearBtnMain||ui.clearBtn||'✕ Limpiar';
@@ -13681,7 +13682,7 @@ async function sendChatPanel() {
   const temp = scores.total < 30 ? 'Frío' : scores.total < 55 ? 'Tibio' : scores.total < 80 ? 'Caliente' : 'Muy Caliente';
   const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
 
-  const contexto = `Eres un experto asesor de ventas de alto rendimiento integrado en Nexus Pro · Ventas Pro. Tienes acceso a los datos en tiempo real de esta operación:
+  const contexto = `Eres un experto asesor de ventas de alto rendimiento integrado en Nexus Advance · Ventas Pro. Tienes acceso a los datos en tiempo real de esta operación:
 
 CLIENTE: ${datos.nombre} | PRODUCTO: ${datos.producto || 'No especificado'} | TIPO: ${datos.tipoOp}
 SCORE: ${scores.total}% (${temp}) | ESTADO: ${estadoTexto}
@@ -14066,7 +14067,7 @@ function copiarTodoElInforme() {
   const scores = calcularScores(datos);
   const fecha = new Date().toLocaleDateString('es-MX', { year:'numeric', month:'long', day:'numeric' });
 
-  let texto = `INFORME EJECUTIVO — Nexus Pro · Ventas Pro\n`;
+  let texto = `INFORME EJECUTIVO — Nexus Advance · Ventas Pro\n`;
   texto += `Generado: ${fecha}\n`;
   texto += `Cliente: ${datos.nombre || '—'} | Producto: ${datos.producto || '—'} | Score: ${scores.total}%\n`;
   texto += `${'═'.repeat(50)}\n\n`;
@@ -14480,7 +14481,7 @@ async function descargarPDF() {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   setColor('#8892A4');
-  doc.text(`Informe generado por Nexus Pro · Ventas Pro — ${fecha}`, M, y + 10);
+  doc.text(`Informe generado por Nexus Advance · Ventas Pro — ${fecha}`, M, y + 10);
   doc.text('Uso confidencial e interno', M, y + 16);
   doc.setFont('helvetica', 'bold');
   setColor('#00F5C4');
@@ -19361,7 +19362,7 @@ function ieInit() {
 }
 
 // ══ NEXUS PRO — Chat IA Flotante Global (contexto enriquecido) ══════════════
-// Sobreescribe sendChatPanel para incluir contexto de toda la app Nexus Pro
+// Sobreescribe sendChatPanel para incluir contexto de toda la app Nexus Advance
 
 (function(){
   // Guarda la función original de VentaMinds
@@ -19402,7 +19403,7 @@ Comentarios del cliente: "${d.comentarios || 'Sin comentarios'}"`;
       }
     } catch(e) {}
 
-    return `Eres un asistente de ventas de alto rendimiento integrado en Nexus Pro — plataforma profesional de IA para vendedores.
+    return `Eres un asistente de ventas de alto rendimiento integrado en Nexus Advance — plataforma profesional de IA para vendedores.
 
 MÓDULO ACTIVO: ${modeName}
 ${vmContext}
@@ -19457,14 +19458,14 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
       if(pm) {
         pm.innerHTML = `<div class="msg-ai">
           <div class="ai-avatar" style="background:linear-gradient(135deg,#00F5C4,#4F8EF7);color:#0D1117;font-weight:700;">NX</div>
-          <div class="msg-ai-bubble">¡Hola! Soy el Asesor IA de <strong>Nexus Pro</strong>. Tengo acceso en tiempo real a todo lo que estés trabajando en la app: operaciones de venta, análisis, textos, academias.<br><br>Pregúntame lo que necesites: estrategias de cierre, manejo de objeciones, cómo mejorar un texto o cualquier consulta de ventas. ¿En qué te ayudo?</div>
+          <div class="msg-ai-bubble">¡Hola! Soy el Asesor IA de <strong>Nexus Advance</strong>. Tengo acceso en tiempo real a todo lo que estés trabajando en la app: operaciones de venta, análisis, textos, academias.<br><br>Pregúntame lo que necesites: estrategias de cierre, manejo de objeciones, cómo mejorar un texto o cualquier consulta de ventas. ¿En qué te ayudo?</div>
         </div>`;
       }
       // Actualizar avatar del panel
       const avatar = document.querySelector('.chat-panel-avatar');
       if(avatar) avatar.textContent = 'NX';
       const title = document.querySelector('.chat-panel-title div:last-child div:first-child');
-      if(title) title.textContent = 'Asesor Nexus Pro IA';
+      if(title) title.textContent = 'Asesor Nexus Advance IA';
       const subtitle = document.querySelector('.chat-panel-title div:last-child div:last-child');
       if(subtitle) { subtitle.textContent = '● En línea — acceso a toda la app'; }
     }, 800);
@@ -19728,9 +19729,10 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ micBtn = createMicBtn(); });
+    document.addEventListener('DOMContentLoaded', function(){ micBtn = createMicBtn(); console.log('✅ Dictado por voz v2 cargado. Botón creado:', !!micBtn, '| Soporte del navegador:', !!SR); });
   } else {
     micBtn = createMicBtn();
+    console.log('✅ Dictado por voz v2 cargado. Botón creado:', !!micBtn, '| Soporte del navegador:', !!SR);
   }
 
 })();
