@@ -6,7 +6,7 @@
 <title>Nexus Advance — Ventas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=optional" rel="stylesheet">
 <style>
   :root {
     /* ── Base surfaces ── */
@@ -2100,7 +2100,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=optional" rel="stylesheet">
 </head>
 <body>
 <style>
@@ -19834,6 +19834,70 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
     micBtn = createMicBtn();
   }
 
+})();
+</script>
+
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   CORRECCIÓN DEFINITIVA: CURSOR DE TEXTO QUE SE DESALINEA A LOS
+   POCOS SEGUNDOS (solo escritorio) — chats de las academias, chat
+   flotante, y cualquier <input>/<textarea> de la app.
+
+   Causa real: el navegador dibuja el cursor de texto (caret) en la
+   posición correcta al enfocar el campo, pero unos segundos después
+   —cuando termina de cargar la fuente web (Inter) y hace el "swap",
+   o por el zoom de escritorio (body{zoom:1.2})— el navegador no
+   vuelve a calcular bien esa posición y el cursor se queda "flotando"
+   en las coordenadas viejas.
+
+   Solución agresiva y definitiva: mientras el campo está enfocado, se
+   fuerza al navegador a soltar el foco y recuperarlo (blur + focus)
+   una sola vez, un poco después de que ya pasó el momento típico del
+   swap de fuente, conservando exactamente la posición del cursor
+   dentro del texto (selectionStart/selectionEnd). Esto obliga al
+   navegador a recalcular el caret desde cero con las métricas ya
+   definitivas, sin importar cuál sea la causa exacta del bug.
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+  function isPlainTextField(el){
+    if(!el) return false;
+    if(el.tagName === 'TEXTAREA') return true;
+    if(el.tagName === 'INPUT'){
+      const t = (el.type || 'text').toLowerCase();
+      return ['text','search','email','url','tel'].includes(t);
+    }
+    return false;
+  }
+
+  function resettleCaret(el){
+    if(document.activeElement !== el) return; // el usuario ya se movió a otro lado
+    let start = null, end = null;
+    try{ start = el.selectionStart; end = el.selectionEnd; }catch(e){}
+    const scrollTop = el.scrollTop, scrollLeft = el.scrollLeft;
+    el.blur();
+    el.focus();
+    try{
+      if(typeof start === 'number') el.setSelectionRange(start, end);
+    }catch(e){}
+    el.scrollTop = scrollTop;
+    el.scrollLeft = scrollLeft;
+  }
+
+  document.addEventListener('focusin', function(e){
+    const el = e.target;
+    if(!isPlainTextField(el)) return;
+    if(el.__caretResettled) return; // ya se corrigió en este ciclo de foco
+    el.__caretResettled = true;
+    // 1800ms cubre con margen el swap típico de fuentes web y cualquier
+    // reflow tardío por el zoom de escritorio.
+    setTimeout(function(){ resettleCaret(el); }, 1800);
+  });
+
+  document.addEventListener('focusout', function(e){
+    // Se limpia la marca para que, si el usuario vuelve a enfocar el
+    // mismo campo más tarde, se vuelva a aplicar la corrección.
+    delete e.target.__caretResettled;
+  });
 })();
 </script>
 
