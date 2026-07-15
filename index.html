@@ -4993,9 +4993,15 @@ function generarInformeDetallado(conContacto){
       ${g.pasoSiguiente ? `<div style="margin-top:6px;font-size:11.5px;color:var(--accent-bright)"><strong>⚡ Siguiente paso:</strong> ${g.pasoSiguiente}</div>` : ''}
     </div>`).join('') : '<p class="text-muted" style="text-align:center;padding:16px 0">Sin gestiones registradas aún.</p>';
 
+  // Solo para las barras de "Gestiones por tipo de contacto": "Primera visita"
+  // se muestra como "Primer contacto / [fuente del lead]" (p. ej. "Primer
+  // contacto / Visita al showroom (piso)"), usando la Fuente del Lead ya
+  // calculada arriba. Esto NO afecta las etiquetas del historial de gestiones
+  // (tipoMap sigue mostrando "🚗 Primera visita" ahí, sin cambios).
+  const tipoMapBarras = Object.assign({}, tipoMap, { primeravisita: `🚗 Primer contacto / ${fuenteTxt}` });
   const barrasHTML = Object.keys(tipoMap).filter(k=>conteoTipos[k]).map(k=>{
     const val = conteoTipos[k], pct = Math.round(val/maxConteo*100);
-    return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span>${tipoMap[k]}</span><span>${val}</span></div><div style="background:var(--panel-3);border-radius:6px;height:8px;overflow:hidden"><div style="width:${pct}%;height:100%;background:var(--grad)"></div></div></div>`;
+    return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span>${tipoMapBarras[k]}</span><span>${val}</span></div><div style="background:var(--panel-3);border-radius:6px;height:8px;overflow:hidden"><div style="width:${pct}%;height:100%;background:var(--grad)"></div></div></div>`;
   }).join('') || '<p class="text-muted" style="font-size:12px">Aún no hay gestiones para graficar.</p>';
 
   // ── Acción Recomendada actual + historial de acciones atendidas ──
