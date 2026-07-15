@@ -1648,9 +1648,23 @@
     animation: fabBounce 3.2s ease-in-out infinite;
   }
   .fab-chat:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(0,245,196,0.6); animation-play-state: paused; }
-  /* Emoji como imagen (no como texto): así se ve idéntico en escritorio y
-     celular, sin depender de la fuente de emojis de cada sistema operativo. */
-  .fab-chat-emoji { width: 60%; height: 60%; object-fit: contain; position: relative; z-index: 2; pointer-events: none; }
+  /* Icono SVG propio (vector, no emoji de imagen): se ve nítido a cualquier
+     tamaño, sin depender de un PNG de baja resolución ni de la fuente de
+     emojis de cada sistema operativo — por eso el robot se veía bien en
+     celular (botón chico) pero mal/"tosco" en escritorio (botón grande,
+     el PNG se notaba pixelado al agrandarse). */
+  .fab-chat-icon { width: 54%; height: 54%; position: relative; z-index: 2; pointer-events: none; transition: transform 0.25s cubic-bezier(.22,.68,0,1.2); }
+  /* Estado "abierto": el botón se encoge para verse más discreto y no
+     estorbar ni taparse con el panel de chat. */
+  .fab-chat.fab-chat-mini {
+    width: 52px; height: 52px; font-size: 20px;
+    animation: none;
+    box-shadow: 0 4px 16px rgba(0,245,196,0.4);
+  }
+  .fab-chat.fab-chat-mini::after { display: none; }
+  @media (max-width: 900px) {
+    .fab-chat.fab-chat-mini { width: 44px; height: 44px; font-size: 18px; }
+  }
   /* Reflejo de luz que recorre el botón, para que no se vea estático */
   .fab-chat::after {
     content: '';
@@ -1676,8 +1690,13 @@
   /* En escritorio se veía chico: mismo punto de quiebre que ya usa el resto
      de la app (901px) para distinguir escritorio de celular/tablet. */
   @media (min-width: 901px) {
-    .fab-chat { width: 116px; height: 116px; font-size: 46px; bottom: 90px; right: 24px; }
-    .chat-panel { bottom: 224px; }
+    .fab-chat { width: 72px; height: 72px; font-size: 30px; bottom: 90px; right: 24px; }
+    /* Estado "abierto" en escritorio: se encoge a un tamaño discreto (igual
+       que en celular) para que el panel de chat, que se abre justo arriba,
+       quede siempre con margen de sobra y nunca tape la fila de escribir /
+       el botón de enviar. */
+    .fab-chat.fab-chat-mini { width: 52px; height: 52px; font-size: 20px; bottom: 90px; right: 24px; }
+    .chat-panel { bottom: 158px; right: 24px; }
   }
   .fab-chat .fab-badge {
     position: absolute;
@@ -1693,7 +1712,7 @@
   }
   .chat-panel {
     position: fixed;
-    bottom: 148px;
+    bottom: 140px;
     right: 12px;
     width: calc(100vw - 24px);
     max-width: 460px;
@@ -2627,7 +2646,7 @@
 #modalConfiguracion #settingsThemeChips .settings-chip.active{background:var(--grad);border-color:transparent;color:#fff;font-weight:800;box-shadow:0 4px 16px var(--grad-glow);}
 
 /* ── Indicador animado de Estado Final de la Operación (CRM + Ventas) ── */
-.estado-op-indicador{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;}
+.estado-op-indicador{display:inline-flex;align-items:center;gap:7px;flex-shrink:1;min-width:0;max-width:58%;}
 .estado-op-punto{width:11px;height:11px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 rgba(0,0,0,0);}
 .estado-op-punto.eo-gris{background:#9AA5B1;}
 .estado-op-punto.eo-verde{background:#22C55E;animation:eoBlinkSlow 2.6s ease-in-out infinite;}
@@ -2637,9 +2656,10 @@
 @keyframes eoBlinkSlow{0%,100%{opacity:1;} 50%{opacity:0.35;}}
 @keyframes eoBlinkMedio{0%,100%{opacity:1;} 50%{opacity:0.3;}}
 @keyframes eoBlinkRapido{0%,100%{opacity:1;} 50%{opacity:0.22;}}
-.estado-op-texto{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;}
+.estado-op-texto{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
 .card-title .estado-op-texto{font-size:11.5px;}
 .card-title .estado-op-punto{font-size:0;}
+.card-header .card-title{flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 
 </style>
 <div id="modeCRM">
@@ -2669,10 +2689,10 @@ function confirmarNuevaFicha(){
 <!-- ══ TOPBAR PROPIO DE CRM — divisor visual entre el modo CRM y el resto de la app ══ -->
 <div class="topbar">
   <div class="topbar-left">
-    <div class="app-logo">🚗</div>
+    <div class="app-logo">👥</div>
     <div>
       <div class="app-name">Nexus CRM</div>
-      <div class="app-sub">Ventas Automotriz</div>
+      <div class="app-sub">Gestión de Clientes</div>
     </div>
   </div>
 </div>
@@ -3709,10 +3729,34 @@ const ESTADO_FINAL_OP_MAP = {
   posventa:           { texto:'Proceso de posventa',         clase:'eo-azul'     },
   recompra:           { texto:'Proceso de recompra',         clase:'eo-amarillo' }
 };
+/* ─── EQUIVALENCIA "¿En qué punto estamos?" (Ventas, escala detallada 0-9)
+   ↔ "Estado final de la operación" (testigo superior, CRM + Ventas) ↔
+   "Estado actual" (CRM, escala simple proceso/cerrada/perdida) ───
+   estadoOp es la fuente más detallada (incluye posventa y recompra), así
+   que manda sobre los otros dos; ver sincronizarDesdeEstadoOp() más abajo. */
+const MAPA_ESTADOOP_A_FINAL = {
+  '1':'pendiente', '2':'pendiente', '3':'pendiente', '4':'pendiente',
+  '5':'cerrada_exito',
+  '0':'cerrada_sin_venta', '6':'cerrada_sin_venta',
+  '7':'posventa', '8':'posventa',
+  '9':'recompra'
+};
+const MAPA_ESTADOOP_A_SIMPLE = {
+  '1':'proceso', '2':'proceso', '3':'proceso', '4':'proceso',
+  '5':'cerrada',
+  '0':'perdida', '6':'perdida',
+  '7':'cerrada', '8':'cerrada', '9':'cerrada'
+};
+// Al elegir un valor final desde el testigo del CRM directamente, ¿a qué
+// valor representativo de estadoOp corresponde? "pendiente" no tiene un
+// único equivalente (puede ser 1,2,3 o 4), así que se omite a propósito.
+const MAPA_FINAL_A_ESTADOOP_REPRESENTANTE = {
+  cerrada_exito:'5', cerrada_sin_venta:'0', posventa:'7', recompra:'9'
+};
 function pintarIndicadorEstadoFinal(valor, puntoEl, textoEl){
   const d = ESTADO_FINAL_OP_MAP[valor] || ESTADO_FINAL_OP_MAP.pendiente;
   if(puntoEl) puntoEl.className = 'estado-op-punto ' + d.clase;
-  if(textoEl) textoEl.textContent = d.texto;
+  if(textoEl){ textoEl.textContent = d.texto; textoEl.title = d.texto; }
 }
 function actualizarIndicadorEstadoFinal(){
   const selCRM = document.getElementById('estadoFinalOperacion');
@@ -3738,6 +3782,18 @@ const DIAS_SEGUIMIENTO_POSVENTA = 90;
 
 function manejarCambioEstadoFinalOperacion(nuevoValor){
   if(nuevoValor === 'cerrada_exito') generarSeguimientoPosventaAutomatico();
+
+  // Coherencia: si el testigo (CRM) cambia directamente, refleja el mismo
+  // estado en "¿En qué punto estamos?" (Ventas), para que nunca queden en
+  // desacuerdo (ej. testigo en "Se perdió" y Ventas en "Negociando").
+  const estadoOpEl = document.getElementById('estadoOp');
+  if(estadoOpEl){
+    const actual = MAPA_ESTADOOP_A_FINAL[estadoOpEl.value];
+    const representante = MAPA_FINAL_A_ESTADOOP_REPRESENTANTE[nuevoValor];
+    if(representante && actual !== nuevoValor){
+      estadoOpEl.value = representante;
+    }
+  }
 }
 
 async function generarSeguimientoPosventaAutomatico(){
@@ -4633,6 +4689,13 @@ document.getElementById('btnGuardarPrimeraVisita').addEventListener('click', asy
 
   // Genera/actualiza el bloque independiente de arriba con la Acción Recomendada
   inicializarAccionRecomendada();
+
+  // Sincroniza de inmediato con Sheets (si ya hay una URL configurada): antes
+  // esta gestión quedaba solo en localStorage hasta que alguien presionara
+  // manualmente "☁️ Sincronizar ahora", así que si la ficha se descargaba
+  // desde otra sesión antes de eso, la Primera Visita (y su Acción
+  // Recomendada) aparecía como si nunca se hubiera registrado.
+  if(localStorage.getItem('nexus_sheets_url')) await sincronizarSheets();
 });
 
 function mostrarPVGuardada(g){
@@ -4823,6 +4886,11 @@ document.getElementById('btnGuardarIC').addEventListener('click', async () => {
 
   // Genera/actualiza el bloque independiente de arriba con la Acción Recomendada
   inicializarAccionRecomendada();
+
+  // Sincroniza de inmediato con Sheets (si ya hay una URL configurada): mismo
+  // arreglo que en Primera Visita, para que ninguna gestión (ni su Acción
+  // Recomendada) dependa de que alguien recuerde sincronizar manualmente.
+  if(localStorage.getItem('nexus_sheets_url')) await sincronizarSheets();
 });
 
 /* ─── HISTORIAL ─── */
@@ -5818,7 +5886,17 @@ function sincronizarVentasDesdeCRM(){
     if(typeof togglePruebaDetalle === 'function') togglePruebaDetalle(v);
   }
   const estadoOperacion = g('estadoOperacion');
-  if(estadoOperacion) setVal('estadoOp', SYNC_MAPA_ESTADO_OP[estadoOperacion.value] ?? '2');
+  if(estadoOperacion){
+    const estadoOpEl = g('estadoOp');
+    const actualSimple = estadoOpEl ? MAPA_ESTADOOP_A_SIMPLE[estadoOpEl.value] : null;
+    // Si el valor detallado actual ya corresponde al mismo estado simple
+    // (proceso/cerrada/perdida), no lo pisamos: así no se pierde el detalle
+    // (posventa, referidos, recompra, cancelado…) cada vez que se edita
+    // cualquier otro campo del CRM.
+    if(actualSimple !== estadoOperacion.value){
+      setVal('estadoOp', SYNC_MAPA_ESTADO_OP[estadoOperacion.value] ?? '2');
+    }
+  }
 
   const crmUrgencia = g('crmUrgencia');
   if(crmUrgencia){
@@ -5874,6 +5952,44 @@ function sincronizarVentasDesdeCRM(){
     if(g('rOtro')?.checked)         regalos.push(g('otroRegaloDesc')?.value || 'Otro');
     regalosResumen.value = regalos.length ? regalos.join(', ') : '';
   }
+}
+
+/* ─── SINCRONIZACIÓN "¿En qué punto estamos?" (Ventas) → testigo ───
+   estadoOp es el campo más detallado (incluye posventa y recompra), así
+   que manda: al cambiarlo se recalcula "Estado final de la operación" en
+   Ventas (queda bloqueado para edición manual, solo se pinta) y también
+   se refleja en el testigo del CRM y en su "Estado actual" simple, para
+   que ambos indicadores nunca queden en desacuerdo. */
+function sincronizarDesdeEstadoOp(){
+  const estadoOpEl = document.getElementById('estadoOp');
+  if(!estadoOpEl) return;
+  const finalVal = MAPA_ESTADOOP_A_FINAL[estadoOpEl.value];
+  if(!finalVal) return;
+
+  const vmSel = document.getElementById('vmEstadoFinalOperacion');
+  if(vmSel) vmSel.value = finalVal;
+
+  const crmFinalSel = document.getElementById('estadoFinalOperacion');
+  if(crmFinalSel && crmFinalSel.value !== finalVal){
+    crmFinalSel.value = finalVal;
+    if(typeof manejarCambioEstadoFinalOperacion === 'function') manejarCambioEstadoFinalOperacion(finalVal);
+  }
+
+  const crmSimpleSel = document.getElementById('estadoOperacion');
+  const simpleVal = MAPA_ESTADOOP_A_SIMPLE[estadoOpEl.value];
+  if(crmSimpleSel && simpleVal) crmSimpleSel.value = simpleVal;
+
+  if(typeof actualizarIndicadorEstadoFinal === 'function') actualizarIndicadorEstadoFinal();
+
+  // Guardado ligero: no se pasa por onCampoChange()/sincronizarVentasDesdeCRM()
+  // completos para evitar un ida-y-vuelta que "aplane" este valor detallado.
+  if(typeof clienteData !== 'undefined'){
+    if(simpleVal) clienteData.estadoOperacion = simpleVal;
+    clienteData.estadoFinalOperacion = finalVal;
+    try{ localStorage.setItem('crm_cliente', JSON.stringify(clienteData)); }catch(e){}
+  }
+  if(typeof recalcScore === 'function') recalcScore();
+  if(typeof scheduleScoreIA === 'function') scheduleScoreIA();
 }
 
 /* ─── BUSCAR CLIENTE (barra superior) ─── */
@@ -5948,7 +6064,7 @@ async function cargarClienteCompleto(id, btnOrigen){
 
     // Poblar gestiones descargadas (formato backend → formato local)
     gestiones = (data.gestiones||[]).map(g => ({
-      id: g.GestionID, gestionId: g.GestionID, fecha: g.Fecha, tipo: g.Tipo, calidad: g.Calidad,
+      id: g.GestionID, gestionId: g.GestionID, fecha: g.Fecha, tipo: mapearTipoBackendALocal(g.Tipo), calidad: g.Calidad,
       comentarios: g.Comentarios, pasoSiguiente: g.PasoSiguiente, mensajeIA: g.MensajeIA,
       accionEstado: mapearEstadoBackendALocal(g.AccionASeguir),
       accionFecha: g.AccionFecha, accionHora: g.AccionHora,
@@ -5986,6 +6102,29 @@ async function cargarClienteCompleto(id, btnOrigen){
 function mapearEstadoBackendALocal(estadoBackend){
   const mapa = { 'Realizado':'realizado', 'No realizado':'no_realizado', 'Pospuesto':'pospuesto' };
   return mapa[estadoBackend] || ''; // "Pendiente por realizar" o vacío → sin resultado aún
+}
+
+// El Script guarda en "Tipo de Contacto" la etiqueta en español (para que la
+// hoja de cálculo sea legible: "Llamada", "WhatsApp", "Primera visita"…),
+// pero el resto de la app (tipoMap del historial/informe, comparaciones como
+// `tipo === 'primeravisita'` que alimentan la Acción Recomendada actual,
+// contadores de actividad, etc.) trabaja con el código interno en minúsculas.
+// Sin este mapeo de regreso, CUALQUIER gestión que no viniera de Primera
+// Visita se relee con un tipo que no coincide con ningún código conocido y
+// termina cayendo, por default, en "informacioncomercial" — que es
+// justamente el nombre de la tarjeta, no el tipo de contacto real elegido
+// (teléfono/WhatsApp/correo/visita). Mismo patrón que mapearEstadoBackendALocal.
+function mapearTipoBackendALocal(tipoBackend){
+  const mapa = {
+    'Sin contacto aún':'sincontacto', 'Primera visita':'primeravisita',
+    'Llamada':'llamada', 'WhatsApp':'whatsapp', 'Cita presencial':'cita',
+    'Seguimiento':'seguimiento', 'Posventa':'posventa', 'Correo':'email',
+    'Información comercial':'informacioncomercial'
+  };
+  // Si ya viene como código interno (filas antiguas guardadas antes de este
+  // arreglo, o si algún día el backend cambia a guardar el código tal cual),
+  // se respeta tal cual en vez de perderlo.
+  return mapa[tipoBackend] || tipoBackend || 'informacioncomercial';
 }
 
 /* ─── Restaura el banner de Primera Visita al cargar una ficha existente
@@ -6709,24 +6848,29 @@ async function sincronizarSheets(){
       </div>
       <div class="field">
         <label class="field-label">¿En qué punto estamos?</label>
-        <select id="estadoOp" class="inp">
+        <select id="estadoOp" class="inp" onchange="sincronizarDesdeEstadoOp()">
           <option value="1">Prospecto nuevo / primer contacto</option>
           <option value="2">Interesado, explorando opciones</option>
           <option value="3">Negociando condiciones</option>
           <option value="4">Falta solo anticipo / firma</option>
           <option value="5">✅ Operación cerrada</option>
-          <option value="0">❌ Se perdió / canceló</option>
+          <option value="0">❌ Se perdió</option>
+          <option value="6">🚫 Canceló</option>
+          <option value="7">⭐ Posventa: seguimiento de satisfacción</option>
+          <option value="8">⭐ Posventa: pedir referidos</option>
+          <option value="9">🔁 Proceso de recompra</option>
         </select>
       </div>
       <div class="field">
         <label class="field-label">Estado final de la operación</label>
-        <select id="vmEstadoFinalOperacion" class="inp" onchange="actualizarIndicadorEstadoFinal()">
+        <select id="vmEstadoFinalOperacion" class="inp" disabled onchange="actualizarIndicadorEstadoFinal()">
           <option value="pendiente">Pendiente de definir</option>
           <option value="cerrada_exito">Operación cerrada con éxito</option>
           <option value="cerrada_sin_venta">Operación cerrada sin venta</option>
           <option value="posventa">Proceso de posventa</option>
           <option value="recompra">Proceso de recompra</option>
         </select>
+        <div style="font-size:11px;color:var(--textodim);margin-top:4px;">🔒 Se calcula automáticamente según "¿En qué punto estamos?".</div>
       </div>
       <div class="field">
         <label class="field-label">Nivel de urgencia del cliente</label>
@@ -13928,7 +14072,7 @@ function calcularScores(d) {
   const fSeniales = (d.senialesCount / 7) * 15;
 
   // Factor 5: Estado operación (0-15)
-  const estadoMap = { 0: 0, 1: 3, 2: 7, 3: 11, 4: 14, 5: 15 };
+  const estadoMap = { 0: 0, 1: 3, 2: 7, 3: 11, 4: 14, 5: 15, 6: 0, 7: 15, 8: 15, 9: 15 };
   const fEstado = estadoMap[d.estadoOp] || 0;
 
   // Factor 6: Competencia y urgencia (0-10)
@@ -14251,7 +14395,7 @@ async function sendChat() {
 - Comentarios del cliente: "${datos.comentarios}"
 - Probabilidad de cierre calculada: ${scores.total}%
 - Temperatura: ${scores.total < 30 ? 'Frío' : scores.total < 55 ? 'Tibio' : scores.total < 80 ? 'Caliente' : 'Muy Caliente'}
-- Estado de la operación: ${['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso'}
+- Estado de la operación: ${['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso'}
 - Objeción principal: ${['','Precio','Tiempo','Necesita aprobación','Duda del producto','Sin objeciones'][datos.objecion] || 'No definida'}
 - Señales de compra detectadas: ${senialesSeleccionadas.size}/7
 - Urgencia del cliente: ${datos.urgencia}/5
@@ -14292,14 +14436,19 @@ document.addEventListener('keydown', e => {
 // ===================== CHAT FLOTANTE GLOBAL =====================
 let chatPanelOpen = false;
 
+const FAB_CHAT_ICON_SVG = '<svg class="fab-chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.5C6.98 3.5 3 7.1 3 11.4c0 2.32 1.13 4.4 2.95 5.83-.09 1.05-.46 2.26-1.36 3.3a.5.5 0 0 0 .49.82c2.02-.36 3.6-1.15 4.58-1.76A11.9 11.9 0 0 0 12 19.3c5.02 0 9-3.6 9-7.9s-3.98-7.9-9-7.9Z" fill="#0D1117"/><path d="M12.5 8.3l.86 2.02 2.02.86-2.02.86-.86 2.02-.86-2.02-2.02-.86 2.02-.86.86-2.02Z" fill="#00F5C4"/></svg>';
+const FAB_CHAT_CLOSE_SVG = '<svg class="fab-chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6l12 12M18 6L6 18" stroke="#0D1117" stroke-width="2.4" stroke-linecap="round"/></svg>';
+
 function toggleChatPanel() {
   chatPanelOpen = !chatPanelOpen;
   const panel = document.getElementById('chatPanel');
   const fab = document.getElementById('fabChat');
   panel.classList.toggle('open', chatPanelOpen);
-  fab.innerHTML = chatPanelOpen
-    ? '✕'
-    : '<img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" alt="🤖" class="fab-chat-emoji" onerror="this.outerHTML=\'🤖\'">';
+  // El botón se encoge cuando el chat está abierto: se ve más discreto,
+  // más agradable, y garantiza que nunca quede detrás del panel tapando
+  // la fila de escribir / el botón de enviar.
+  fab.classList.toggle('fab-chat-mini', chatPanelOpen);
+  fab.innerHTML = chatPanelOpen ? FAB_CHAT_CLOSE_SVG : FAB_CHAT_ICON_SVG;
   if (chatPanelOpen) {
     setTimeout(() => document.getElementById('chatPanelInput').focus(), 300);
   }
@@ -14322,7 +14471,7 @@ async function sendChatPanel() {
   const datos = recopilarDatos();
   const scores = calcularScores(datos);
   const temp = scores.total < 30 ? 'Frío' : scores.total < 55 ? 'Tibio' : scores.total < 80 ? 'Caliente' : 'Muy Caliente';
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
 
   const contexto = `Eres un experto asesor de ventas de alto rendimiento integrado en Nexus Advance · Ventas Pro. Tienes acceso a los datos en tiempo real de esta operación:
 
@@ -14360,7 +14509,7 @@ function prepararInforme() {
   const prob = scores.total;
 
   const temp = prob < 30 ? '❄️ Frío' : prob < 55 ? '🌤️ Tibio' : prob < 80 ? '🔥 Caliente' : '💥 Muy Caliente';
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
 
   const meta = document.getElementById('reportMetaGrid');
   meta.innerHTML = `
@@ -14403,7 +14552,7 @@ async function generarInformeCompleto() {
   document.getElementById('reportGenerating').style.display = 'block';
 
   const temp = prob < 30 ? 'Frío' : prob < 55 ? 'Tibio' : prob < 80 ? 'Caliente' : 'Muy Caliente';
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
   const objecionTexto = ['','Precio/presupuesto','Tiempo/lo pienso','Necesita aprobación','Duda del producto','Sin objeciones'][datos.objecion] || 'No definida';
 
   const factoresDetalle = [
@@ -14592,7 +14741,7 @@ async function generarSiguientesPasos() {
   const scores = calcularScores(datos);
   const prob = scores.total;
   const temp = prob < 30 ? 'Frío' : prob < 55 ? 'Tibio' : prob < 80 ? 'Caliente' : 'Muy Caliente';
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
   const objecionTexto = ['','Precio/presupuesto','Tiempo/lo pienso','Necesita aprobación','Duda del producto','Sin objeciones'][datos.objecion] || 'No definida';
 
   const prompt = `Eres un asesor de ventas experto. Con base en estos datos de la operación, entrega ÚNICAMENTE una lista breve y práctica de las acciones inmediatas a realizar (sin análisis, sin datos adicionales, sin introducciones).
@@ -14634,7 +14783,7 @@ async function generarMensajeIA() {
   const scores = calcularScores(datos);
   const prob = scores.total;
   const temp = prob < 30 ? 'Frío' : prob < 55 ? 'Tibio' : prob < 80 ? 'Caliente' : 'Muy Caliente';
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
   const objecionTexto = ['','Precio/presupuesto','Tiempo/lo pienso','Necesita aprobación','Duda del producto','Sin objeciones'][datos.objecion] || 'No definida';
 
   const prompt = `Eres un asesor de ventas experto redactando el siguiente mensaje para un cliente o prospecto. Con base en estos datos de la operación, escribe el mensaje listo para copiar y enviar.
@@ -14909,7 +15058,7 @@ async function descargarPDF() {
 
   // Cuadros de métricas 2x2
   const boxW = (CW - 8) / 2, boxH = 28;
-  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][datos.estadoOp] || 'En proceso';
+  const estadoTexto = ['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][datos.estadoOp] || 'En proceso';
 
   const metricBoxes = [
     { label: 'Probabilidad de Cierre', value: `${prob}%`, color: scoreColor },
@@ -20049,7 +20198,7 @@ function ieInit() {
         vmContext = `
 === DATOS DE OPERACIÓN ACTIVA (Ventas Pro) ===
 Cliente: ${d.nombre || '—'} | Producto: ${d.producto || '—'} | Tipo: ${d.tipoOp || '—'}
-Score de cierre: ${s.total}% (${temp}) | Estado: ${['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada'][d.estadoOp] || '—'}
+Score de cierre: ${s.total}% (${temp}) | Estado: ${['Cancelada','Nuevo prospecto','Interesado','Negociando','Falta firma','Cerrada','Cancelada','Posventa: satisfacción','Posventa: referidos','Recompra'][d.estadoOp] || '—'}
 Días en operación: ${d.diasSinCerrar} | Días sin contacto: ${d.diasSinContacto}
 Contactos: ${d.contactosTotales} (${d.llamadas}📞 ${d.whatsapp}💬 ${d.correos}✉️)
 Objeción principal: ${['','Precio','Tiempo','Necesita aprobación','Duda del producto','Sin objeciones'][d.objecion] || '—'}
@@ -20165,7 +20314,7 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
 
 <!-- CHAT FLOTANTE GLOBAL (visible en toda la app, no solo en Ventas) -->
 <button class="fab-chat" onclick="toggleChatPanel()" id="fabChat" title="Asesor IA">
-  <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" alt="🤖" class="fab-chat-emoji" onerror="this.outerHTML='🤖'">
+  <svg class="fab-chat-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3.5C6.98 3.5 3 7.1 3 11.4c0 2.32 1.13 4.4 2.95 5.83-.09 1.05-.46 2.26-1.36 3.3a.5.5 0 0 0 .49.82c2.02-.36 3.6-1.15 4.58-1.76A11.9 11.9 0 0 0 12 19.3c5.02 0 9-3.6 9-7.9s-3.98-7.9-9-7.9Z" fill="#0D1117"/><path d="M12.5 8.3l.86 2.02 2.02.86-2.02.86-.86 2.02-.86-2.02-2.02-.86 2.02-.86.86-2.02Z" fill="#00F5C4"/></svg>
 </button>
 
 <div class="chat-panel" id="chatPanel">
