@@ -4993,6 +4993,104 @@ function generarInformeDetallado(conContacto){
     <div><label style="margin-bottom:2px">Correo</label><div style="font-size:14px;color:var(--text)">${correo||'No registrado'}</div></div>
   ` : '';
 
+  // ── CONDICIONES COMERCIALES: crédito/contado, descuento, regalos, prueba de manejo, objeción ──
+  const g_ = id => document.getElementById(id);
+  const pruebaVal = g_('pruebaManejo')?.value || '';
+  const pruebaTxt = pruebaVal==='si' ? '✅ Sí se realizó' : pruebaVal==='no' ? '❌ No se realizó' : 'No registrada';
+  const reaccionPruebaTxt = (g_('crmComentariosPrueba')?.value||'').trim() || 'Sin reacción registrada';
+
+  const tipoOperacionVal = g_('tipoOperacion')?.value || '';
+  const tipoOperacionTxt = tipoOperacionVal==='contado' ? '💵 De contado' : tipoOperacionVal==='financiado' ? '🏦 Financiado' : 'No definido';
+  const seguroTxt = g_('seguro')?.value==='si' ? '✅ Sí, con nosotros' : g_('seguro')?.value==='no' ? '❌ No' : '—';
+  const financiadoHTML = tipoOperacionVal==='financiado' ? `
+    <div><label style="margin-bottom:2px">Enganche</label><div style="font-size:14px;color:var(--text)">${g_('kpiEnganche')?.textContent || '—'}</div></div>
+    <div><label style="margin-bottom:2px">Monto a financiar</label><div style="font-size:14px;color:var(--text)">${g_('kpiMontoFinanciar')?.textContent || '—'}</div></div>
+    <div><label style="margin-bottom:2px">Plazo</label><div style="font-size:14px;color:var(--text)">${g_('plazo')?.value ? g_('plazo').value+' meses' : '—'}</div></div>
+    <div><label style="margin-bottom:2px">Mensualidad estimada</label><div style="font-size:14px;color:var(--text)">${g_('kpiMensualidad')?.textContent || '—'}</div></div>
+  ` : `<div><label style="margin-bottom:2px">Seguro adquirido con nosotros</label><div style="font-size:14px;color:var(--text)">${seguroTxt}</div></div>`;
+
+  const descuentoVal = g_('descuento')?.value || '';
+  const descuentoTxt = descuentoVal==='si' ? `✅ Sí, $${Number(g_('montoDescuento')?.value||0).toLocaleString('es-MX')} MXN` : descuentoVal==='no' ? '❌ No' : 'No registrado';
+  const regalosArr = [];
+  if(g_('rTapetes')?.checked) regalosArr.push('Tapetes');
+  if(g_('rVidrios')?.checked) regalosArr.push('Vidrios de seguridad');
+  if(g_('rPelicula')?.checked) regalosArr.push('Película antiasalto');
+  if(g_('rKitSeguridad')?.checked) regalosArr.push('Kit de seguridad completo');
+  if(g_('rPlacas')?.checked) regalosArr.push('Placas y tenencia');
+  if(g_('rOtro')?.checked) regalosArr.push(g_('otroRegaloDesc')?.value || 'Otro');
+  const regalosTxt = regalosArr.length ? regalosArr.join(', ') : 'Ninguno';
+
+  const disponibilidadVal = g_('disponibilidad')?.value || '';
+  const disponibilidadTxt = disponibilidadVal==='si' ? '✅ En existencia' : disponibilidadVal==='no' ? `🚚 No disponible — llega en ${g_('tiempoLlegada')?.value || 'tiempo no especificado'}` : 'No registrada';
+
+  const anticipoMap = {anticipo:'💰 Dejó anticipo', pedido:'📝 Firmó pedido', ambos:'✅ Anticipo + pedido', no:'❌ Ninguno aún'};
+  const anticipoTxt = anticipoMap[g_('anticipo')?.value] || 'No registrado';
+  const documentacionMap = {si:'✅ Sí, entregó documentos', no:'❌ No ha entregado', parcial:'📄 Parcialmente'};
+  const documentacionTxt = documentacionMap[g_('documentacion')?.value] || 'No registrado';
+  const estatusCreditoMap = {pendiente:'⏳ Pendiente de revisar', proceso:'🔄 En proceso de autorización', aprobado:'✅ Aprobado', negado:'❌ Negado', contrapropuesta:'🔁 Contrapropuesta del banco'};
+  const estatusCreditoTxt = estatusCreditoMap[g_('estatusCredito')?.value] || 'No aplica / no registrado';
+  const decisionMap = {propio:'👤 El cliente mismo', pareja:'👫 Junto con su pareja', familia:'👨‍👩‍👧 Familia / tercero', empresa:'🏢 Decisión empresarial'};
+  const decisionTxt = decisionMap[g_('decision')?.value] || 'No registrado';
+  const urgenciaMap2 = {inmediato:'🔥 De inmediato / ya', semana:'📅 Esta semana', quincena:'📅 Esta quincena', mes:'🗓 Este mes', sinprisa:'😌 Sin prisa definida'};
+  const urgenciaTxt2 = urgenciaMap2[g_('crmUrgencia')?.value] || 'No mencionó';
+  const objecionMap = {'1':'Precio / presupuesto','2':'Tiempo / "lo pienso"','3':'Necesita aprobación de tercero','4':'Duda del producto','5':'Sin objeciones claras'};
+  const objecionTxt = objecionMap[g_('crmObjecion')?.value] || 'No registrada';
+
+  // ── PUNTOS A FAVOR / PUNTOS DE ATENCIÓN (heurística basada en la ficha) ──
+  const favor = [], atencion = [];
+  if(pruebaVal==='si') favor.push('Ya realizó la prueba de manejo'); else if(pruebaVal==='no') atencion.push('Aún no se realiza la prueba de manejo');
+  if(descuentoVal==='si') favor.push('Se le otorgó un descuento — ya hay una condición especial sobre la mesa');
+  if(regalosArr.length) favor.push(`Se le ofrecieron beneficios adicionales (${regalosTxt})`);
+  if(disponibilidadVal==='si') favor.push('El producto está disponible de inmediato'); else if(disponibilidadVal==='no') atencion.push(`El producto no está disponible — tiempo de espera: ${g_('tiempoLlegada')?.value || 'no especificado'}`);
+  if(['anticipo','pedido','ambos'].includes(g_('anticipo')?.value)) favor.push('Ya dejó anticipo o firmó pedido');
+  if(g_('anticipo')?.value==='no') atencion.push('Aún no deja anticipo ni firma pedido');
+  if(g_('documentacion')?.value==='si') favor.push('Ya entregó toda la documentación'); else if(g_('documentacion')?.value==='no') atencion.push('No ha entregado documentación — puede frenar el cierre');
+  if(g_('estatusCredito')?.value==='aprobado') favor.push('Crédito ya aprobado'); 
+  else if(g_('estatusCredito')?.value==='negado') atencion.push('Crédito negado — requiere alternativa de pago');
+  else if(g_('estatusCredito')?.value==='contrapropuesta') atencion.push('El banco hizo una contrapropuesta — requiere seguimiento');
+  if(g_('crmUrgencia')?.value==='inmediato'||g_('crmUrgencia')?.value==='semana') favor.push('El cliente tiene urgencia real por adquirirlo');
+  if(g_('crmObjecion')?.value && g_('crmObjecion')?.value!=='5') atencion.push(`Objeción activa: ${objecionTxt}`);
+  const favorHTML = favor.length ? favor.map(f=>`<div style="font-size:12.5px;color:var(--text);padding:6px 0;border-bottom:1px dashed var(--borde)">✅ ${f}</div>`).join('') : '<p class="text-muted" style="font-size:12px">Sin puntos a favor claros registrados aún.</p>';
+  const atencionHTML = atencion.length ? atencion.map(f=>`<div style="font-size:12.5px;color:var(--text);padding:6px 0;border-bottom:1px dashed var(--borde)">⚠️ ${f}</div>`).join('') : '<p class="text-muted" style="font-size:12px">Sin puntos de atención registrados.</p>';
+  const totalFA = favor.length + atencion.length;
+  const pctFavor = totalFA ? Math.round((favor.length/totalFA)*100) : 50;
+  const balanceHTML = totalFA ? `
+    <div style="margin:10px 0 4px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px"><span>✅ A favor (${favor.length})</span><span>⚠️ Atención (${atencion.length})</span></div>
+      <div style="display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--panel-3)">
+        <div style="width:${pctFavor}%;background:#22C55E"></div>
+        <div style="width:${100-pctFavor}%;background:#F59E0B"></div>
+      </div>
+    </div>` : '';
+
+  const condicionesHTML = `
+    <div class="card-inner" style="margin-bottom:14px">
+      <div class="section-title">Condiciones comerciales</div>
+      <div class="grid-2" style="gap:10px">
+        <div><label style="margin-bottom:2px">Prueba de manejo</label><div style="font-size:14px;color:var(--text)">${pruebaTxt}</div></div>
+        <div style="grid-column:1/-1"><label style="margin-bottom:2px">Reacción en la prueba de manejo</label><div style="font-size:13px;color:var(--text-dim)">${reaccionPruebaTxt}</div></div>
+        <div><label style="margin-bottom:2px">Tipo de operación</label><div style="font-size:14px;color:var(--text)">${tipoOperacionTxt}</div></div>
+        ${financiadoHTML}
+        <div><label style="margin-bottom:2px">Descuento otorgado</label><div style="font-size:14px;color:var(--text)">${descuentoTxt}</div></div>
+        <div><label style="margin-bottom:2px">Regalos / beneficios</label><div style="font-size:14px;color:var(--text)">${regalosTxt}</div></div>
+        <div><label style="margin-bottom:2px">Disponibilidad del producto</label><div style="font-size:14px;color:var(--text)">${disponibilidadTxt}</div></div>
+        <div><label style="margin-bottom:2px">Anticipo / pedido</label><div style="font-size:14px;color:var(--text)">${anticipoTxt}</div></div>
+        <div><label style="margin-bottom:2px">Documentación</label><div style="font-size:14px;color:var(--text)">${documentacionTxt}</div></div>
+        <div><label style="margin-bottom:2px">Estatus del crédito</label><div style="font-size:14px;color:var(--text)">${estatusCreditoTxt}</div></div>
+        <div><label style="margin-bottom:2px">Quién decide la compra</label><div style="font-size:14px;color:var(--text)">${decisionTxt}</div></div>
+        <div><label style="margin-bottom:2px">Urgencia expresada</label><div style="font-size:14px;color:var(--text)">${urgenciaTxt2}</div></div>
+        <div style="grid-column:1/-1"><label style="margin-bottom:2px">Objeción principal</label><div style="font-size:14px;color:var(--text)">${objecionTxt}</div></div>
+      </div>
+    </div>
+    <div class="card-inner" style="margin-bottom:14px">
+      <div class="section-title">✅ Puntos a favor</div>
+      ${balanceHTML}
+      ${favorHTML}
+      <div class="section-title" style="margin-top:14px">⚠️ Puntos de atención</div>
+      ${atencionHTML}
+    </div>`;
+
+
   const html = `
     <div id="informeParaExportar" style="background:var(--panel);padding:20px;border-radius:12px">
       <div style="text-align:center;margin-bottom:18px">
@@ -5024,6 +5122,8 @@ function generarInformeDetallado(conContacto){
           <div style="font-size:12px;color:var(--muted)">Fecha estimada de cierre: <strong style="color:var(--text)">${fechaCierreTxt}</strong></div>
         </div>
       </div>
+
+      ${condicionesHTML}
 
       <div class="card-inner" style="margin-bottom:14px">
         <div class="section-title">Gestiones por tipo de contacto</div>
@@ -6936,6 +7036,24 @@ async function sincronizarSheets(){
         <button class="btn-copy" onclick="copiarSeccion('diagnosticoText', this)">📋 Copiar</button>
       </div>
       <div class="report-section-body" id="diagnosticoText"></div>
+    </div>
+
+    <!-- SECCIÓN: OBJECIONES DEL CLIENTE -->
+    <div class="report-section">
+      <div class="report-section-header">
+        <div class="report-section-title"><span>🚧</span> Objeciones del Cliente</div>
+        <button class="btn-copy" onclick="copiarSeccion('objecionesText', this)">📋 Copiar</button>
+      </div>
+      <div class="report-section-body" id="objecionesText"></div>
+    </div>
+
+    <!-- SECCIÓN: ASPECTOS POSITIVOS Y NEGATIVOS -->
+    <div class="report-section">
+      <div class="report-section-header">
+        <div class="report-section-title"><span>⚖️</span> Aspectos Positivos y Negativos</div>
+        <button class="btn-copy" onclick="copiarSeccion('positivosNegativosText', this)">📋 Copiar</button>
+      </div>
+      <div class="report-section-body" id="positivosNegativosText"></div>
     </div>
 
     <!-- SECCIÓN: PLAN DE ACCIÓN -->
@@ -14325,7 +14443,7 @@ CONDICIONES:
 - Objeción principal: ${objecionTexto}
 
 ANÁLISIS DE SEÑALES Y ESTADO:
-- Señales de compra detectadas: ${senialesSeleccionadas.size}/7
+- Señales de compra detectadas: ${senialesSeleccionadas.size}/7${senialesSeleccionadas.size ? ' — ' + SENIALES.filter(s=>senialesSeleccionadas.has(s.id)).map(s=>s.texto).join('; ') : ''}
 - Estado actual de la operación: ${estadoTexto}
 - Urgencia del cliente: ${datos.urgencia}/5
 - Comentarios del cliente: "${datos.comentarios || 'Sin comentarios registrados'}"
@@ -14361,6 +14479,12 @@ Escribe aquí 4-5 párrafos con análisis profundo: comportamiento del cliente, 
 ###DIAGNOSTICO_FACTORES###
 Escribe aquí el diagnóstico de cada uno de los 6 factores de scoring con su resultado y qué significa para la operación. Usa el formato: FACTOR (pts/máx): diagnóstico.
 
+###OBJECIONES###
+Escribe aquí un análisis enfocado ÚNICAMENTE en las objeciones del cliente. Parte de la "Objeción principal" registrada en el CRM y de cualquier objeción adicional que puedas inferir de los comentarios y notas. Para cada objeción explica: qué la origina, qué tan grave es para el cierre, y una respuesta o guion concreto para superarla (entre comillas). Si no hay objeciones claras registradas, dilo explícitamente y sugiere qué preguntar al cliente para descubrirlas. Máximo 120 palabras.
+
+###POSITIVOS_NEGATIVOS###
+Escribe aquí DOS listas con viñetas (•), una de "ASPECTOS POSITIVOS:" y otra de "ASPECTOS NEGATIVOS:" (en líneas separadas, usa esos encabezados literales). Basa los positivos en señales favorables reales del CRM: reacción en la prueba de manejo, señales de compra detectadas, velocidad de respuesta, si trajo acompañante, si aceptó la cotización, urgencia expresada, comentarios favorables, etc. Basa los negativos en señales de riesgo: objeciones, competencia mencionada, cotización rechazada o sin respuesta, poca velocidad de respuesta, mucho tiempo sin contacto, comentarios negativos o dudas expresadas, etc. Sé específico citando el dato del CRM que sustenta cada punto, no generes puntos genéricos. Si algún lado tiene poca información, dilo brevemente en vez de inventar.
+
 ###PLAN_ACCION###
 Escribe aquí lista numerada de 5-7 acciones concretas e inmediatas. Cada acción debe incluir: qué hacer, por qué canal, y cuándo hacerlo.
 
@@ -14391,6 +14515,8 @@ IMPORTANTE: Responde ÚNICAMENTE con las 6 secciones usando exactamente los marc
       metricasText:         parseSec('METRICAS_CLAVE'),
       analisisDetalladoText: parseSec('ANALISIS_DETALLADO'),
       diagnosticoText:      parseSec('DIAGNOSTICO_FACTORES'),
+      objecionesText:       parseSec('OBJECIONES'),
+      positivosNegativosText: parseSec('POSITIVOS_NEGATIVOS'),
       planAccionText:       parseSec('PLAN_ACCION'),
       estrategiaText:       parseSec('ESTRATEGIA_CIERRE'),
     };
@@ -14403,6 +14529,8 @@ IMPORTANTE: Responde ÚNICAMENTE con las 6 secciones usando exactamente los marc
       document.getElementById('analisisDetalladoText').textContent = texto;
       document.getElementById('metricasText').textContent = `Score total: ${prob}% — ${temp}\nContactos: ${datos.contactosTotales} | Señales: ${senialesSeleccionadas.size}/7 | Días: ${datos.diasSinCerrar}`;
       document.getElementById('diagnosticoText').textContent = `Interés: ${scores.interes}/25 | Seguimiento: ${scores.contacto}/20 | Condiciones: ${scores.condiciones}/20 | Señales: ${scores.seniales}/15 | Estado: ${scores.estado}/15 | Externos: ${scores.externo}/10`;
+      document.getElementById('objecionesText').textContent = `Objeción principal registrada: ${objecionTexto}. Consulta el análisis completo abajo.`;
+      document.getElementById('positivosNegativosText').textContent = 'Consulta el análisis completo abajo para identificar señales positivas y negativas.';
       document.getElementById('planAccionText').textContent = 'Consulta el análisis detallado para el plan de acción.';
       document.getElementById('estrategiaText').textContent = 'Consulta el análisis detallado para la estrategia de cierre.';
     } else {
@@ -14584,6 +14712,8 @@ function copiarTodoElInforme() {
     { titulo: '📊 MÉTRICAS CLAVE', id: 'metricasText' },
     { titulo: '🧠 ANÁLISIS DETALLADO', id: 'analisisDetalladoText' },
     { titulo: '🎯 DIAGNÓSTICO POR FACTOR', id: 'diagnosticoText' },
+    { titulo: '🚧 OBJECIONES DEL CLIENTE', id: 'objecionesText' },
+    { titulo: '⚖️ ASPECTOS POSITIVOS Y NEGATIVOS', id: 'positivosNegativosText' },
     { titulo: '🚀 PLAN DE ACCIÓN', id: 'planAccionText' },
     { titulo: '🤝 ESTRATEGIA DE CIERRE', id: 'estrategiaText' },
   ];
@@ -14894,6 +15024,8 @@ async function descargarPDF() {
     { titulo: '📊 MÉTRICAS CLAVE', id: 'metricasText', color: '#4F8EF7' },
     { titulo: '🧠 ANÁLISIS DETALLADO', id: 'analisisDetalladoText', color: '#A855F7' },
     { titulo: '🎯 DIAGNÓSTICO POR FACTOR', id: 'diagnosticoText', color: '#F59E0B' },
+    { titulo: '🚧 OBJECIONES DEL CLIENTE', id: 'objecionesText', color: '#EF4444' },
+    { titulo: '⚖️ ASPECTOS POSITIVOS Y NEGATIVOS', id: 'positivosNegativosText', color: '#22C55E' },
     { titulo: '🚀 PLAN DE ACCIÓN', id: 'planAccionText', color: '#00F5C4' },
     { titulo: '🤝 ESTRATEGIA DE CIERRE', id: 'estrategiaText', color: '#F97316' },
   ];
