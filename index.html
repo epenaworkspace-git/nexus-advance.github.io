@@ -1644,8 +1644,41 @@
     box-shadow: 0 4px 20px rgba(0,245,196,0.45);
     z-index: 100;
     transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    animation: fabBounce 3.2s ease-in-out infinite;
   }
-  .fab-chat:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(0,245,196,0.6); }
+  .fab-chat:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(0,245,196,0.6); animation-play-state: paused; }
+  /* Emoji como imagen (no como texto): así se ve idéntico en escritorio y
+     celular, sin depender de la fuente de emojis de cada sistema operativo. */
+  .fab-chat-emoji { width: 60%; height: 60%; object-fit: contain; position: relative; z-index: 2; pointer-events: none; }
+  /* Reflejo de luz que recorre el botón, para que no se vea estático */
+  .fab-chat::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -60%;
+    width: 40%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.55) 45%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.55) 55%, transparent 100%);
+    transform: skewX(-18deg);
+    animation: fabShine 3.6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes fabBounce {
+    0%, 24%, 46%, 68%, 100% { transform: translateY(0); }
+    35% { transform: translateY(-9px); }
+    57% { transform: translateY(-4px); }
+  }
+  @keyframes fabShine {
+    0%   { left: -60%; }
+    35%  { left: 130%; }
+    100% { left: 130%; }
+  }
+  /* En escritorio se veía chico: mismo punto de quiebre que ya usa el resto
+     de la app (901px) para distinguir escritorio de celular/tablet. */
+  @media (min-width: 901px) {
+    .fab-chat { width: 116px; height: 116px; font-size: 46px; bottom: 90px; right: 24px; }
+    .chat-panel { bottom: 224px; }
+  }
   .fab-chat .fab-badge {
     position: absolute;
     top: -2px; right: -2px;
@@ -2449,7 +2482,7 @@
   --radius:16px;--radius-sm:12px;--radius-xs:10px;--radius-pill:999px;
   --shadow:0 2px 18px rgba(0,0,0,0.45);--shadow-glow:0 0 22px rgba(0,245,196,0.22);
   --transition:all 0.28s cubic-bezier(.4,0,.2,1);
-  --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji';
+  --font:'Inter','Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }[data-theme="light"] #crm-root {
   --bg:#F0F4F8;--panel:#FFFFFF;--panel-2:#EDF2F7;--panel-3:#E2E8F0;--line:#CBD5E0;
   --grad-glow:rgba(0,168,130,0.20);
@@ -2473,7 +2506,7 @@
   box-shadow:var(--shadow);transition:border-color 0.25s,box-shadow 0.25s;animation:crmCardIn 0.55s cubic-bezier(.16,1,.3,1) both;}#crm-root .card:hover {border-color:rgba(34,211,238,0.18);}[data-theme="light"] #crm-root .card {background:#FFFFFF;border-color:#E2E8F0;box-shadow:0 1px 8px rgba(15,23,42,0.06),0 4px 16px rgba(15,23,42,0.04);}[data-theme="light"] #crm-root .card:hover {border-color:#93C5FD;}#crm-root .card-inner {background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px;}#crm-root .card-accent {background:var(--panel);border-radius:var(--radius);padding:20px;margin-bottom:14px;position:relative;isolation:isolate;animation:crmCardIn 0.55s cubic-bezier(.16,1,.3,1) both;}#crm-root .card-accent::before {content:'';position:absolute;inset:0;border-radius:var(--radius);border:1.5px solid transparent;
   background:var(--grad) border-box;-webkit-mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);
   -webkit-mask-composite:destination-out;mask-composite:exclude;}#crm-root .card-header {display:flex;align-items:center;gap:10px;margin-bottom:18px;}#crm-root .card-icon {width:34px;height:34px;background:var(--accent-dim);border:1px solid var(--accent-glow);border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}#crm-root .card-title {font-size:16px;font-weight:700;color:var(--text);}#crm-root label {display:block;font-size:13px;font-weight:400;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.04em;}#crm-root .inp {width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:10px 13px;
-  color:var(--text);font-family:var(--font);font-size:14px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;}#crm-root .inp:focus {border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}#crm-root .inp::placeholder {color:var(--muted);}#crm-root .inp:disabled {opacity:0.45;cursor:not-allowed;}[data-theme="light"] #crm-root .inp {background:#FFFFFF;border-color:#CBD5E1;color:#0F172A;}[data-theme="light"] #crm-root .inp:focus {border-color:#00A882;box-shadow:0 0 0 3px rgba(0,168,130,0.10);}#crm-root select.inp option {background:var(--panel-2);}[data-theme="light"] #crm-root select.inp option {background:#FFFFFF;color:#0F172A;}#crm-root textarea.inp {resize:vertical;min-height:90px;line-height:1.6;}#crm-root .num-stepper .stepper-btns {border-left-color:var(--line);}#crm-root .num-stepper .stepper-btn {background:var(--panel-2);color:var(--muted);}#crm-root .num-stepper .stepper-btn:first-child {border-bottom-color:var(--line);}#crm-root .num-stepper .stepper-btn:hover {background:var(--accent);color:#0D1117;}#crm-root .btn-primary {display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--grad);color:#0D1117;
+  color:var(--text);font-family:var(--font);font-size:14px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;}#crm-root .inp:focus {border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);}#crm-root .inp::placeholder {color:var(--muted);}#crm-root .inp:disabled {opacity:0.45;cursor:not-allowed;}[data-theme="light"] #crm-root .inp {background:#FFFFFF;border-color:#CBD5E1;color:#0F172A;}[data-theme="light"] #crm-root .inp:focus {border-color:#00A882;box-shadow:0 0 0 3px rgba(0,168,130,0.10);}#crm-root select.inp option {background:var(--panel-2);}[data-theme="light"] #crm-root select.inp option {background:#FFFFFF;color:#0F172A;}#crm-root textarea.inp {resize:vertical;min-height:90px;line-height:1.6;}#crm-root .num-stepper .stepper-btns {border-left-color:var(--line);}#crm-root .num-stepper .stepper-btn {background:var(--panel-2);color:var(--muted);}#crm-root .num-stepper .stepper-btn:first-child {border-bottom-color:var(--line);}#crm-root .num-stepper .stepper-btn:hover {background:var(--accent);color:#0D1117;}#crm-root .emj{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji','Segoe UI Symbol',sans-serif;font-style:normal;}#crm-root{color-scheme:dark;}[data-theme="light"] #crm-root{color-scheme:light;}#crm-root input[type="date"].inp,#crm-root input[type="time"].inp,#crm-root input[type="datetime-local"].inp{position:relative;}#crm-root input[type="date"].inp::-webkit-calendar-picker-indicator,#crm-root input[type="time"].inp::-webkit-calendar-picker-indicator,#crm-root input[type="datetime-local"].inp::-webkit-calendar-picker-indicator{filter:invert(0.65) sepia(1) saturate(4) hue-rotate(115deg) brightness(1.15);opacity:0.75;cursor:pointer;padding:4px;border-radius:6px;margin-right:-2px;transition:opacity 0.2s,background 0.2s;}#crm-root input[type="date"].inp::-webkit-calendar-picker-indicator:hover,#crm-root input[type="time"].inp::-webkit-calendar-picker-indicator:hover,#crm-root input[type="datetime-local"].inp::-webkit-calendar-picker-indicator:hover{opacity:1;background:var(--accent-dim);}[data-theme="light"] #crm-root input[type="date"].inp::-webkit-calendar-picker-indicator,[data-theme="light"] #crm-root input[type="time"].inp::-webkit-calendar-picker-indicator,[data-theme="light"] #crm-root input[type="datetime-local"].inp::-webkit-calendar-picker-indicator{filter:invert(0.35) sepia(1) saturate(3) hue-rotate(115deg) brightness(0.9);}#crm-root input[type="date"].inp::-webkit-datetime-edit,#crm-root input[type="time"].inp::-webkit-datetime-edit,#crm-root input[type="datetime-local"].inp::-webkit-datetime-edit{color:var(--text);}#crm-root input[type="date"].inp::-webkit-datetime-edit-fields-wrapper,#crm-root input[type="time"].inp::-webkit-datetime-edit-fields-wrapper{padding:0;}#crm-root .btn-primary {display:inline-flex;align-items:center;justify-content:center;gap:7px;background:var(--grad);color:#0D1117;
   border:none;border-radius:var(--radius-pill);padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;
   font-family:var(--font);transition:transform 0.15s,box-shadow 0.2s,filter 0.15s;}#crm-root .btn-primary:hover {transform:translateY(-2px);box-shadow:0 8px 28px var(--grad-glow);filter:brightness(1.06);}#crm-root .btn-primary:active {transform:scale(0.97);}#crm-root .btn-primary:disabled {opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none;}#crm-root .btn-primary.full {width:100%;padding:14px 0;font-size:15px;}#crm-root .btn-ghost {display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--panel-2);color:var(--text-dim);
   border:1px solid var(--line);border-radius:var(--radius-pill);padding:11px 22px;font-size:14px;font-weight:600;
@@ -2593,6 +2626,21 @@
 [data-theme="light"] #modalConfiguracion #settingsThemeChips .settings-chip{background:#EDF2F7;border-color:#CBD5E0;color:rgba(13,17,23,0.75);}
 #modalConfiguracion #settingsThemeChips .settings-chip.active{background:var(--grad);border-color:transparent;color:#fff;font-weight:800;box-shadow:0 4px 16px var(--grad-glow);}
 
+/* ── Indicador animado de Estado Final de la Operación (CRM + Ventas) ── */
+.estado-op-indicador{display:inline-flex;align-items:center;gap:7px;flex-shrink:0;}
+.estado-op-punto{width:11px;height:11px;border-radius:50%;flex-shrink:0;box-shadow:0 0 0 rgba(0,0,0,0);}
+.estado-op-punto.eo-gris{background:#9AA5B1;}
+.estado-op-punto.eo-verde{background:#22C55E;animation:eoBlinkSlow 2.6s ease-in-out infinite;}
+.estado-op-punto.eo-rojo{background:#EF4444;}
+.estado-op-punto.eo-azul{background:#3B82F6;animation:eoBlinkMedio 1.5s ease-in-out infinite;}
+.estado-op-punto.eo-amarillo{background:#F5B729;animation:eoBlinkRapido 0.85s ease-in-out infinite;}
+@keyframes eoBlinkSlow{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+@keyframes eoBlinkMedio{0%,100%{opacity:1;} 50%{opacity:0.3;}}
+@keyframes eoBlinkRapido{0%,100%{opacity:1;} 50%{opacity:0.22;}}
+.estado-op-texto{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.03em;white-space:nowrap;}
+.card-title .estado-op-texto{font-size:11.5px;}
+.card-title .estado-op-punto{font-size:0;}
+
 </style>
 <div id="modeCRM">
 <div id="crm-root">
@@ -2698,7 +2746,7 @@ function confirmarNuevaFicha(){
       <div class="campo col-2"><label id="lblVehiculo">Vehículo de interés</label><input class="inp" type="text" id="vehiculo" placeholder="Ej. Mazda CX-5 2024 iSport" oninput="onCampoChange()"></div>
       <div class="campo"><label>Ocupación del cliente (opcional)</label><input class="inp" type="text" id="ocupacion" placeholder="Ej. Empresario, médico…" oninput="onCampoChange()"></div>
       <div class="campo"><label>Precio de la unidad ($)</label><input class="inp" type="number" id="precio" placeholder="0" min="0" oninput="onCampoChange();calcularFinanciamiento()"></div>
-      <div class="campo"><label>Fuente del lead</label>
+      <div class="campo"><label>Fuente del Lead</label>
         <select class="inp" id="fuenteLead" onchange="onCampoChange()">
           <option value="">Seleccionar</option>
           <option value="showroom">Visita al showroom</option>
@@ -2707,6 +2755,7 @@ function confirmarNuevaFicha(){
           <option value="redes">Redes sociales</option>
           <option value="llamada">Llamada entrante</option>
           <option value="evento">Evento / expo</option>
+          <option value="leads">Leads</option>
         </select>
       </div>
     </div>
@@ -2812,12 +2861,12 @@ function confirmarNuevaFicha(){
     <div class="campo">
       <label>¿Se le regaló algún accesorio / beneficio?</label>
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px" id="regaloCheckboxes">
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rTapetes" onchange="onCampoChange()"> 🛏 Tapetes</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rVidrios" onchange="onCampoChange()"> 🪟 Vidrios de seguridad</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rPelicula" onchange="onCampoChange()"> 🛡 Película antiasalto</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rKitSeguridad" onchange="onCampoChange()"> 🔒 Kit de seguridad completo</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rPlacas" onchange="onCampoChange()"> 🪪 Placas y tenencia</label>
-        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rOtro" onchange="toggleOtroRegalo();onCampoChange()"> ➕ Otro</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rTapetes" onchange="onCampoChange()"> <span class="emj">🛏️</span> Tapetes</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rVidrios" onchange="onCampoChange()"> <span class="emj">🪟</span> Vidrios de seguridad</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rPelicula" onchange="onCampoChange()"> <span class="emj">🛡️</span> Película antiasalto</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rKitSeguridad" onchange="onCampoChange()"> <span class="emj">🔒</span> Kit de seguridad completo</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rPlacas" onchange="onCampoChange()"> <span class="emj">🪪</span> Placas y tenencia</label>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;text-transform:none;letter-spacing:0;color:var(--text);cursor:pointer;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 14px"><input type="checkbox" id="rOtro" onchange="toggleOtroRegalo();onCampoChange()"> <span class="emj">➕</span> Otro</label>
       </div>
       <div id="campoOtroRegalo" style="display:none;margin-top:10px">
         <input class="inp" type="text" id="otroRegaloDesc" placeholder="Describe qué se le regaló o agregó…" oninput="onCampoChange()">
@@ -3000,7 +3049,25 @@ function confirmarNuevaFicha(){
       <div class="overlay-icon">🔒</div>
       <p class="overlay-texto">Completa los <strong>Datos del Cliente</strong> y pulsa <strong>Guardar datos</strong> para habilitar esta sección.</p>
     </div>
-    <div class="card-header"><div class="card-icon">📊</div><div class="card-title">Información Comercial</div></div>
+    <div class="card-header">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Información Comercial</div>
+      <div class="estado-op-indicador" id="icEstadoOpIndicador" style="margin-left:auto">
+        <span class="estado-op-punto eo-gris" id="icEstadoOpPunto"></span>
+        <span class="estado-op-texto" id="icEstadoOpTexto">Pendiente de definir</span>
+      </div>
+    </div>
+
+    <div class="campo" style="margin-top:2px">
+      <label>Estado final de la operación</label>
+      <select class="inp" id="estadoFinalOperacion" onchange="onCampoChange();actualizarIndicadorEstadoFinal();manejarCambioEstadoFinalOperacion(this.value)">
+        <option value="pendiente">Pendiente de definir</option>
+        <option value="cerrada_exito">Operación cerrada con éxito</option>
+        <option value="cerrada_sin_venta">Operación cerrada sin venta</option>
+        <option value="posventa">Proceso de posventa</option>
+        <option value="recompra">Proceso de recompra</option>
+      </select>
+    </div>
 
     <div class="section-title">Actividad de contacto</div>
     <div class="grid-2">
@@ -3630,10 +3697,110 @@ function adaptarCuestionarioTipoOp(){
   if(bloqueDet) bloqueDet.classList.toggle('hidden', !esAuto);
 }
 
+/* ─── INDICADOR ANIMADO DE ESTADO FINAL DE LA OPERACIÓN (CRM + Ventas) ───
+   Un solo mapa de textos/colores para que ambos indicadores (el de
+   "Información Comercial" en el CRM y el de "Estado de la Operación" en
+   Ventas) se pinten siempre igual, sin duplicar lógica. Declarado ANTES
+   de INIT porque init() lo invoca de inmediato al cargar la página. */
+const ESTADO_FINAL_OP_MAP = {
+  pendiente:         { texto:'Pendiente de definir',       clase:'eo-gris'     },
+  cerrada_exito:      { texto:'Operación cerrada con éxito', clase:'eo-verde'    },
+  cerrada_sin_venta:  { texto:'Operación cerrada sin venta', clase:'eo-rojo'     },
+  posventa:           { texto:'Proceso de posventa',         clase:'eo-azul'     },
+  recompra:           { texto:'Proceso de recompra',         clase:'eo-amarillo' }
+};
+function pintarIndicadorEstadoFinal(valor, puntoEl, textoEl){
+  const d = ESTADO_FINAL_OP_MAP[valor] || ESTADO_FINAL_OP_MAP.pendiente;
+  if(puntoEl) puntoEl.className = 'estado-op-punto ' + d.clase;
+  if(textoEl) textoEl.textContent = d.texto;
+}
+function actualizarIndicadorEstadoFinal(){
+  const selCRM = document.getElementById('estadoFinalOperacion');
+  if(selCRM) pintarIndicadorEstadoFinal(selCRM.value, document.getElementById('icEstadoOpPunto'), document.getElementById('icEstadoOpTexto'));
+  const selVM = document.getElementById('vmEstadoFinalOperacion');
+  if(selVM) pintarIndicadorEstadoFinal(selVM.value, document.getElementById('vmEstadoOpPunto'), document.getElementById('vmEstadoOpTexto'));
+}
+
+/* ─── SEGUIMIENTO AUTOMÁTICO DE POSVENTA ───
+   Al marcar "Estado final de la operación" como 'cerrada_exito' (select CRM,
+   única fuente de verdad — el de Ventas solo se pinta por sincronizarVentasDesdeCRM
+   y no se guarda de vuelta), se genera y agenda automáticamente una Acción a
+   Seguir de posventa para DIAS_SEGUIMIENTO_POSVENTA días después, reutilizando
+   exactamente el mismo mecanismo de Agenda que ya usa "Acción a Seguir"
+   (tipo 'registrar_seguimiento_posventa' en el Script, que a su vez llama a
+   guardarAccionSeguir sin tocarla). Cuando esa fecha llega, el propio Script
+   (trigger diario) y esta misma app (al abrir la ficha, ver
+   verificarPosventaAlAbrir) cambian el estado a 'posventa' automáticamente:
+   círculo azul con parpadeo moderado + texto "Proceso de posventa", ya
+   definidos arriba en ESTADO_FINAL_OP_MAP. Ajusta solo esta constante si
+   quieres cambiar el plazo del seguimiento. */
+const DIAS_SEGUIMIENTO_POSVENTA = 90;
+
+function manejarCambioEstadoFinalOperacion(nuevoValor){
+  if(nuevoValor === 'cerrada_exito') generarSeguimientoPosventaAutomatico();
+}
+
+async function generarSeguimientoPosventaAutomatico(){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  const nombreCliente = (document.getElementById('crmNombre').value||'').trim();
+  if(!url || !nombreCliente) return;
+
+  const hoy = new Date();
+  const fechaObjetivo = new Date(hoy.getTime() + DIAS_SEGUIMIENTO_POSVENTA*86400000);
+  const fechaISO = fechaObjetivo.toISOString().slice(0,10);
+
+  const payload = {
+    tipo: 'registrar_seguimiento_posventa',
+    clienteId: clienteId || '',
+    nombreCliente,
+    telefono: (document.getElementById('telefono').value||'').trim(),
+    correo:   (document.getElementById('correo').value||'').trim(),
+    accionTexto: 'Seguimiento de posventa: contactar al cliente para revisar su satisfacción, dar mantenimiento a la relación y explorar referidos.',
+    plazo: `${DIAS_SEGUIMIENTO_POSVENTA} días`,
+    estado: '',
+    fecha: fechaISO,
+    hora: '10:00',
+    duracionMin: 20,
+    fechaGestionTexto: hoy.toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'})
+  };
+  try{
+    const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if(data.success) crmMostrarToast('🗓️ Seguimiento de posventa agendado automáticamente.');
+    else crmMostrarToast('⚠️ No se pudo agendar el seguimiento de posventa: '+(data.error||'error desconocido'));
+  }catch(e){ crmMostrarToast('⚠️ No se pudo conectar con Sheets para agendar el seguimiento de posventa.'); }
+}
+
+/* Revisión puntual al abrir la ficha: consulta al Script si la fecha de
+   seguimiento de posventa de ESTE cliente ya se cumplió. El Script aplica el
+   cambio (si corresponde) directamente en Sheets antes de responder, así que
+   aquí solo hace falta reflejar ese resultado en la ficha local (select +
+   indicador + clienteData) para que el próximo "Guardar ficha" no lo revierta
+   por accidente mandando el valor viejo que aún tenía el formulario. */
+async function verificarPosventaAlAbrir(){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url || !clienteId) return;
+  try{
+    const res = await fetch(url+'?action=verificarPosventaCliente&id='+encodeURIComponent(clienteId));
+    const data = await res.json();
+    if(data.success && data.estadoFinalOperacion === 'posventa'){
+      const selCRM = document.getElementById('estadoFinalOperacion');
+      if(selCRM && selCRM.value !== 'posventa'){
+        selCRM.value = 'posventa';
+        clienteData.estadoFinalOperacion = 'posventa';
+        localStorage.setItem('crm_cliente', JSON.stringify(clienteData));
+        actualizarIndicadorEstadoFinal();
+        if(typeof sincronizarVentasDesdeCRM === 'function') sincronizarVentasDesdeCRM();
+        crmMostrarToast('🔵 Este cliente pasó automáticamente a Proceso de posventa.');
+      }
+    }
+  }catch(e){ /* revisión silenciosa: no debe interrumpir la carga de la ficha */ }
+}
+
 /* ─── INIT ─── */
 (function init(){
   const campos = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
-    'pruebaManejo','tipoOperacion','estadoOperacion','seguro','enganche','engancheModo','plazo',
+    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
     'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
@@ -3651,6 +3818,7 @@ function adaptarCuestionarioTipoOp(){
   });
   togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo();
   renderHistorial(); recalcScore(); actualizarPasoSiguiente(); calcularFinanciamiento();
+  if(typeof actualizarIndicadorEstadoFinal === 'function') actualizarIndicadorEstadoFinal();
   scheduleScoreIA();
   actualizarClienteIdBadge();
 
@@ -3675,6 +3843,10 @@ function adaptarCuestionarioTipoOp(){
   // Restaurar el bloque independiente "🎯 Siguiente Acción Recomendada" (arriba, sobre Datos del Cliente)
   // con base en la gestión más reciente, sea de Primera Visita o de Registro de Contacto.
   inicializarAccionRecomendada();
+
+  // Revisión puntual: si este cliente ya cumplió su fecha de seguimiento de
+  // posventa, refleja aquí el cambio automático a 'posventa' (ver arriba).
+  verificarPosventaAlAbrir();
 })();
 
 /* ─── TOGGLES ─── */
@@ -3969,7 +4141,7 @@ function stepNumberInput(id, delta){
 /* ─── AUTO-SAVE ─── */
 function onCampoChange(){
   const campos=['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
-    'pruebaManejo','tipoOperacion','estadoOperacion','seguro','enganche','engancheModo','plazo',
+    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
     'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
@@ -4605,6 +4777,30 @@ document.getElementById('btnGuardarIC').addEventListener('click', async () => {
     || document.getElementById('crmCompromisos').value.trim()
     || document.getElementById('crmNotasPersonales').value.trim()
     || 'Actualización de información comercial.';
+
+  // ── Acción Previa Atendida ──────────────────────────────────────────
+  // Antes de crear la nueva gestión, gestiones[0] (si existe) es la
+  // gestión anterior más reciente. Si generó una Acción Recomendada, el
+  // botón "Guardar" de Información Comercial permanece bloqueado hasta que
+  // esa acción se marque Realizada / No realizada / Pospuesta (ver
+  // hayAccionRecomendadaPendiente()), así que en este punto ya quedó
+  // resuelta: se anexa esa "fotografía" a la NUEVA gestión que se está por
+  // crear, para conservar el historial completo en la pestaña de
+  // Seguimientos. La Acción Recomendada NUEVA que esta misma gestión
+  // genere (pasoSiguiente) NO se vincula aquí: solo se resuelve, y por lo
+  // tanto se vincula, en el guardado siguiente.
+  const gestionAnterior = gestiones[0];
+  const accionPrevia = (gestionAnterior && gestionAnterior.accionEstado) ? {
+    accionPreviaResumen:      gestionAnterior.pasoSiguiente || '',
+    accionPreviaEstado:       gestionAnterior.accionEstado || '',
+    accionPreviaFecha:        gestionAnterior.accionFecha || '',
+    accionPreviaHora:         gestionAnterior.accionHora || '',
+    accionPreviaExplicacion:  gestionAnterior.accionExplicacion || ''
+  } : {
+    accionPreviaResumen: '', accionPreviaEstado: '', accionPreviaFecha: '',
+    accionPreviaHora: '', accionPreviaExplicacion: ''
+  };
+
   const g = {
     id: Date.now(),
     fecha: new Date().toLocaleString('es-MX'),
@@ -4615,7 +4811,8 @@ document.getElementById('btnGuardarIC').addEventListener('click', async () => {
     planDetallado: document.getElementById('icPasosTexto').innerText || '',
     accionTiempo: icTiempoEstimado || '24-48 horas',
     mensajeIA: icMsgActual || '',
-    accionEstado: '', accionExplicacion: '', accionFecha: '', accionHora: ''
+    accionEstado: '', accionExplicacion: '', accionFecha: '', accionHora: '',
+    ...accionPrevia
   };
   gestiones.unshift(g);
   localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
@@ -4691,10 +4888,18 @@ function generarInformeDetallado(conContacto){
   const correo     = document.getElementById('correo').value.trim();
   const tipoOpVal  = document.getElementById('crmTipoOp').value;
   const tipoOpLabel = {auto:'Vehículo / Automotriz', inmueble:'Bien Raíz / Inmueble', servicio:'Servicio Especializado', otro:'Otro producto'}[tipoOpVal] || 'No especificado';
+  const productoLabel = document.getElementById('lblVehiculo')?.textContent || 'Producto de interés';
+  const productoVal   = document.getElementById('vehiculo').value.trim() || 'No especificado';
+  const fuenteMap = {showroom:'Visita al showroom (piso)', web:'Página web', referido:'Referido', redes:'Redes sociales', llamada:'Llamada entrante', evento:'Evento / expo', leads:'Leads'};
+  const fuenteVal  = document.getElementById('fuenteLead').value;
+  const fuenteTxt  = fuenteMap[fuenteVal] || 'No especificada';
   const fechaRegistro = document.getElementById('crmFechaContacto').value;
   const fechaRegistroTxt = fechaRegistro ? new Date(fechaRegistro+'T00:00:00').toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}) : 'No especificada';
   const estado    = document.getElementById('estadoOperacion').value;
   const urgencia  = document.getElementById('crmUrgencia').value;
+  const vendidoTxt = estado==='cerrada' ? 'Sí ✅' : estado==='perdida' ? 'No — venta perdida' : 'No — aún en proceso';
+  const estadoFinalVal = document.getElementById('estadoFinalOperacion')?.value || 'pendiente';
+  const estadoFinalTxt = (ESTADO_FINAL_OP_MAP[estadoFinalVal] || ESTADO_FINAL_OP_MAP.pendiente).texto;
 
   // Probabilidad / temperatura / fecha estimada de cierre
   const scoreNumTxt = (document.getElementById('scoreNum').textContent||'').trim();
@@ -4712,6 +4917,7 @@ function generarInformeDetallado(conContacto){
   gestiones.forEach(g=>{ conteoTipos[g.tipo]=(conteoTipos[g.tipo]||0)+1; });
   const maxConteo = Math.max(1,...Object.values(conteoTipos));
 
+
   const historialHTML = gestiones.length ? gestiones.map(g=>`
     <div class="gestion-item" style="margin-bottom:8px">
       <div class="gestion-meta"><span class="gestion-tipo">${tipoMap[g.tipo]||g.tipo}</span><span>${g.fecha}</span></div>
@@ -4724,13 +4930,56 @@ function generarInformeDetallado(conContacto){
     return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:3px"><span>${tipoMap[k]}</span><span>${val}</span></div><div style="background:var(--panel-3);border-radius:6px;height:8px;overflow:hidden"><div style="width:${pct}%;height:100%;background:var(--grad)"></div></div></div>`;
   }).join('') || '<p class="text-muted" style="font-size:12px">Aún no hay gestiones para graficar.</p>';
 
+  // ── Acción Recomendada actual + historial de acciones atendidas ──
+  const ESTADO_ACCION_LABEL = {
+    realizado:    { txt:'✅ Completada', color:'var(--elec-green,#22C55E)' },
+    no_realizado: { txt:'❌ No realizada', color:'var(--elec-red,#EF4444)' },
+    pospuesto:    { txt:'🕓 Pospuesta', color:'var(--elec-amber,#F5B729)' }
+  };
+  const ultimaGestion = gestiones[0];
+  const accionActualHTML = (ultimaGestion && ultimaGestion.pasoSiguiente && !ultimaGestion.accionEstado)
+    ? `<div class="card-inner" style="margin-bottom:14px;border-left:3px solid var(--accent)">
+         <div class="section-title" style="margin-top:0">Acción recomendada actual</div>
+         <p style="font-size:13px;line-height:1.6;color:var(--text)">${ultimaGestion.pasoSiguiente}</p>
+         <p style="font-size:11.5px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.04em">⏳ Estado: Pendiente</p>
+       </div>`
+    : `<div class="card-inner" style="margin-bottom:14px">
+         <div class="section-title" style="margin-top:0">Acción recomendada actual</div>
+         <p class="text-muted" style="font-size:12.5px">No hay una acción recomendada pendiente en este momento.</p>
+       </div>`;
+
+  const accionesAtendidas = gestiones.filter(g => g.accionEstado);
+  const totalAtendidas = accionesAtendidas.length;
+  const totalCompletadas = accionesAtendidas.filter(g => g.accionEstado==='realizado').length;
+  const totalPospuestas  = accionesAtendidas.filter(g => g.accionEstado==='pospuesto').length;
+  const totalNoRealizadas = accionesAtendidas.filter(g => g.accionEstado==='no_realizado').length;
+
+  const historialAccionesHTML = totalAtendidas ? accionesAtendidas.map(g=>{
+    const d = ESTADO_ACCION_LABEL[g.accionEstado] || {txt:g.accionEstado, color:'var(--text)'};
+    return `<div class="gestion-item" style="margin-bottom:8px">
+      <div class="gestion-meta"><span style="color:${d.color};font-weight:700">${d.txt}</span><span>${g.accionFecha||''}${g.accionHora?' · '+g.accionHora:''}</span></div>
+      <p style="font-size:12.5px;line-height:1.5;color:var(--text)">${g.pasoSiguiente||'—'}</p>
+      ${g.accionExplicacion ? `<p style="font-size:11.5px;color:var(--text-dim);margin-top:4px"><strong>Comentario:</strong> ${g.accionExplicacion}</p>` : ''}
+    </div>`;
+  }).join('') : '<p class="text-muted" style="text-align:center;padding:16px 0">Aún no se ha atendido ninguna acción recomendada.</p>';
+
+  const resumenAccionesHTML = `<div class="card-inner" style="margin-bottom:14px">
+    <div class="section-title" style="margin-top:0">Resumen de acciones recomendadas atendidas</div>
+    <div class="grid-2" style="gap:10px">
+      <div><label style="margin-bottom:2px">Total atendidas</label><div style="font-size:14px;color:var(--text)">${totalAtendidas}</div></div>
+      <div><label style="margin-bottom:2px">Completadas</label><div style="font-size:14px;color:var(--text)">${totalCompletadas}</div></div>
+      <div><label style="margin-bottom:2px">Pospuestas</label><div style="font-size:14px;color:var(--text)">${totalPospuestas}</div></div>
+      <div><label style="margin-bottom:2px">No realizadas</label><div style="font-size:14px;color:var(--text)">${totalNoRealizadas}</div></div>
+    </div>
+  </div>`;
+
   // Días activo / silencio, para el resumen general
   const fechaUltima = document.getElementById('crmFechaUltima').value;
   let diasActivo='—', diasSilencio='—';
   if(fechaRegistro) diasActivo = Math.max(0,Math.round((Date.now()-new Date(fechaRegistro+'T00:00:00').getTime())/86400000));
   if(fechaUltima) diasSilencio = Math.max(0,Math.round((Date.now()-new Date(fechaUltima+'T00:00:00').getTime())/86400000));
 
-  const resumenTxt = `${nombre} lleva ${diasActivo==='—'?'un tiempo no especificado':diasActivo+' día(s)'} en seguimiento, con ${gestiones.length} gestión(es) registrada(s)${diasSilencio!=='—'?` y ${diasSilencio} día(s) desde la última interacción`:''}. Estado actual: ${temp.label}, con ${prob}% de probabilidad de cierre.`;
+  const resumenTxt = `${nombre} lleva ${diasActivo==='—'?'un tiempo no especificado':diasActivo+' día(s)'} en seguimiento desde que fue atendido por primera vez (${fuenteTxt}), con ${gestiones.length} gestión(es) registrada(s)${diasSilencio!=='—'?` y ${diasSilencio} día(s) desde la última interacción`:''}. Estado actual: ${temp.label}, con ${prob}% de probabilidad de cierre. ¿Se ha concretado la venta? ${vendidoTxt}.`;
 
   // Anillo de score (SVG)
   const R=50, C=2*Math.PI*R, off = C-(C*prob/100);
@@ -4757,7 +5006,12 @@ function generarInformeDetallado(conContacto){
         <div class="grid-2" style="gap:10px">
           <div><label style="margin-bottom:2px">Nombre completo</label><div style="font-size:14px;color:var(--text)">${nombre}</div></div>
           <div><label style="margin-bottom:2px">Tipo de operación</label><div style="font-size:14px;color:var(--text)">${tipoOpLabel}</div></div>
-          <div><label style="margin-bottom:2px">Fecha de registro</label><div style="font-size:14px;color:var(--text)">${fechaRegistroTxt}</div></div>
+          <div style="grid-column:1/-1"><label style="margin-bottom:2px">${productoLabel}</label><div style="font-size:14px;color:var(--text)">${productoVal}</div></div>
+          <div><label style="margin-bottom:2px">Fecha de registro (primer contacto)</label><div style="font-size:14px;color:var(--text)">${fechaRegistroTxt}</div></div>
+          <div><label style="margin-bottom:2px">Días en seguimiento</label><div style="font-size:14px;color:var(--text)">${diasActivo==='—'?'No especificado':diasActivo+' día(s)'}</div></div>
+          <div><label style="margin-bottom:2px">Fuente del Lead</label><div style="font-size:14px;color:var(--text)">${fuenteTxt}</div></div>
+          <div><label style="margin-bottom:2px">¿Se le ha vendido?</label><div style="font-size:14px;color:var(--text)">${vendidoTxt}</div></div>
+          <div><label style="margin-bottom:2px">Estado final de la operación</label><div style="font-size:14px;color:var(--text)">${estadoFinalTxt}</div></div>
           ${contactoHTML}
         </div>
       </div>
@@ -4780,6 +5034,12 @@ function generarInformeDetallado(conContacto){
         <div class="section-title">Resumen general de avance</div>
         <p style="font-size:13px;line-height:1.6;color:var(--text-dim)">${resumenTxt}</p>
       </div>
+
+      ${accionActualHTML}
+      ${resumenAccionesHTML}
+
+      <div class="section-title">Historial de acciones recomendadas atendidas (${totalAtendidas})</div>
+      <div style="margin-top:8px;margin-bottom:14px">${historialAccionesHTML}</div>
 
       <div class="section-title">Historial completo de gestiones (${gestiones.length})</div>
       <div style="margin-top:8px">${historialHTML}</div>
@@ -5365,7 +5625,7 @@ function confirmarRegistrarComoNuevo(){
 
 /* ─── CAMPOS QUE SE RESTAURAN AL CARGAR UNA FICHA EXISTENTE ─── */
 const CAMPOS_CLIENTE_FORM = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
-  'pruebaManejo','tipoOperacion','estadoOperacion','enganche','engancheModo','plazo','seguro',
+  'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','enganche','engancheModo','plazo','seguro',
   'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
   'descuento','montoDescuento','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
   'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
@@ -5379,6 +5639,7 @@ const MAPA_CAMPOS_BACKEND = {
   tipoOperacion:'TipoOperacion', enganche:'Enganche', engancheModo:'EngancheModo',
   plazo:'Plazo', tasaInteres:'TasaInteres', seguro:'Seguro',
   estadoOperacion:'EstadoOperacion', disponibilidad:'Disponibilidad', tiempoLlegada:'TiempoLlegada',
+  estadoFinalOperacion:'EstadoFinalOperacion',
   descuento:'Descuento', montoDescuento:'MontoDescuento', anticipo:'Anticipo',
   documentacion:'Documentacion', estatusCredito:'EstatusCredito', decision:'Decision', crmUrgencia:'Urgencia',
   // Campos de "Seguimiento Comercial" (agregados para igualar el cuestionario de Ventas)
@@ -5417,7 +5678,8 @@ const SYNC_CRM_A_VENTAS_DIRECTO = {
   correo:'vmCorreo', ciudad:'vmCiudad', ocupacion:'vmOcupacion', fuenteLead:'vmFuenteLead',
   enganche:'vmEnganche', engancheModo:'vmEngancheModo', plazo:'vmPlazo',
   tasaInteres:'vmTasaInteres', seguro:'vmSeguro', anticipo:'vmAnticipo',
-  disponibilidad:'vmDisponibilidad', tiempoLlegada:'vmTiempoLlegada'
+  disponibilidad:'vmDisponibilidad', tiempoLlegada:'vmTiempoLlegada',
+  estadoFinalOperacion:'vmEstadoFinalOperacion'
 };
 
 // Tablas de equivalencia para campos que existen en ambos lados pero con
@@ -5446,6 +5708,7 @@ function sincronizarVentasDesdeCRM(){
     if(!origen) return;
     setVal(SYNC_CRM_A_VENTAS_DIRECTO[crmId], origen.value);
   });
+  if(typeof actualizarIndicadorEstadoFinal === 'function') actualizarIndicadorEstadoFinal();
 
   // 2) Campos con conversión de escala
   const pruebaManejo = g('pruebaManejo');
@@ -5883,6 +6146,7 @@ async function sincronizarSheets(){
     seguro:          document.getElementById('seguro').value||'',
     mensualidad:     mensualidadEl ? mensualidadEl.textContent : '',
     estadoOperacion: document.getElementById('estadoOperacion').value||'',
+    estadoFinalOperacion: document.getElementById('estadoFinalOperacion')?.value||'',
     disponibilidad:  document.getElementById('disponibilidad').value||'',
     tiempoLlegada:   document.getElementById('tiempoLlegada').value||'',
     descuento:       document.getElementById('descuento').value||'',
@@ -5923,7 +6187,12 @@ async function sincronizarSheets(){
       accionFecha: g.accionFecha||'',
       accionHora:  g.accionHora||'',
       accionDuracionMin: g.accionDuracionMin||'',
-      accionExplicacion: g.accionExplicacion||''
+      accionExplicacion: g.accionExplicacion||'',
+      accionPreviaResumen: g.accionPreviaResumen||'',
+      accionPreviaEstado: g.accionPreviaEstado||'',
+      accionPreviaFecha: g.accionPreviaFecha||'',
+      accionPreviaHora: g.accionPreviaHora||'',
+      accionPreviaExplicacion: g.accionPreviaExplicacion||''
     }))
   };
 
@@ -6035,7 +6304,7 @@ async function sincronizarSheets(){
           <input type="text" id="vmOcupacion" class="inp" placeholder="Ej: Comerciante">
         </div>
         <div class="field" style="margin-bottom:0;">
-          <label class="field-label">Fuente del lead</label>
+          <label class="field-label">Fuente del Lead</label>
           <select id="vmFuenteLead" class="inp">
             <option value="">Seleccionar</option>
             <option value="showroom">Visita al showroom</option>
@@ -6044,6 +6313,7 @@ async function sincronizarSheets(){
             <option value="redes">Redes sociales</option>
             <option value="llamada">Llamada entrante</option>
             <option value="evento">Evento / expo</option>
+            <option value="leads">Leads</option>
           </select>
         </div>
       </div>
@@ -6331,7 +6601,12 @@ async function sincronizarSheets(){
       <div id="senialesWrap" style="display:flex;flex-direction:column;gap:8px;"></div>
     </div>
     <div class="card">
-      <div class="card-title"><span>📋</span> Estado de la Operación</div>
+      <div class="card-title"><span>📋</span> Estado de la Operación
+        <div class="estado-op-indicador" id="vmEstadoOpIndicador" style="margin-left:auto">
+          <span class="estado-op-punto eo-gris" id="vmEstadoOpPunto"></span>
+          <span class="estado-op-texto" id="vmEstadoOpTexto">Pendiente de definir</span>
+        </div>
+      </div>
       <div class="field">
         <label class="field-label">¿En qué punto estamos?</label>
         <select id="estadoOp" class="inp">
@@ -6341,6 +6616,16 @@ async function sincronizarSheets(){
           <option value="4">Falta solo anticipo / firma</option>
           <option value="5">✅ Operación cerrada</option>
           <option value="0">❌ Se perdió / canceló</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label">Estado final de la operación</label>
+        <select id="vmEstadoFinalOperacion" class="inp" onchange="actualizarIndicadorEstadoFinal()">
+          <option value="pendiente">Pendiente de definir</option>
+          <option value="cerrada_exito">Operación cerrada con éxito</option>
+          <option value="cerrada_sin_venta">Operación cerrada sin venta</option>
+          <option value="posventa">Proceso de posventa</option>
+          <option value="recompra">Proceso de recompra</option>
         </select>
       </div>
       <div class="field">
@@ -13894,7 +14179,9 @@ function toggleChatPanel() {
   const panel = document.getElementById('chatPanel');
   const fab = document.getElementById('fabChat');
   panel.classList.toggle('open', chatPanelOpen);
-  fab.textContent = chatPanelOpen ? '✕' : '🤖';
+  fab.innerHTML = chatPanelOpen
+    ? '✕'
+    : '<img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" alt="🤖" class="fab-chat-emoji" onerror="this.outerHTML=\'🤖\'">';
   if (chatPanelOpen) {
     setTimeout(() => document.getElementById('chatPanelInput').focus(), 300);
   }
@@ -19746,7 +20033,7 @@ Responde en español, de forma directa, accionable y en tono conversacional natu
 
 <!-- CHAT FLOTANTE GLOBAL (visible en toda la app, no solo en Ventas) -->
 <button class="fab-chat" onclick="toggleChatPanel()" id="fabChat" title="Asesor IA">
-  🤖
+  <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" alt="🤖" class="fab-chat-emoji" onerror="this.outerHTML='🤖'">
 </button>
 
 <div class="chat-panel" id="chatPanel">
