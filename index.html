@@ -2179,7 +2179,7 @@
 </div>
 <div class="topbar">
   <div class="topbar-left">
-    <div class="app-logo">⚡</div>
+    <div class="app-logo logo-rayo">⚡</div>
     <div>
       <div class="app-name">Nexus Advance</div>
       <div class="app-subtitle">Ventas · IA</div>
@@ -2517,7 +2517,7 @@
 }#crm-root *, #crm-root *::before, #crm-root *::after {box-sizing:border-box;margin:0;padding:0;}#crm-root body {background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;min-height:100vh;padding-bottom:80px;transition:background 0.35s,color 0.35s;}#crm-root ::-webkit-scrollbar {width:5px;height:5px;}#crm-root ::-webkit-scrollbar-track {background:transparent;}#crm-root ::-webkit-scrollbar-thumb {background:var(--line);border-radius:99px;}#crm-root body::before {display:none;}#crm-root .topbar {position:relative;top:auto;z-index:5;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
   width:calc(100% - 32px);max-width:860px;margin:0 auto 14px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 @media(min-width:901px){#crm-root .topbar {max-width:920px;}}
-[data-theme="light"] #crm-root .topbar {background:#FFFFFF;border-color:#E2E8F0;box-shadow:0 1px 8px rgba(15,23,42,0.06),0 4px 16px rgba(15,23,42,0.04);}#crm-root .topbar-left {display:flex;align-items:center;gap:10px;}#crm-root .topbar-right {display:flex;align-items:center;gap:7px;}#crm-root .app-logo {width:34px;height:34px;background:var(--grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 2px 16px var(--grad-glow);transition:var(--transition);cursor:pointer;}#crm-root .app-logo:hover {transform:rotate(-8deg) scale(1.08);}#crm-root .app-name {font-size:16px;color:var(--accent);letter-spacing:0.06em;font-weight:600;}#crm-root .app-sub {font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;line-height:1;}#crm-root .icon-btn {height:36px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-pill);color:var(--muted);
+[data-theme="light"] #crm-root .topbar {background:#FFFFFF;border-color:#E2E8F0;box-shadow:0 1px 8px rgba(15,23,42,0.06),0 4px 16px rgba(15,23,42,0.04);}#crm-root .topbar-left {display:flex;align-items:center;gap:10px;}#crm-root .topbar-right {display:flex;align-items:center;gap:7px;}#crm-root .app-logo {width:34px;height:34px;background:var(--grad);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 2px 16px var(--grad-glow);transition:var(--transition);cursor:pointer;}#crm-root .app-logo:hover {transform:rotate(-8deg) scale(1.08);}#crm-root .app-logo.logo-rayo {animation:logoRayoPulso 2.4s ease-in-out infinite;transform-origin:50% 55%;}@keyframes logoRayoPulso{0%,100%{transform:rotate(0deg) scale(1);box-shadow:0 2px 16px var(--grad-glow);}15%{transform:rotate(-12deg) scale(1.08);box-shadow:0 4px 24px var(--accent-bright);}30%{transform:rotate(9deg) scale(1.05);}45%{transform:rotate(-6deg) scale(1.03);}60%{transform:rotate(3deg) scale(1.01);box-shadow:0 2px 16px var(--grad-glow);}}#crm-root .app-name {font-size:16px;color:var(--accent);letter-spacing:0.06em;font-weight:600;}#crm-root .app-sub {font-size:10px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;line-height:1;}#crm-root .icon-btn {height:36px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-pill);color:var(--muted);
   display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 14px;
   font-size:13px;font-weight:600;cursor:pointer;transition:var(--transition);font-family:var(--font);}#crm-root .icon-btn:hover {border-color:var(--accent);color:var(--accent);}#crm-root .btn-back {width:36px;height:36px;background:var(--grad);border:none;border-radius:var(--radius-pill);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;flex-shrink:0;color:#fff;box-shadow:0 2px 14px var(--grad-glow);transition:var(--transition);}#crm-root .btn-back:hover {transform:scale(1.08) translateX(-1px);}#crm-root .wrap {max-width:860px;margin:0 auto;padding:0 16px 24px;position:relative;z-index:1;}
 @media(min-width:901px){#crm-root .wrap {max-width:952px;} 
@@ -2542,11 +2542,11 @@
   padding:12px 22px;font-size:14px;font-weight:600;z-index:999;opacity:0;pointer-events:none;
   transition:opacity 0.25s,transform 0.25s;box-shadow:var(--shadow);white-space:nowrap;}#crm-root .toast.show {opacity:1;transform:translateX(-50%) translateY(0);}#crm-root .historial-list {display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;}#crm-root .gestion-item {background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius-xs);padding:14px;}#crm-root .gestion-meta {display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-bottom:6px;gap:8px;flex-wrap:wrap;}#crm-root .gestion-tipo {background:var(--accent-dim);color:var(--accent-bright);padding:2px 10px;border-radius:99px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;}#crm-root .gestion-msg {margin-top:8px;padding:10px 12px;background:var(--panel-3);border-radius:var(--radius-xs);border-left:2px solid var(--green);font-size:12px;color:var(--text-dim);line-height:1.55;}#crm-root .gestion-msg-label {font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}#menuPrincipal .menu-item {width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;background:none;border:none;border-bottom:1px solid var(--line);font-family:var(--font-body);cursor:pointer;transition:background 0.15s;text-align:left;}#menuPrincipal .menu-item:active {background:var(--gold-dim);}#menuPrincipal .menu-label {font-size:14px;font-weight:600;color:var(--cream);}#menuPrincipal .menu-sub {font-size:11px;font-weight:400;color:var(--textodim);margin-top:1px;}#menuPrincipal .menu-icon {font-size:20px;flex-shrink:0;}#menuPrincipal .menu-item-danger .menu-label {color:var(--red);}#menuPrincipal .menu-item-danger:active {background:var(--red-dim);}
 @media(hover:hover){#menuPrincipal .menu-item:hover {background:var(--panel-2);}#menuPrincipal .menu-item-danger:hover {background:var(--red-dim);}
-}#crm-root .badge {display:inline-flex;align-items:center;background:var(--grad);color:#0D1117;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;letter-spacing:0.04em;vertical-align:middle;}#crm-root .bloque-bloqueado {position:relative;}#crm-root .bloque-bloqueado .bloque-overlay {display:none;position:absolute;inset:0;border-radius:var(--radius);background:rgba(13,27,46,0.7);z-index:5;backdrop-filter:blur(2px);align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;padding:20px;}#crm-root .bloque-bloqueado.bloqueado .bloque-overlay {display:flex;}[data-theme="light"] #crm-root .bloque-bloqueado .bloque-overlay {background:rgba(255,255,255,0.8);}#crm-root .overlay-icon {font-size:28px;}#crm-root .overlay-texto {font-size:13px;color:var(--text-dim);max-width:260px;line-height:1.5;}#crm-root .req-row {display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}#crm-root .req-badge {display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--panel-3);border:1px solid var(--line);color:var(--muted);}#crm-root .req-badge.done {background:var(--green-dim);border-color:var(--green);color:var(--green);}#crm-root .btn-ia {display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--grad);color:#0D1117;
+}#crm-root .badge {display:inline-flex;align-items:center;background:var(--grad);color:#0D1117;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;letter-spacing:0.04em;vertical-align:middle;}#crm-root .bloque-bloqueado {position:relative;}#crm-root .bloque-bloqueado .bloque-overlay {display:none;position:absolute;inset:0;border-radius:var(--radius);background:rgba(13,27,46,0.7);z-index:5;backdrop-filter:blur(2px);align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;padding:20px;}#crm-root .bloque-bloqueado.bloqueado .bloque-overlay {display:flex;}[data-theme="light"] #crm-root .bloque-bloqueado .bloque-overlay {background:rgba(255,255,255,0.8);}#crm-root .overlay-icon {font-size:28px;}#crm-root .overlay-texto {font-size:13px;color:var(--text-dim);max-width:260px;line-height:1.5;}#crm-root .req-row {display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}#crm-root .req-badge {display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--panel-3);border:1px solid var(--line);color:var(--muted);}#crm-root .req-badge.done {background:var(--green-dim);border-color:var(--green);color:var(--green);}#crm-root .btn-cta-blink{animation:ctaBlinkPulse 1.3s ease-out infinite;position:relative;}#crm-root .btn-cta-blink:disabled{animation:none;}@keyframes ctaBlinkPulse{0%{box-shadow:0 0 0 0 var(--grad-glow);}70%{box-shadow:0 0 0 11px rgba(0,0,0,0);}100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}}#crm-root .btn-ia {display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--grad);color:#0D1117;
   border:none;border-radius:var(--radius-pill);padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;
   font-family:var(--font);transition:transform 0.15s,box-shadow 0.2s,filter 0.15s;box-shadow:0 2px 14px var(--grad-glow);}#crm-root .btn-ia:hover {transform:translateY(-2px);box-shadow:0 8px 24px var(--grad-glow);filter:brightness(1.07);}#crm-root .btn-ia:active {transform:scale(0.97);}#crm-root .btn-ia:disabled {opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none;}#crm-root .btn-ia.sm {padding:7px 16px;font-size:12px;}#crm-root .accion-recomendada-card {background:var(--accent-dim);border:1px solid var(--accent-glow);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;}#crm-root .accion-meta-row {display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:2px;}#crm-root .accion-status-row {display:flex;gap:8px;flex-wrap:wrap;}#crm-root .accion-btn {flex:1;min-width:110px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
   background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim);border-radius:var(--radius-pill);
-  padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:var(--transition);}#crm-root .accion-btn:hover {transform:translateY(-1px);}#crm-root .accion-btn.realizado.active {background:var(--elec-green-dim);border-color:var(--elec-green);color:var(--elec-green);box-shadow:0 0 16px var(--elec-green-glow);}#crm-root .accion-btn.norealizado.active {background:var(--elec-red-dim);border-color:var(--elec-red);color:var(--elec-red);box-shadow:0 0 16px var(--elec-red-glow);}#crm-root .accion-btn.posponer.active {background:var(--elec-amber-dim);border-color:var(--elec-amber);color:var(--elec-amber);box-shadow:0 0 16px var(--elec-amber-glow);}#crm-root .text-muted {color:var(--muted);}#crm-root .text-accent {color:var(--accent-bright);}#crm-root .text-green {color:var(--green);}#crm-root .text-red {color:var(--red);}#crm-root .hidden {display:none!important;}#crm-root .campo {margin-bottom:14px;}
+  padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);transition:var(--transition);}#crm-root .accion-btn:hover {transform:translateY(-1px);}#crm-root .accion-btn:disabled {opacity:0.4;cursor:not-allowed;transform:none;}#crm-root .accion-btn.realizado.active {background:var(--elec-green-dim);border-color:var(--elec-green);color:var(--elec-green);box-shadow:0 0 16px var(--elec-green-glow);}#crm-root .accion-btn.norealizado.active {background:var(--elec-red-dim);border-color:var(--elec-red);color:var(--elec-red);box-shadow:0 0 16px var(--elec-red-glow);}#crm-root .accion-btn.posponer.active {background:var(--elec-amber-dim);border-color:var(--elec-amber);color:var(--elec-amber);box-shadow:0 0 16px var(--elec-amber-glow);}#crm-root .text-muted {color:var(--muted);}#crm-root .text-accent {color:var(--accent-bright);}#crm-root .text-green {color:var(--green);}#crm-root .text-red {color:var(--red);}#crm-root .hidden {display:none!important;}#crm-root .campo {margin-bottom:14px;}
 
 
 @keyframes crmCardIn{from{opacity:0;transform:translateY(16px) scale(0.984);}to{opacity:1;transform:translateY(0) scale(1);}}
@@ -3007,16 +3007,18 @@ function confirmarNuevaFicha(){
     </div>
   </div>
 
-  <!-- ══ REGISTRO DE CONTACTO (Tipo/Calificación de contacto, Notas del contacto).
-       Ya NO tiene botones propios de "Siguientes pasos", "Mensaje IA" ni "Guardar":
-       estos campos solo capturan datos, y se guardan junto con la gestión que se
-       genera desde "Información Comercial" (botón "💾 Guardar" de esa sección),
-       que es lo que ahora desbloquea "Siguiente Acción Recomendada" — id interno
-       cardRegistrarContacto se conserva ══ -->
+  <!-- ══ REGISTRO DE CONTACTO / "Seguimiento" (Tipo/Calificación de contacto, Notas
+       del contacto). Tiene sus propios botones "⚡ Siguientes pasos", "💬 Mensaje IA"
+       y "💾 Guardar" (ver generarPasosRC/generarMensajeRC/evaluarBtnGuardarRC y el
+       listener de btnGuardarRC), igual que "Información Comercial". Se desbloquea
+       SOLO después de que, en el bloque "🎯 Siguiente Acción Recomendada", se
+       presione primero "🗓️ Agendar" y luego "💾 Guardar" (ver evaluarBloqueoRC(),
+       llamada desde inicializarAccionRecomendada()) — id interno cardRegistrarContacto
+       se conserva ══ -->
   <div class="card bloque-bloqueado bloqueado" id="cardRegistrarContacto">
     <div class="bloque-overlay">
       <div class="overlay-icon">🔒</div>
-      <p class="overlay-texto">Se habilita al generarse la <strong>Siguiente Acción Recomendada</strong> (guarda tu <strong>Primera Visita</strong> o tu próxima gestión de <strong>Seguimiento</strong>).</p>
+      <p class="overlay-texto">Se habilita después de <strong>Agendar</strong> y luego <strong>Guardar</strong> la <strong>Siguiente Acción Recomendada</strong> (de tu <strong>Primera Visita</strong> o tu gestión de <strong>Seguimiento</strong> anterior).</p>
     </div>
     <div class="card-header"><div class="card-icon">💬</div><div class="card-title">Seguimiento</div></div>
 
@@ -3027,7 +3029,7 @@ function confirmarNuevaFicha(){
     </div>
 
     <div id="rcFormulario">
-      <p class="text-muted" style="font-size:12px;margin-bottom:12px;line-height:1.5">Estos datos se guardan junto con <strong>Información Comercial</strong>: complétalos y usa los botones de esa sección para generar los siguientes pasos, el mensaje IA y guardar.</p>
+      <p class="text-muted" style="font-size:12px;margin-bottom:12px;line-height:1.5">Registra este contacto de seguimiento y usa los botones de abajo para generar sus propios siguientes pasos, el mensaje IA y guardarlo.</p>
 
       <div class="grid-2" style="margin-bottom:14px">
         <div class="campo"><label>Tipo de contacto</label>
@@ -3052,6 +3054,39 @@ function confirmarNuevaFicha(){
         <div style="display:flex;justify-content:flex-end;margin-top:6px">
           <button class="btn-ia sm" type="button" onclick="reescribirTexto('comentariosGestion', this)">🪄 Reescribir</button>
         </div>
+      </div>
+
+      <!-- Indicadores de requisitos -->
+      <div class="req-row" style="margin-top:14px">
+        <span class="req-badge" id="reqRcPasos">⬜ Siguientes pasos generados</span>
+        <span class="req-badge" id="reqRcMensaje">⬜ Mensaje IA generado</span>
+        <span class="req-badge" id="reqRcAccion">⬜ Acción recomendada anterior atendida</span>
+      </div>
+
+      <!-- Siguientes pasos RC — plan detallado, mismo patrón que Información Comercial -->
+      <div id="rcPasosBox" class="paso-integrado hidden" style="margin-bottom:12px">
+        <div class="paso-eyebrow">🗺️ Siguientes pasos (plan completo)</div>
+        <div class="paso-texto" id="rcPasosTexto"></div>
+      </div>
+
+      <!-- Mensaje IA RC -->
+      <div id="rcMensajeBox" class="hidden" style="margin-bottom:14px">
+        <div style="background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px;margin-bottom:10px">
+          <p class="text-muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Mensaje generado</p>
+          <div id="rcMensajeTexto" class="ai-output" style="min-height:60px"></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-sm success" onclick="copiarTexto(document.getElementById('rcMensajeTexto').innerText,'✓ Mensaje copiado')">📋 Copiar</button>
+          <button class="btn-ia sm" onclick="generarMensajeRC()">🔄 Regenerar</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
+        <button class="btn-ia" id="btnRcPasos" onclick="generarPasosRC()" style="flex:1" disabled>⚡ Siguientes pasos</button>
+        <button class="btn-ia" id="btnRcMensaje" onclick="generarMensajeRC()" style="flex:1" disabled>💬 Mensaje IA</button>
+      </div>
+      <div style="margin-top:10px">
+        <button class="btn-primary full" id="btnGuardarRC" disabled>💾 Guardar</button>
       </div>
     </div>
   </div>
@@ -3182,13 +3217,6 @@ function confirmarNuevaFicha(){
       </div>
     </div>
 
-    <!-- Indicadores de requisitos -->
-    <div class="req-row" style="margin-top:14px">
-      <span class="req-badge" id="reqIcPasos">⬜ Siguientes pasos generados</span>
-      <span class="req-badge" id="reqIcMensaje">⬜ Mensaje IA generado</span>
-      <span class="req-badge" id="reqIcAccion">⬜ Acción recomendada anterior atendida</span>
-    </div>
-
     <!-- Siguientes pasos IC — plan detallado, mismo patrón que Primera Visita / Seguimiento -->
     <div id="icPasosBox" class="paso-integrado hidden" style="margin-bottom:12px">
       <div class="paso-eyebrow">🗺️ Siguientes pasos (plan completo)</div>
@@ -3209,7 +3237,7 @@ function confirmarNuevaFicha(){
 
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
       <button class="btn-ia" id="btnIcPasos" onclick="generarPasosIC()" style="flex:1" disabled>⚡ Siguientes pasos</button>
-      <button class="btn-ia" id="btnIcMensaje" onclick="generarMensajeIC()" style="flex:1" disabled>💬 Mensaje con IA</button>
+      <button class="btn-ia" id="btnIcMensaje" onclick="generarMensajeIC()" style="flex:1" disabled>💬 Mensaje IA</button>
     </div>
     <div style="margin-top:10px">
       <button class="btn-primary full" id="btnGuardarIC" disabled>💾 Guardar</button>
@@ -3651,8 +3679,9 @@ const SECCIONES_BLOQUEO_GENERAL = [
   'cardProcesoVenta','cardInfoAdicional','cardPrimeraVisita','cardInformacionComercial','cardAnalisisIA','cardHistorialGestiones','cardInformeDetallado'
 ];
 // "cardRegistrarContacto" (sección "Seguimiento") queda fuera de este arreglo a propósito:
-// ya no se desbloquea junto con "Guardar datos", sino automáticamente al generarse la
-// "Siguiente Acción Recomendada" (ver evaluarBloqueoRC(), llamada desde inicializarAccionRecomendada()).
+// no se desbloquea junto con "Guardar datos", sino solo después de que la "Siguiente
+// Acción Recomendada" se Agende y luego se Guarde (ver evaluarBloqueoRC(), llamada
+// desde inicializarAccionRecomendada()).
 let coincidenciasCandidatas = [];
 let pvGuardada  = localStorage.getItem('crm_pv_guardada') === '1';
 let pvMsgActual = localStorage.getItem('crm_pv_msg') || '';
@@ -3666,6 +3695,15 @@ let icMsgActual = '';
 let icPasosActual = '';
 let icAccionRapida   = '';
 let icTiempoEstimado = '';
+// Seguimiento ("Follow-up"): mismo patrón que Información Comercial, pero con
+// su propio guardado independiente (ver generarPasosRC/generarMensajeRC/
+// evaluarBtnGuardarRC y el listener de btnGuardarRC).
+let rcPasosGenerados  = false;
+let rcMensajeGenerado = false;
+let rcMsgActual = '';
+let rcPasosActual = '';
+let rcAccionRapida   = '';
+let rcTiempoEstimado = '';
 
 /* ─── ESTADO DEL SCORE IA-NATIVO ─── */
 let scoreIAActiva  = false;   // true una vez que la IA ya evaluó al menos una vez a este cliente
@@ -4247,26 +4285,58 @@ function evaluarBtnGuardarIC(){
   const btnPasos = document.getElementById('btnIcPasos');
   const btnMensaje = document.getElementById('btnIcMensaje');
   const accionPendiente = hayAccionRecomendadaPendiente();
-  // Mientras la Acción Recomendada anterior no se haya guardado explícitamente, los tres
-  // botones de Información Comercial (Siguientes pasos, Mensaje con IA y Guardar gestión)
-  // quedan bloqueados.
+  // Mientras la Acción Recomendada anterior no se haya guardado explícitamente, los
+  // botones "Siguientes pasos" y "Mensaje con IA" de Información Comercial quedan
+  // bloqueados. El botón "Guardar" de esta sección, en cambio, ya NO tiene ninguna
+  // restricción: el usuario puede guardar en cualquier momento.
+  if(btnPasos)   btnPasos.disabled   = accionPendiente;
+  if(btnMensaje) btnMensaje.disabled = accionPendiente;
+  if(btn) btn.disabled = false;
+}
+
+/* ─── SEGUIMIENTO ("Follow-up") — evalúa su propio botón "Guardar" ───
+   Mismo criterio que tenía antes el "Guardar" de Información Comercial: exige que
+   ya se hayan generado tanto "Siguientes pasos" como "Mensaje IA" de ESTA sección,
+   y que la Acción Recomendada anterior ya haya sido atendida (estado asignado,
+   comentario si aplica, fecha reagendada si aplica, y "Guardar" presionado en ese
+   módulo). El "Agendar" de la Acción Recomendada no aplica aquí: eso ya es
+   condición para que esta tarjeta esté desbloqueada en primer lugar
+   (ver evaluarBloqueoRC()). */
+function evaluarBtnGuardarRC(){
+  const btn = document.getElementById('btnGuardarRC');
+  const btnPasos = document.getElementById('btnRcPasos');
+  const btnMensaje = document.getElementById('btnRcMensaje');
+  const accionPendiente = hayAccionRecomendadaPendiente();
   if(btnPasos)   btnPasos.disabled   = accionPendiente;
   if(btnMensaje) btnMensaje.disabled = accionPendiente;
   if(!btn) return;
-  const pasosYMensajeOk = icPasosGenerados && icMensajeGenerado;
+  const pasosYMensajeOk = rcPasosGenerados && rcMensajeGenerado;
   const ok = pasosYMensajeOk && !accionPendiente;
   btn.disabled = !ok;
-  document.getElementById('reqIcPasos').className   = 'req-badge' + (icPasosGenerados  ? ' done' : '');
-  document.getElementById('reqIcPasos').textContent  = (icPasosGenerados  ? '✅' : '⬜') + ' Siguientes pasos generados';
-  document.getElementById('reqIcMensaje').className  = 'req-badge' + (icMensajeGenerado ? ' done' : '');
-  document.getElementById('reqIcMensaje').textContent = (icMensajeGenerado ? '✅' : '⬜') + ' Mensaje IA generado';
-  const badgeAccion = document.getElementById('reqIcAccion');
+  // Guía visual: en "Seguimiento" no hay botón "Agendar" propio (eso ya se resolvió
+  // arriba, en "Siguiente Acción Recomendada"), así que aquí solo "💾 Guardar" parpadea
+  // en cuanto queda habilitado, hasta que se presione.
+  btn.classList.toggle('btn-cta-blink', ok);
+  const badgePasos = document.getElementById('reqRcPasos');
+  const badgeMensaje = document.getElementById('reqRcMensaje');
+  if(badgePasos){
+    badgePasos.className   = 'req-badge' + (rcPasosGenerados  ? ' done' : '');
+    badgePasos.textContent  = (rcPasosGenerados  ? '✅' : '⬜') + ' Siguientes pasos generados';
+  }
+  if(badgeMensaje){
+    badgeMensaje.className  = 'req-badge' + (rcMensajeGenerado ? ' done' : '');
+    badgeMensaje.textContent = (rcMensajeGenerado ? '✅' : '⬜') + ' Mensaje IA generado';
+  }
+  const badgeAccion = document.getElementById('reqRcAccion');
   if(badgeAccion){
     badgeAccion.className   = 'req-badge' + (!accionPendiente ? ' done' : '');
     badgeAccion.textContent = (!accionPendiente ? '✅' : '⬜') + ' Acción recomendada anterior atendida';
   }
 }
 
+/* ─── SEGUIMIENTO ("Follow-up") — se desbloquea únicamente después de que, en el
+   bloque "🎯 Siguiente Acción Recomendada", se presione primero "🗓️ Agendar" y
+   luego "💾 Guardar". Ver inicializarAccionRecomendada() y agendarAccion(). ─── */
 function evaluarBloqueoRC(desbloqueado){
   const card = document.getElementById('cardRegistrarContacto');
   card.classList.toggle('bloqueado', !desbloqueado);
@@ -4275,6 +4345,11 @@ function evaluarBloqueoRC(desbloqueado){
     if(!desbloqueado) el.setAttribute('disabled','');
     else el.removeAttribute('disabled');
   });
+  if(!desbloqueado){
+    const btnGu = document.getElementById('btnGuardarRC');
+    if(btnGu) btnGu.classList.remove('btn-cta-blink');
+  }
+  if(desbloqueado && typeof evaluarBtnGuardarRC==='function') evaluarBtnGuardarRC();
 }
 
 /* ─── REESCRIBIR CON IA (para campos de texto libre, dictado por voz) ─── */
@@ -4367,7 +4442,7 @@ function renderAccionModule(container, prefix, resumen, tiempoTexto, diasSugerid
       </div>
       <div class="campo hidden" id="${prefix}CampoExplicacion" style="margin-top:12px">
         <label>¿Por qué no se realizó?</label>
-        <textarea class="inp" id="${prefix}Explicacion" oninput="evaluarBtnGuardarAccion('${prefix}'); if(typeof evaluarBtnGuardarIC==='function') evaluarBtnGuardarIC();" placeholder="Explica brevemente qué pasó…"></textarea>
+        <textarea class="inp" id="${prefix}Explicacion" oninput="evaluarBtnGuardarAccion('${prefix}'); if(typeof evaluarBtnGuardarIC==='function') evaluarBtnGuardarIC(); if(typeof evaluarBtnGuardarRC==='function') evaluarBtnGuardarRC();" placeholder="Explica brevemente qué pasó…"></textarea>
         <div style="display:flex;justify-content:flex-end;margin-top:6px">
           <button class="btn-ia sm" type="button" onclick="reescribirTexto('${prefix}Explicacion', this)">🪄 Reescribir</button>
         </div>
@@ -4378,6 +4453,8 @@ function renderAccionModule(container, prefix, resumen, tiempoTexto, diasSugerid
         <button class="btn-primary" id="${prefix}BtnGuardar" onclick="guardarAccion('${prefix}')" style="flex:1" disabled>💾 Guardar</button>
       </div>
     </div>`;
+  sincronizarEstadoAccionDisponible(prefix);
+  sincronizarBlinkAccion(prefix);
 }
 
 function marcarEstadoAccion(prefix, estado){
@@ -4399,20 +4476,72 @@ function marcarEstadoAccion(prefix, estado){
   }
   evaluarBtnGuardarAccion(prefix);
   // Marcar Realizado / No realizado / Posponer también puede desbloquear el botón
-  // "Guardar" de Información Comercial (requiere que la acción anterior esté atendida).
+  // "Guardar" de Información Comercial y el de Seguimiento (ambos requieren que la
+  // acción anterior esté atendida).
   if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+  if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
+}
+
+/* ─── ETAPA 1 vs ETAPA 2 del bloque "🎯 Siguiente Acción Recomendada" ───
+   ETAPA 1 — Creando la acción (aún no se presiona "🗓️ Agendar"): aquí "atender"
+   la acción (Realizado / No realizado / Posponer) NO aplica, solo se agenda y
+   se guarda. Por eso, mientras no esté agendada, los botones de estado (y el
+   campo de explicación) quedan inhabilitados: no tiene sentido marcar como
+   "realizada" una acción que todavía ni se ha programado.
+   ETAPA 2 — Atendiendo una acción existente (ya se presionó "🗓️ Agendar"): recién
+   aquí se habilitan esos botones, y "💾 Guardar" exige atenderla por completo
+   (estado elegido + explicación si aplica) — eso ya lo garantiza
+   evaluarBtnGuardarAccion(), esta función solo sincroniza la disponibilidad
+   visual de los controles de estado con esa misma condición (st.agendado). */
+function sincronizarEstadoAccionDisponible(prefix){
+  const disponible = !!(accionState[prefix] && accionState[prefix].agendado);
+  ['Realizado','NoRealizado','Posponer'].forEach(k=>{
+    const b = document.getElementById(prefix+'Btn'+k);
+    if(b) b.disabled = !disponible;
+  });
+  const exp = document.getElementById(prefix+'Explicacion');
+  if(exp) exp.disabled = !disponible;
 }
 
 function evaluarBtnGuardarAccion(prefix){
   const st = accionState[prefix] || {};
   const btn = document.getElementById(prefix+'BtnGuardar');
   if(!btn) return;
-  let ok = !!st.estado;
+  // El "Guardar" de la Acción Recomendada solo se habilita DESPUÉS de haber
+  // presionado "🗓️ Agendar": Agendar siempre va primero.
+  let ok = !!st.estado && !!st.agendado;
   if(st.estado==='no_realizado'){
     const expEl = document.getElementById(prefix+'Explicacion');
     ok = ok && !!(expEl && expEl.value.trim());
   }
   btn.disabled = !ok;
+  sincronizarEstadoAccionDisponible(prefix);
+  sincronizarBlinkAccion(prefix);
+}
+
+/* ─── GUÍA VISUAL (parpadeo) del bloque "🎯 Siguiente Acción Recomendada" ───
+   Solo añade una señal visual (clase .btn-cta-blink) sobre el flujo ya existente
+   de Agendar → Guardar; no cambia ninguna condición de habilitado/bloqueado.
+   - ETAPA 1 (creando la acción, sin Agendar todavía): parpadea "🗓️ Agendar"
+     ("Guardar" no parpadea porque, sin agendar, tampoco puede habilitarse).
+   - ETAPA 2 (atendiendo la acción ya agendada): deja de parpadear "Agendar" y,
+     únicamente cuando "💾 Guardar" ya quedó habilitado (es decir, la acción
+     quedó atendida por completo: estado + campos requeridos), empieza a
+     parpadear "Guardar" hasta que se presione. El parpadeo es solo una guía
+     visual: nunca habilita el botón por sí mismo, eso lo sigue decidiendo
+     evaluarBtnGuardarAccion(). */
+function sincronizarBlinkAccion(prefix){
+  const btnAg = document.getElementById(prefix+'BtnAgendar');
+  const btnGu = document.getElementById(prefix+'BtnGuardar');
+  if(!btnAg || !btnGu) return;
+  const st = accionState[prefix] || {};
+  if(!st.agendado){
+    btnAg.classList.add('btn-cta-blink');
+    btnGu.classList.remove('btn-cta-blink');
+  } else {
+    btnAg.classList.remove('btn-cta-blink');
+    btnGu.classList.toggle('btn-cta-blink', !btnGu.disabled);
+  }
 }
 
 function accionGuardadaHTML(st){
@@ -4439,6 +4568,7 @@ function limpiarAccionRecomendada(){
   // Sin Acción Recomendada activa, la sección "Seguimiento" permanece bloqueada.
   if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(false);
   if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+  if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
 }
 
 async function inicializarAccionRecomendada(){
@@ -4451,29 +4581,45 @@ async function inicializarAccionRecomendada(){
 
   const prefix = ultima.tipo === 'primeravisita' ? 'pvAccion' : 'icAccion';
 
-  // Se generó (o ya existía) una Acción Recomendada: desbloquea automáticamente "Seguimiento".
-  if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(true);
-
   if(ultima.accionEstado){
+    // Ya se Guardó esta Acción Recomendada. Si además quedó registrado que se
+    // Agendó (flujo normal desde este cambio en adelante, donde "Guardar" exige
+    // haber Agendado antes), "Seguimiento" se desbloquea. Una gestión que no
+    // traiga ese dato (por ejemplo, cargada desde Sheets o guardada antes de
+    // este cambio) se trata como agendada por compatibilidad, para no
+    // re-bloquear de golpe procesos que ya estaban resueltos.
     cont.innerHTML = accionGuardadaHTML({
       estado: ultima.accionEstado, fecha: ultima.accionFecha,
       hora: ultima.accionHora, explicacion: ultima.accionExplicacion
     });
+    if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(ultima.accionAgendado !== false);
     if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+    if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
     return;
   }
+
+  // Acción Recomendada recién generada y todavía sin Agendar/Guardar: "Seguimiento"
+  // permanece bloqueado hasta que se completen esos dos pasos, en ese orden.
+  if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(false);
 
   const resumen = ultima.pasoSiguiente;
   const tiempo  = ultima.accionTiempo || '24-48 horas';
   renderAccionModule(cont, prefix, resumen, tiempo, diasDesdeTiempo(tiempo), (st) => {
     ultima.accionEstado = st.estado; ultima.accionExplicacion = st.explicacion;
     ultima.accionFecha = st.fecha; ultima.accionHora = st.hora;
+    // Se guarda si "Agendar" ya se había presionado ANTES de este "Guardar" (es
+    // requisito: ver evaluarBtnGuardarAccion()), así que en la práctica siempre
+    // queda en true al llegar aquí — se persiste para que sobreviva a un recargo.
+    ultima.accionAgendado = !!(accionState[prefix] && accionState[prefix].agendado);
     localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
-    if(accionState[prefix]) accionState[prefix].agendado = false;
     cont.innerHTML = accionGuardadaHTML(st);
+    // Se completaron Agendar + Guardar de la Acción Recomendada: desbloquea "Seguimiento".
+    if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(ultima.accionAgendado);
     // La acción recomendada anterior ya quedó atendida: reevaluar el botón "Guardar"
-    // de Información Comercial por si esa era la única condición que le faltaba.
+    // de Información Comercial y el de Seguimiento por si esa era la única condición
+    // que les faltaba.
     if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+    if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
     if(prefix === 'pvAccion'){
       crmMostrarToast('✓ Acción registrada.');
       mostrarPVGuardada(ultima); // refresca la vista de PV para bloquear editar/eliminar
@@ -4483,8 +4629,10 @@ async function inicializarAccionRecomendada(){
     }
   }, ultima.gestionId || ultima.id);
   // Al quedar renderizado un módulo de Acción Recomendada sin resolver, el botón
-  // "Guardar" de Información Comercial debe bloquearse hasta que se atienda.
+  // "Guardar" de Información Comercial y el de Seguimiento deben bloquearse hasta
+  // que se atienda.
   if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+  if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
 }
 
 function guardarAccion(prefix){
@@ -4500,6 +4648,8 @@ function guardarAccion(prefix){
   st.fecha       = (document.getElementById(prefix+'Fecha')||{}).value || '';
   st.hora        = (document.getElementById(prefix+'Hora')||{}).value || '';
   st.duracionMin = parseInt((document.getElementById(prefix+'Duracion')||{}).value, 10) || 20;
+  const btnGu = document.getElementById(prefix+'BtnGuardar');
+  if(btnGu) btnGu.classList.remove('btn-cta-blink');
   finalizarGuardadoAccion(prefix, st);
 }
 
@@ -4572,15 +4722,19 @@ async function agendarAccion(prefix){
   if(!st.fecha){ crmMostrarToast('Elige una fecha para agendar la acción.'); return; }
 
   const btn = document.getElementById(prefix+'BtnAgendar');
-  if(btn){ btn.disabled = true; btn.textContent = '⏳ Agendando…'; }
+  if(btn){ btn.disabled = true; btn.textContent = '⏳ Agendando…'; btn.classList.remove('btn-cta-blink'); }
 
   if(localStorage.getItem('nexus_sheets_url')) await sincronizarSheets();
   await enviarAccionASheets(prefix, st, true);
 
   if(accionState[prefix]) accionState[prefix].agendado = true;
+  // "Guardar" de esta Acción Recomendada exige que "Agendar" ya se haya presionado:
+  // ahora que quedó agendada, se reevalúa para habilitarlo si el estado ya está elegido.
+  if(typeof evaluarBtnGuardarAccion === 'function') evaluarBtnGuardarAccion(prefix);
   const tag = document.getElementById(prefix+'AgendadoTag');
   if(tag) tag.classList.remove('hidden');
   if(btn){ btn.disabled = false; btn.textContent = '🗓️ Agendar'; }
+  sincronizarBlinkAccion(prefix);
   crmMostrarToast('🗓️ Acción agendada como pendiente por realizar.');
 }
 
@@ -4796,7 +4950,7 @@ async function generarMensajeIC(){
     icMsgActual = resp;
     icMensajeGenerado = true;
   }catch(e){ txt.textContent='Error al generar. Intenta de nuevo.'; icMensajeGenerado=false; }
-  btn.disabled=false; btn.textContent='💬 Mensaje con IA';
+  btn.disabled=false; btn.textContent='💬 Mensaje IA';
   evaluarBtnGuardarIC();
 }
 
@@ -4890,6 +5044,128 @@ document.getElementById('btnGuardarIC').addEventListener('click', async () => {
   // Sincroniza de inmediato con Sheets (si ya hay una URL configurada): mismo
   // arreglo que en Primera Visita, para que ninguna gestión (ni su Acción
   // Recomendada) dependa de que alguien recuerde sincronizar manualmente.
+  if(localStorage.getItem('nexus_sheets_url')) await sincronizarSheets();
+});
+
+/* ─── SEGUIMIENTO ("Follow-up") — PASOS ───
+   Mismo patrón que Información Comercial: un plan de seguimiento profesional para
+   esta tarjeta, y una acción rápida separada para el bloque de Acción Recomendada. */
+async function generarPasosRC(){
+  const btn = document.getElementById('btnRcPasos');
+  const box = document.getElementById('rcPasosBox');
+  const txt = document.getElementById('rcPasosTexto');
+  btn.disabled=true; btn.textContent='⏳ Generando…';
+  box.classList.remove('hidden');
+  txt.innerHTML='<div class="ai-loading"><div class="spinner"></div> Generando plan de seguimiento…</div>';
+  const p=`Eres un coach de ventas automotriz senior. Con base en este seguimiento del cliente, genera un plan de seguimiento profesional Y una acción inmediata. Responde EXACTAMENTE con este formato, sin texto adicional antes ni después, sin comillas:\n\nPLAN:\n1. (primer paso concreto y específico)\n2. (siguiente paso)\n(continúa numerando tantos pasos como consideres profesionalmente necesarios: pueden ser 2, pueden ser 7, tú decides según la complejidad real del caso — no fuerces un número fijo, sé un consultor senior, no una plantilla)\n\nACCION_RAPIDA: (una sola acción específica y lista para ejecutar hoy o en las próximas horas, máximo 2 líneas, sin emojis ni encabezados)\nTIEMPO: (rango de tiempo realista para ejecutar esa acción rápida, ejemplo "24-48 horas")\n\nContexto: ${buildContexto()}\nTipo de contacto: ${document.getElementById('tipoContacto').value}\nCalidad del contacto: ${document.getElementById('calidadContacto').value}\nNotas del contacto: ${document.getElementById('comentariosGestion').value.trim()||'Ninguna'}\nNotas personales del cliente: ${document.getElementById('crmNotasPersonales').value.trim()||'Ninguna'}\nCompromisos pendientes: ${document.getElementById('crmCompromisos').value.trim()||'Ninguno'}`;
+  try{
+    const resp = await llamarIA(p, 1400);
+    const {plan, accionRapida, tiempo} = parseRespuestaPlan(resp);
+    txt.innerHTML = (plan||resp).replace(/\n/g,'<br>');
+    rcAccionRapida = accionRapida || plan;
+    rcTiempoEstimado = tiempo;
+    rcPasosActual = plan||resp;
+    rcPasosGenerados = true;
+  }catch(e){ txt.textContent='Error al generar. Intenta de nuevo.'; rcPasosGenerados=false; }
+  btn.disabled=false; btn.textContent='⚡ Siguientes pasos';
+  evaluarBtnGuardarRC();
+}
+
+/* ─── SEGUIMIENTO ("Follow-up") — MENSAJE IA ─── */
+async function generarMensajeRC(){
+  const btn = document.getElementById('btnRcMensaje');
+  const box = document.getElementById('rcMensajeBox');
+  const txt = document.getElementById('rcMensajeTexto');
+  btn.disabled=true; btn.textContent='⏳ Generando…';
+  box.classList.remove('hidden');
+  txt.innerHTML='<div class="ai-loading"><div class="spinner"></div> Generando mensaje…</div>';
+  const p=`Eres un vendedor de autos experto en WhatsApp en México.\n\nContexto: ${buildContexto()}\nTipo de contacto: ${document.getElementById('tipoContacto').value}\nCalidad del contacto: ${document.getElementById('calidadContacto').value}\nNotas del contacto: ${document.getElementById('comentariosGestion').value.trim()||'Ninguna'}\nNotas personales del cliente: ${document.getElementById('crmNotasPersonales').value.trim()||'Ninguna'}\nCompromisos pendientes: ${document.getElementById('crmCompromisos').value.trim()||'Ninguno'}\n\nRedacta UN mensaje de seguimiento con base en el estado comercial actual. Máximo 4-5 líneas. Natural, cálido, con call-to-action claro. 1-2 emojis máximo. Solo el mensaje, sin comillas ni explicaciones.`;
+  try{
+    const resp = await llamarIA(p, 600);
+    txt.textContent = resp;
+    rcMsgActual = resp;
+    rcMensajeGenerado = true;
+  }catch(e){ txt.textContent='Error al generar. Intenta de nuevo.'; rcMensajeGenerado=false; }
+  btn.disabled=false; btn.textContent='💬 Mensaje IA';
+  evaluarBtnGuardarRC();
+}
+
+function resetearRC(){
+  document.getElementById('rcPasosBox').classList.add('hidden');
+  document.getElementById('rcMensajeBox').classList.add('hidden');
+  rcPasosGenerados=false; rcMensajeGenerado=false; rcMsgActual=''; rcPasosActual='';
+  rcAccionRapida=''; rcTiempoEstimado='';
+  evaluarBtnGuardarRC();
+  const tipoContactoEl = document.getElementById('tipoContacto');
+  const calidadContactoEl = document.getElementById('calidadContacto');
+  const notasContactoEl = document.getElementById('comentariosGestion');
+  if(tipoContactoEl) tipoContactoEl.value = 'sincontacto';
+  if(calidadContactoEl) calidadContactoEl.value = 'positivo';
+  if(notasContactoEl) notasContactoEl.value = '';
+}
+
+/* ─── GUARDAR SEGUIMIENTO ("Follow-up") ───
+   Misma lógica base que "Guardar" de Información Comercial (registra una gestión
+   con la "Acción Recomendada" generada, que alimenta el bloque "🎯 Siguiente Acción
+   Recomendada" de arriba), más las reglas propias de esta sección: solo puede
+   presionarse cuando ya se generaron aquí "Siguientes pasos" y "Mensaje IA", y la
+   Acción Recomendada anterior ya quedó atendida (ver evaluarBtnGuardarRC()). Al
+   guardar, la nueva Acción Recomendada que se genera vuelve a bloquear esta misma
+   tarjeta hasta que se repita el ciclo completo (Agendar → Guardar). */
+document.getElementById('btnGuardarRC').addEventListener('click', async () => {
+  document.getElementById('btnGuardarRC').classList.remove('btn-cta-blink');
+  const tipoContacto = document.getElementById('tipoContacto').value;
+  const calidadContacto = document.getElementById('calidadContacto').value;
+  const notasContacto = document.getElementById('comentariosGestion').value.trim();
+  const estado = document.getElementById('estadoOperacion').value;
+  const calidadDerivada = estado==='cerrada' ? 'positivo' : estado==='perdida' ? 'negativo' : 'neutral';
+
+  const MAPA_CONTADOR_CONTACTO = { llamada:'crmLlamadas', whatsapp:'crmWhatsapp', email:'crmCorreos' };
+  const campoContador = MAPA_CONTADOR_CONTACTO[tipoContacto];
+  if(campoContador) stepNumberInput(campoContador, 1);
+
+  const resumenComentarios = notasContacto
+    || document.getElementById('crmCompromisos').value.trim()
+    || document.getElementById('crmNotasPersonales').value.trim()
+    || 'Actualización de seguimiento.';
+
+  // ── Acción Previa Atendida (mismo criterio que en Información Comercial) ──
+  const gestionAnterior = gestiones[0];
+  const accionPrevia = (gestionAnterior && gestionAnterior.accionEstado) ? {
+    accionPreviaResumen:      gestionAnterior.pasoSiguiente || '',
+    accionPreviaEstado:       gestionAnterior.accionEstado || '',
+    accionPreviaFecha:        gestionAnterior.accionFecha || '',
+    accionPreviaHora:         gestionAnterior.accionHora || '',
+    accionPreviaExplicacion:  gestionAnterior.accionExplicacion || ''
+  } : {
+    accionPreviaResumen: '', accionPreviaEstado: '', accionPreviaFecha: '',
+    accionPreviaHora: '', accionPreviaExplicacion: ''
+  };
+
+  const g = {
+    id: Date.now(),
+    fecha: new Date().toLocaleString('es-MX'),
+    tipo: (tipoContacto && tipoContacto!=='sincontacto') ? tipoContacto : 'seguimiento',
+    calidad: notasContacto ? calidadContacto : calidadDerivada,
+    comentarios: resumenComentarios,
+    pasoSiguiente: rcAccionRapida || '',
+    planDetallado: document.getElementById('rcPasosTexto').innerText || '',
+    accionTiempo: rcTiempoEstimado || '24-48 horas',
+    mensajeIA: rcMsgActual || '',
+    accionEstado: '', accionExplicacion: '', accionFecha: '', accionHora: '',
+    ...accionPrevia
+  };
+  gestiones.unshift(g);
+  localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
+  renderHistorial(); recalcScore();
+  crmMostrarToast('✓ Seguimiento guardado');
+  evaluarScoreIA(false);
+  resetearRC();
+
+  // Genera la nueva Acción Recomendada y, con ella, vuelve a bloquear "Seguimiento"
+  // hasta que se repita Agendar → Guardar sobre esta nueva acción.
+  inicializarAccionRecomendada();
+
   if(localStorage.getItem('nexus_sheets_url')) await sincronizarSheets();
 });
 
