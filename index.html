@@ -3236,8 +3236,8 @@ function confirmarNuevaFicha(){
     </div>
 
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px">
-      <button class="btn-ia" id="btnIcPasos" onclick="generarPasosIC()" style="flex:1" disabled>⚡ Siguientes pasos</button>
-      <button class="btn-ia" id="btnIcMensaje" onclick="generarMensajeIC()" style="flex:1" disabled>💬 Mensaje IA</button>
+      <button class="btn-ia" id="btnIcPasos" onclick="generarPasosIC()" style="flex:1">⚡ Siguientes pasos</button>
+      <button class="btn-ia" id="btnIcMensaje" onclick="generarMensajeIC()" style="flex:1">💬 Mensaje IA</button>
     </div>
     <div style="margin-top:10px">
       <button class="btn-primary full" id="btnGuardarIC" disabled>💾 Guardar</button>
@@ -4286,13 +4286,13 @@ function evaluarBtnGuardarIC(){
   const btn = document.getElementById('btnGuardarIC');
   const btnPasos = document.getElementById('btnIcPasos');
   const btnMensaje = document.getElementById('btnIcMensaje');
-  const accionPendiente = hayAccionRecomendadaPendiente();
-  // Mientras la Acción Recomendada anterior no se haya guardado explícitamente, los
-  // botones "Siguientes pasos" y "Mensaje con IA" de Información Comercial quedan
-  // bloqueados. El botón "Guardar" de esta sección, en cambio, ya NO tiene ninguna
+  // "Siguientes pasos" y "Mensaje IA" de Información Comercial NO dependen de
+  // nada -- ni de la Acción Recomendada anterior ni de ninguna otra cosa -- y
+  // se pueden usar indistinta e indiferentemente en cualquier momento y en
+  // cualquier orden. El botón "Guardar" de esta sección tampoco tiene
   // restricción: el usuario puede guardar en cualquier momento.
-  if(btnPasos)   btnPasos.disabled   = accionPendiente;
-  if(btnMensaje) btnMensaje.disabled = accionPendiente;
+  if(btnPasos)   btnPasos.disabled   = false;
+  if(btnMensaje) btnMensaje.disabled = false;
   if(btn) btn.disabled = false;
 }
 
