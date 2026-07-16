@@ -4271,13 +4271,15 @@ function hayAccionRecomendadaPendiente(){
   if(!gestiones.length) return false;
   const ultima = gestiones[0];
   if(!ultima.pasoSiguiente) return false; // no hay módulo de Acción Recomendada activo
-  // Pendiente hasta que se presione explícitamente el botón "💾 Guardar" del módulo
-  // "Siguiente Acción Recomendada" (ultima.accionEstado SOLO se fija dentro del callback
-  // onGuardar de inicializarAccionRecomendada(), que se dispara desde guardarAccion() →
-  // finalizarGuardadoAccion()). Marcar Realizado/No realizado/Posponer (accionState[prefix])
-  // actualiza el estado visual del botón, pero NO cuenta como atendido por sí solo: eso
-  // evita que solo seleccionar una opción, sin guardarla, desbloquee Información Comercial.
-  return !ultima.accionEstado;
+  // Pendiente hasta que la Acción Recomendada quede REALMENTE atendida. Agendar +
+  // Guardar (ultima.accionEstado === 'agendada') solo programa la tarea a futuro —
+  // es anotarla en una libreta, no tacharla — así que NO cuenta como atendida.
+  // Solo cuenta como atendida cuando, en una segunda etapa (ver
+  // renderAccionEtapaAtender()), se elige Realizado / No realizado / Posponer (con
+  // sus campos requeridos) y se guarda ese resultado real.
+  if(!ultima.accionEstado) return true;
+  if(ultima.accionEstado === 'agendada') return true;
+  return false;
 }
 
 function evaluarBtnGuardarIC(){
@@ -4414,7 +4416,7 @@ function renderAccionModule(container, prefix, resumen, tiempoTexto, diasSugerid
   const sugerida = new Date(hoy.getTime() + (diasSugeridos||1)*86400000);
   const fechaValue = sugerida.toISOString().slice(0,10);
   const duracionDefault = estimarDuracionAccion(resumen);
-  accionState[prefix] = { estado:'', resumen, tiempoTexto, gestionId, agendado:false };
+  accionState[prefix] = { estado:'', resumen, tiempoTexto, gestionId, agendado:false, etapa:'crear' };
   accionCallbacks[prefix] = onGuardar;
   container.innerHTML = `
     <div class="accion-recomendada-card">
@@ -4434,18 +4436,6 @@ function renderAccionModule(container, prefix, resumen, tiempoTexto, diasSugerid
       </div>
       <div class="campo" style="margin-bottom:14px"><label>⏱ Duración estimada (minutos, para la Agenda)</label>
         <input class="inp" type="number" min="5" step="5" id="${prefix}Duracion" value="${duracionDefault}">
-      </div>
-      <div class="accion-status-row">
-        <button type="button" class="accion-btn realizado" id="${prefix}BtnRealizado" onclick="marcarEstadoAccion('${prefix}','realizado')">✅ Realizado</button>
-        <button type="button" class="accion-btn norealizado" id="${prefix}BtnNoRealizado" onclick="marcarEstadoAccion('${prefix}','no_realizado')">❌ No realizado</button>
-        <button type="button" class="accion-btn posponer" id="${prefix}BtnPosponer" onclick="marcarEstadoAccion('${prefix}','pospuesto')">🕓 Posponer</button>
-      </div>
-      <div class="campo hidden" id="${prefix}CampoExplicacion" style="margin-top:12px">
-        <label>¿Por qué no se realizó?</label>
-        <textarea class="inp" id="${prefix}Explicacion" oninput="evaluarBtnGuardarAccion('${prefix}'); if(typeof evaluarBtnGuardarIC==='function') evaluarBtnGuardarIC(); if(typeof evaluarBtnGuardarRC==='function') evaluarBtnGuardarRC();" placeholder="Explica brevemente qué pasó…"></textarea>
-        <div style="display:flex;justify-content:flex-end;margin-top:6px">
-          <button class="btn-ia sm" type="button" onclick="reescribirTexto('${prefix}Explicacion', this)">🪄 Reescribir</button>
-        </div>
       </div>
       <p id="${prefix}AgendadoTag" class="hidden" style="font-size:12px;color:var(--accent-bright);font-weight:600;margin-top:12px">🗓️ Agendado en la Agenda como pendiente por realizar.</p>
       <div style="display:flex;gap:10px;margin-top:14px">
@@ -4469,6 +4459,8 @@ function marcarEstadoAccion(prefix, estado){
   });
   const campoExp = document.getElementById(prefix+'CampoExplicacion');
   if(campoExp) campoExp.classList.toggle('hidden', nuevoEstado!=='no_realizado');
+  const campoNuevaFecha = document.getElementById(prefix+'CampoNuevaFecha');
+  if(campoNuevaFecha) campoNuevaFecha.classList.toggle('hidden', nuevoEstado!=='pospuesto');
   if(nuevoEstado==='pospuesto'){
     const fechaInp = document.getElementById(prefix+'Fecha');
     if(fechaInp){ try{ fechaInp.focus(); if(typeof fechaInp.showPicker==='function') fechaInp.showPicker(); }catch(e){} }
@@ -4483,42 +4475,54 @@ function marcarEstadoAccion(prefix, estado){
 
 /* ─── ETAPA 1 del bloque "🎯 Siguiente Acción Recomendada" ───
    Al CREAR la acción (recién generada), "atenderla" (Realizado / No realizado /
-   Posponer) NO es un requisito: solo hace falta 🗓️ Agendar y luego 💾 Guardar.
-   Los botones de estado quedan disponibles por si el usuario ya sabe el resultado,
-   pero son opcionales — "Guardar" nunca los exige en esta etapa. Atender la acción
-   por completo (estado + campos) es cosa de la segunda etapa, cuando más adelante
-   se retoma esa acción ya existente para darle seguimiento. */
+   Posponer) no está disponible todavía: solo hace falta 🗓️ Agendar y luego
+   💾 Guardar, lo que únicamente programa la tarea (como anotarla en una libreta).
+   Elegir el resultado real es cosa de la ETAPA 2 (renderAccionEtapaAtender()),
+   que se muestra después, cuando ya toca retomar esa acción para atenderla. */
 function evaluarBtnGuardarAccion(prefix){
   const st = accionState[prefix] || {};
   const btn = document.getElementById(prefix+'BtnGuardar');
   if(!btn) return;
-  // El "Guardar" de la Acción Recomendada solo se habilita DESPUÉS de haber
-  // presionado "🗓️ Agendar": Agendar siempre va primero. No exige estado.
-  let ok = !!st.agendado;
-  if(st.estado==='no_realizado'){
-    const expEl = document.getElementById(prefix+'Explicacion');
-    ok = ok && !!(expEl && expEl.value.trim());
+  if(st.etapa === 'atender'){
+    // ETAPA 2: exige haber elegido un resultado real, y sus campos requeridos
+    // (explicación si "No realizado", nueva fecha si "Posponer").
+    let ok = !!st.estado;
+    if(st.estado==='no_realizado'){
+      const expEl = document.getElementById(prefix+'Explicacion');
+      ok = ok && !!(expEl && expEl.value.trim());
+    }
+    if(st.estado==='pospuesto'){
+      const fechaEl = document.getElementById(prefix+'Fecha');
+      ok = ok && !!(fechaEl && fechaEl.value);
+    }
+    btn.disabled = !ok;
+  } else {
+    // ETAPA 1: el "Guardar" de la Acción Recomendada solo se habilita DESPUÉS de
+    // haber presionado "🗓️ Agendar": Agendar siempre va primero. No exige estado.
+    btn.disabled = !st.agendado;
   }
-  btn.disabled = !ok;
   sincronizarBlinkAccion(prefix);
 }
 
 /* ─── GUÍA VISUAL (parpadeo) del bloque "🎯 Siguiente Acción Recomendada" ───
-   Solo añade una señal visual (clase .btn-cta-blink) sobre el flujo ya existente
-   de Agendar → Guardar; no cambia ninguna condición de habilitado/bloqueado.
+   Solo añade una señal visual (clase .btn-cta-blink) sobre el flujo ya existente;
+   no cambia ninguna condición de habilitado/bloqueado.
    - ETAPA 1 (creando la acción, sin Agendar todavía): parpadea "🗓️ Agendar"
      ("Guardar" no parpadea porque, sin agendar, tampoco puede habilitarse).
-   - ETAPA 2 (atendiendo la acción ya agendada): deja de parpadear "Agendar" y,
-     únicamente cuando "💾 Guardar" ya quedó habilitado (es decir, la acción
-     quedó atendida por completo: estado + campos requeridos), empieza a
-     parpadear "Guardar" hasta que se presione. El parpadeo es solo una guía
-     visual: nunca habilita el botón por sí mismo, eso lo sigue decidiendo
-     evaluarBtnGuardarAccion(). */
+   - ETAPA 2 (atendiendo la acción ya agendada, sin botón "Agendar" en su tarjeta):
+     únicamente cuando "💾 Guardar" ya quedó habilitado (resultado elegido con sus
+     campos requeridos), empieza a parpadear "Guardar" hasta que se presione. El
+     parpadeo es solo una guía visual: nunca habilita el botón por sí mismo, eso
+     lo sigue decidiendo evaluarBtnGuardarAccion(). */
 function sincronizarBlinkAccion(prefix){
-  const btnAg = document.getElementById(prefix+'BtnAgendar');
   const btnGu = document.getElementById(prefix+'BtnGuardar');
-  if(!btnAg || !btnGu) return;
+  if(!btnGu) return;
+  const btnAg = document.getElementById(prefix+'BtnAgendar');
   const st = accionState[prefix] || {};
+  if(!btnAg){
+    btnGu.classList.toggle('btn-cta-blink', !btnGu.disabled);
+    return;
+  }
   if(!st.agendado){
     btnAg.classList.add('btn-cta-blink');
     btnGu.classList.remove('btn-cta-blink');
@@ -4566,18 +4570,24 @@ async function inicializarAccionRecomendada(){
 
   const prefix = ultima.tipo === 'primeravisita' ? 'pvAccion' : 'icAccion';
 
-  if(ultima.accionEstado){
-    // Ya se Guardó esta Acción Recomendada. Si además quedó registrado que se
-    // Agendó (flujo normal desde este cambio en adelante, donde "Guardar" exige
-    // haber Agendado antes), "Seguimiento" se desbloquea. Una gestión que no
-    // traiga ese dato (por ejemplo, cargada desde Sheets o guardada antes de
-    // este cambio) se trata como agendada por compatibilidad, para no
-    // re-bloquear de golpe procesos que ya estaban resueltos.
+  // Ya se atendió por completo (Realizado / No realizado / Posponer, con sus campos
+  // requeridos, ya guardado en Etapa 2): tarjeta cerrada, de solo lectura.
+  if(ultima.accionEstado && ultima.accionEstado !== 'agendada'){
     cont.innerHTML = accionGuardadaHTML({
       estado: ultima.accionEstado, fecha: ultima.accionFecha,
       hora: ultima.accionHora, explicacion: ultima.accionExplicacion
     });
     if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(ultima.accionAgendado !== false);
+    if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+    if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
+    return;
+  }
+
+  // Ya se completó Etapa 1 (Agendar + Guardar): la tarea quedó programada, pero
+  // todavía no atendida. Se muestra la Etapa 2 para elegir el resultado real.
+  if(ultima.accionEstado === 'agendada'){
+    if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(true);
+    renderAccionEtapaAtender(cont, prefix, ultima, (st) => aplicarResultadoFinalAccion(prefix, ultima, cont, st));
     if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
     if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
     return;
@@ -4590,28 +4600,21 @@ async function inicializarAccionRecomendada(){
   const resumen = ultima.pasoSiguiente;
   const tiempo  = ultima.accionTiempo || '24-48 horas';
   renderAccionModule(cont, prefix, resumen, tiempo, diasDesdeTiempo(tiempo), (st) => {
-    ultima.accionEstado = st.estado; ultima.accionExplicacion = st.explicacion;
+    // Etapa 1 completa: st.estado siempre llega como 'agendada' (ver guardarAccion()).
+    // Esto SOLO programa la tarea -- no la marca como atendida.
+    ultima.accionEstado = st.estado;
     ultima.accionFecha = st.fecha; ultima.accionHora = st.hora;
-    // Se guarda si "Agendar" ya se había presionado ANTES de este "Guardar" (es
-    // requisito: ver evaluarBtnGuardarAccion()), así que en la práctica siempre
-    // queda en true al llegar aquí — se persiste para que sobreviva a un recargo.
     ultima.accionAgendado = !!(accionState[prefix] && accionState[prefix].agendado);
     localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
-    cont.innerHTML = accionGuardadaHTML(st);
-    // Se completaron Agendar + Guardar de la Acción Recomendada: desbloquea "Seguimiento".
+    // Se completaron Agendar + Guardar: desbloquea la tarjeta de "Seguimiento" (ya se
+    // puede registrar el contacto), aunque la acción todavía no esté atendida.
     if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(ultima.accionAgendado);
-    // La acción recomendada anterior ya quedó atendida: reevaluar el botón "Guardar"
-    // de Información Comercial y el de Seguimiento por si esa era la única condición
-    // que les faltaba.
     if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
     if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
-    if(prefix === 'pvAccion'){
-      crmMostrarToast('✓ Acción registrada.');
-      mostrarPVGuardada(ultima); // refresca la vista de PV para bloquear editar/eliminar
-    } else {
-      crmMostrarToast('✓ Acción registrada.');
-      setTimeout(resetearIC, 1100);
-    }
+    crmMostrarToast('🗓️ Acción programada. Cuando la realices, márcala como Realizado, No realizado o Posponer.');
+    if(prefix === 'pvAccion') mostrarPVGuardada(ultima); // refresca la vista de PV para bloquear editar/eliminar
+    // Pasa directo a Etapa 2, en la misma tarjeta, para elegir el resultado real.
+    renderAccionEtapaAtender(cont, prefix, ultima, (st2) => aplicarResultadoFinalAccion(prefix, ultima, cont, st2));
   }, ultima.gestionId || ultima.id);
   // Al quedar renderizado un módulo de Acción Recomendada sin resolver, el botón
   // "Guardar" de Información Comercial y el de Seguimiento deben bloquearse hasta
@@ -4620,20 +4623,105 @@ async function inicializarAccionRecomendada(){
   if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
 }
 
+/* ─── ETAPA 2 del bloque "🎯 Siguiente Acción Recomendada" ───
+   Se muestra cuando la acción YA fue agendada (Etapa 1 completa: Agendar + Guardar)
+   pero todavía no se ha atendido su resultado real. Aquí se elige Realizado / No
+   realizado / Posponer (con sus campos requeridos) y se guarda: solo entonces la
+   acción cuenta como atendida (ver hayAccionRecomendadaPendiente()). No lleva botón
+   "Agendar" propio: eso ya se resolvió en Etapa 1. */
+function renderAccionEtapaAtender(container, prefix, ultima, onGuardar){
+  if(!container) return;
+  const resumen = ultima.pasoSiguiente || '';
+  const tiempoTexto = ultima.accionTiempo || '24-48 horas';
+  const fechaAgendada = ultima.accionFecha || '';
+  const horaAgendada  = ultima.accionHora  || '';
+  accionState[prefix] = {
+    estado:'', resumen, tiempoTexto, gestionId: ultima.gestionId || ultima.id,
+    agendado:true, etapa:'atender', fecha: fechaAgendada, hora: horaAgendada, duracionMin: 20
+  };
+  accionCallbacks[prefix] = onGuardar;
+  container.innerHTML = `
+    <div class="accion-recomendada-card">
+      <div class="paso-eyebrow">🎯 Acción agendada — pendiente por atender</div>
+      <div class="accion-meta-row">
+        ${fechaAgendada ? `<span>📅 Programada: ${fechaAgendada}${horaAgendada?' · 🕐 '+horaAgendada:''}</span>` : ''}
+        <span>⏱ Tiempo estimado: ${tiempoTexto}</span>
+      </div>
+      <div class="paso-texto" style="margin:10px 0 14px">${resumen.replace(/\n/g,'<br>')}</div>
+      <div class="accion-status-row">
+        <button type="button" class="accion-btn realizado" id="${prefix}BtnRealizado" onclick="marcarEstadoAccion('${prefix}','realizado')">✅ Realizado</button>
+        <button type="button" class="accion-btn norealizado" id="${prefix}BtnNoRealizado" onclick="marcarEstadoAccion('${prefix}','no_realizado')">❌ No realizado</button>
+        <button type="button" class="accion-btn posponer" id="${prefix}BtnPosponer" onclick="marcarEstadoAccion('${prefix}','pospuesto')">🕓 Posponer</button>
+      </div>
+      <div class="campo hidden" id="${prefix}CampoExplicacion" style="margin-top:12px">
+        <label>¿Por qué no se realizó?</label>
+        <textarea class="inp" id="${prefix}Explicacion" oninput="evaluarBtnGuardarAccion('${prefix}')" placeholder="Explica brevemente qué pasó…"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-ia sm" type="button" onclick="reescribirTexto('${prefix}Explicacion', this)">🪄 Reescribir</button>
+        </div>
+      </div>
+      <div class="grid-2 hidden" id="${prefix}CampoNuevaFecha" style="margin-top:12px">
+        <div class="campo" style="margin-bottom:0"><label>Nueva fecha</label>
+          <input class="inp" type="date" id="${prefix}Fecha" value="${fechaAgendada}" oninput="evaluarBtnGuardarAccion('${prefix}')">
+        </div>
+        <div class="campo" style="margin-bottom:0"><label>Nueva hora</label>
+          <input class="inp" type="time" id="${prefix}Hora" value="${horaAgendada||'10:00'}">
+        </div>
+      </div>
+      <div style="margin-top:14px">
+        <button class="btn-primary" id="${prefix}BtnGuardar" onclick="guardarAccion('${prefix}')" style="width:100%" disabled>💾 Guardar</button>
+      </div>
+    </div>`;
+  sincronizarBlinkAccion(prefix);
+}
+
+/* ─── Aplica el resultado real (Etapa 2 ya guardada): la acción queda atendida. ─── */
+function aplicarResultadoFinalAccion(prefix, ultima, cont, st){
+  ultima.accionEstado = st.estado; ultima.accionExplicacion = st.explicacion;
+  ultima.accionFecha = st.fecha; ultima.accionHora = st.hora;
+  ultima.accionAgendado = true;
+  localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
+  cont.innerHTML = accionGuardadaHTML(st);
+  // La acción recomendada anterior ya quedó REALMENTE atendida: reevaluar todo lo
+  // que dependía de eso.
+  if(typeof evaluarBloqueoRC === 'function') evaluarBloqueoRC(true);
+  if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+  if(typeof evaluarBtnGuardarRC === 'function') evaluarBtnGuardarRC();
+  crmMostrarToast('✓ Resultado de la acción registrado.');
+  if(prefix === 'pvAccion') mostrarPVGuardada(ultima);
+  else setTimeout(resetearIC, 1100);
+}
+
 function guardarAccion(prefix){
   const st = accionState[prefix] || {};
-  if(!st.agendado){ crmMostrarToast('Primero presiona "🗓️ Agendar".'); return; }
-  if(st.estado==='no_realizado'){
-    const exp = (document.getElementById(prefix+'Explicacion')||{}).value||'';
-    if(!exp.trim()){ crmMostrarToast('Explica brevemente por qué no se realizó.'); return; }
-    st.explicacion = exp.trim();
-  } else {
-    st.explicacion = '';
+  if(st.etapa === 'atender'){
+    // ETAPA 2: aquí sí se guarda el resultado REAL de una acción ya agendada.
+    if(!st.estado){ crmMostrarToast('Elige Realizado, No realizado o Posponer.'); return; }
+    if(st.estado==='no_realizado'){
+      const exp = (document.getElementById(prefix+'Explicacion')||{}).value||'';
+      if(!exp.trim()){ crmMostrarToast('Explica brevemente por qué no se realizó.'); return; }
+      st.explicacion = exp.trim();
+    } else {
+      st.explicacion = '';
+    }
+    if(st.estado==='pospuesto'){
+      const fecha = (document.getElementById(prefix+'Fecha')||{}).value || '';
+      if(!fecha){ crmMostrarToast('Elige la nueva fecha para posponer.'); return; }
+      st.fecha = fecha;
+      st.hora  = (document.getElementById(prefix+'Hora')||{}).value || st.hora || '';
+    }
+    st.duracionMin = st.duracionMin || 20;
+    const btnGu = document.getElementById(prefix+'BtnGuardar');
+    if(btnGu) btnGu.classList.remove('btn-cta-blink');
+    finalizarGuardadoAccion(prefix, st);
+    return;
   }
-  // Etapa 1 (creando la acción): elegir Realizado/No realizado/Posponer es opcional.
-  // Si no se eligió nada, se guarda como "agendada" (pendiente por atender más
-  // adelante) para no exigir ese paso aquí.
-  if(!st.estado) st.estado = 'agendada';
+  // ETAPA 1: "Guardar" aquí solo programa la tarea -- es como anotarla en una
+  // libreta -- nunca la da por atendida. El resultado real se elige después, en
+  // Etapa 2 (ver renderAccionEtapaAtender()).
+  if(!st.agendado){ crmMostrarToast('Primero presiona "🗓️ Agendar".'); return; }
+  st.estado = 'agendada';
+  st.explicacion = '';
   st.fecha       = (document.getElementById(prefix+'Fecha')||{}).value || '';
   st.hora        = (document.getElementById(prefix+'Hora')||{}).value || '';
   st.duracionMin = parseInt((document.getElementById(prefix+'Duracion')||{}).value, 10) || 20;
