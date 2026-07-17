@@ -2632,6 +2632,7 @@
 #modalConfiguracion .hist-clear-btn:hover{background:rgba(240,90,90,0.1);}
 
 @media(max-width:420px){#modalConfiguracion .proveedor-grid{grid-template-columns:1fr;}}
+@media(max-width:480px){#cardDatosCliente .card-header{flex-wrap:wrap;row-gap:6px;}#cardDatosCliente .card-header .card-title{flex-basis:100%;white-space:normal;overflow:visible;text-overflow:clip;}#cardDatosCliente #clienteIdBadge{margin-left:44px;}}
 
 /* Corrige un choque de nombres: los botones de Tema llevan el atributo
    data-theme="dark"/"light" (para que el JS sepa cuál se pulsó), pero ese
@@ -2703,7 +2704,7 @@ function confirmarNuevaFicha(){
   <div class="card" id="cardBuscarCliente">
     <label>Buscar cliente</label>
     <div style="display:flex;gap:8px">
-      <input class="inp" type="text" id="buscarClienteInput" placeholder="Nombre, apellidos o ID único…"
+      <input class="inp" type="text" id="buscarClienteInput" placeholder="Buscar por nombre o referencia"
         onkeydown="if(event.key==='Enter'){event.preventDefault();buscarClienteGlobal();}">
       <button class="btn-primary" type="button" onclick="buscarClienteGlobal()" style="white-space:nowrap">🔍 Buscar</button>
     </div>
@@ -2746,8 +2747,8 @@ function confirmarNuevaFicha(){
   <div class="card" id="cardDatosCliente">
     <div class="card-header">
       <div class="card-icon">👤</div>
-      <div class="card-title" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Datos del Cliente</div>
-      <div id="clienteIdBadge" style="flex-shrink:0;font-size:11px;font-weight:700;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px 14px;letter-spacing:0.04em;white-space:nowrap">ID: —</div>
+      <div class="card-title" style="flex:1;min-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Datos del Cliente</div>
+      <div id="clienteIdBadge" style="flex-shrink:0;font-size:11px;font-weight:700;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:var(--radius-pill);padding:4px 14px;letter-spacing:0.02em;white-space:nowrap;min-width:max-content">ID: —</div>
     </div>
     <div class="grid-2">
       <div class="campo"><label>Nombre completo</label><input class="inp" type="text" id="crmNombre" placeholder="Ej. Juan García López" oninput="onCampoChange()"></div>
@@ -6038,26 +6039,36 @@ async function guardarFichaCompleta(){
    desbloquea junto, al confirmar (existente o nuevo) mediante
    "Guardar datos".
 ════════════════════════════════════════════════════════════════ */
-// ── FORMATO DE ID DE CLIENTE (7 dígitos, ceros a la izquierda) ───
-// Debe ser IDÉNTICO al formato que usa formatId() en el Apps Script
-// (columna A de la hoja "Clientes"), para que el ID mostrado en esta
-// tarjeta y el que queda guardado en la hoja SIEMPRE coincidan.
+// ── FORMATO DE ID DE CLIENTE (fijo y permanente, asignado por el Apps
+// Script: inicial del nombre + inicial del apellido + '-' + fecha de
+// registro DDMMYYYY + '-' + consecutivo. Ej: "JP-16072026-001") ───
+// El ID final SIEMPRE viene de la hoja de cálculo (ver sincronizarSheets),
+// así que aquí solo se muestra tal cual, sin reformatear.
 function formatearIdCliente(valor){
-  const soloDigitos = (valor || '').toString().replace(/\D/g, '');
-  if(!soloDigitos) return (valor || '').toString();
-  return soloDigitos.padStart(7, '0');
+  return (valor || '').toString().trim();
 }
 
-// Genera un ID local PROVISIONAL (mismo formato de 7 dígitos) para un
-// cliente nuevo mientras aún no se confirma con la hoja de cálculo (por
-// ejemplo, sin URL de Google Sheets configurada). Usa un contador propio
-// guardado en este navegador para que, incluso sin conexión, el ID ya
-// nazca con el formato correcto de 7 dígitos en vez de un código alfanumérico
-// que nunca coincidiría con el de la hoja.
+// Genera un ID local PROVISIONAL, con el mismo formato visual que el ID
+// final, para un cliente nuevo mientras aún no se confirma con la hoja de
+// cálculo (por ejemplo, sin URL de Google Sheets configurada). Usa un
+// contador propio guardado en este navegador; en cuanto se sincroniza, el
+// ID permanente y real que asigna el Apps Script SIEMPRE lo reemplaza.
 function generarIdCliente(){
   const siguiente = parseInt(localStorage.getItem('crm_local_id_counter') || '0', 10) + 1;
   localStorage.setItem('crm_local_id_counter', String(siguiente));
-  return formatearIdCliente(siguiente);
+
+  const nombre = ((document.getElementById('crmNombre')||{}).value || '').trim();
+  const partes = nombre.split(/\s+/).filter(Boolean);
+  const inicialNombre   = partes.length > 0 ? partes[0].charAt(0).toUpperCase() : 'X';
+  const inicialApellido = partes.length > 1 ? partes[partes.length - 1].charAt(0).toUpperCase() : inicialNombre;
+
+  const hoy = new Date();
+  const dd   = String(hoy.getDate()).padStart(2, '0');
+  const mm   = String(hoy.getMonth() + 1).padStart(2, '0');
+  const yyyy = hoy.getFullYear();
+  const consecutivo = String(siguiente).padStart(3, '0');
+
+  return `${inicialNombre}${inicialApellido}-${dd}${mm}${yyyy}-${consecutivo}`;
 }
 
 function actualizarClienteIdBadge(){
@@ -6356,7 +6367,7 @@ function sincronizarDesdeEstadoOp(){
 async function buscarClienteGlobal(){
   const q = (document.getElementById('buscarClienteInput').value||'').trim();
   const cont = document.getElementById('resultadosBuscarCliente');
-  if(!q){ crmMostrarToast('Escribe un nombre o ID para buscar.'); return; }
+  if(!q){ crmMostrarToast('Escribe un nombre o referencia para buscar.'); return; }
   const url = localStorage.getItem('nexus_sheets_url')||'';
   if(!url){ crmMostrarToast('Configura primero la URL de Google Sheets en ⚙️ Configuración.'); return; }
 
@@ -6460,8 +6471,11 @@ async function cargarClienteCompleto(id, btnOrigen){
 }
 
 function mapearEstadoBackendALocal(estadoBackend){
-  const mapa = { 'Realizado':'realizado', 'No realizado':'no_realizado', 'Pospuesto':'pospuesto' };
-  return mapa[estadoBackend] || ''; // "Pendiente por realizar" o vacío → sin resultado aún
+  const mapa = {
+    'Agendada':'agendada', 'Realizado':'realizado',
+    'No realizado':'no_realizado', 'Pospuesto':'pospuesto'
+  };
+  return mapa[estadoBackend] || ''; // vacío → todavía sin agendar ni resultado
 }
 
 // El Script guarda en "Tipo de Contacto" la etiqueta en español (para que la
