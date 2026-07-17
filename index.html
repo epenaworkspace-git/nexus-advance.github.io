@@ -6727,6 +6727,19 @@ async function sincronizarSheets(){
   const url = localStorage.getItem('nexus_sheets_url')||'';
   if(!url){ crmMostrarToast('Configura primero la URL del Web App en Configuración.'); return; }
   const est = document.getElementById('sheetsEstado');
+  if(!(document.getElementById('crmNombre').value||'').trim()){
+    est.textContent='Sincronizando…'; est.style.color='var(--muted)';
+    try{
+      const res = await fetch(url+'?action=ping');
+      const data = await res.json();
+      est.textContent = '✅ Base de datos sincronizada — ' + (data.status||'OK');
+      est.style.color = 'var(--green)';
+    }catch(e){
+      est.textContent = '❌ No se pudo sincronizar. Verifica la URL e intenta de nuevo.';
+      est.style.color = 'var(--red)';
+    }
+    return;
+  }
   est.textContent='Sincronizando…'; est.style.color='var(--muted)';
 
   const regalos=[];
