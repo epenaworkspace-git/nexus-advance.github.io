@@ -4310,8 +4310,12 @@ function evaluarBtnGuardarRC(){
   const btnPasos = document.getElementById('btnRcPasos');
   const btnMensaje = document.getElementById('btnRcMensaje');
   const accionPendiente = hayAccionRecomendadaPendiente();
-  if(btnPasos)   btnPasos.disabled   = accionPendiente;
-  if(btnMensaje) btnMensaje.disabled = accionPendiente;
+  // "Siguientes pasos" y "Mensaje IA" de Seguimiento NO dependen de la Acción
+  // Recomendada anterior (mismo criterio que Información Comercial, ver
+  // evaluarBtnGuardarIC()): se pueden generar en cualquier momento. Solo el
+  // botón final "💾 Guardar" exige que esa acción anterior ya esté atendida.
+  if(btnPasos)   btnPasos.disabled   = false;
+  if(btnMensaje) btnMensaje.disabled = false;
   if(!btn) return;
   const pasosYMensajeOk = rcPasosGenerados && rcMensajeGenerado;
   const ok = pasosYMensajeOk && !accionPendiente;
