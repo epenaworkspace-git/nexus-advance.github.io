@@ -2841,8 +2841,13 @@ function confirmarNuevaFicha(){
         <p class="text-muted" style="font-size:11px;margin-top:10px;text-align:center">*Estimado. Incluye IVA 16% sobre intereses. No incluye seguro, comisiones u otros cargos.</p>
       </div>
     </div>
+    <!-- "Estado actual" está de vuelta y ahora vive en un flujo de tres
+         puntas: este campo, "Estado final de la operación" (Información
+         Comercial) y "¿En qué punto estamos?" (Ventas) se mantienen
+         sincronizados entre sí sin importar cuál se cambie primero — ver
+         manejarCambioEstadoOperacion() y su llamada a sincronizarDesdeEstadoOp(). -->
     <div class="campo" style="margin-top:14px"><label>Estado actual</label>
-      <select class="inp" id="estadoOperacion" onchange="onCampoChange()">
+      <select class="inp" id="estadoOperacion" onchange="manejarCambioEstadoOperacion(this.value);onCampoChange()">
         <option value="proceso">🔄 En proceso</option><option value="cerrada">✅ Cerrada y vendida</option><option value="perdida">❌ Perdida / No cerró</option>
       </select>
     </div>
@@ -3819,11 +3824,25 @@ function actualizarIndicadorEstadoFinal(){
    quieres cambiar el plazo del seguimiento. */
 const DIAS_SEGUIMIENTO_POSVENTA = 90;
 
+// Al elegir directamente "Estado actual" en Proceso de Venta, se traduce a
+// la escala detallada de estadoOp (Ventas) y desde ahí se deja que
+// sincronizarDesdeEstadoOp() —ya existente— haga el resto: pinta el testigo
+// de Información Comercial, actualiza Ventas, dispara el seguimiento de
+// posventa si aplica y guarda. Así los tres campos quedan enlazados sin
+// importar cuál se toque primero.
+function manejarCambioEstadoOperacion(valor){
+  const estadoOpEl = document.getElementById('estadoOp');
+  if(!estadoOpEl) return;
+  estadoOpEl.value = SYNC_MAPA_ESTADO_OP[valor] ?? '2';
+  if(typeof sincronizarDesdeEstadoOp === 'function') sincronizarDesdeEstadoOp();
+}
+
 function manejarCambioEstadoFinalOperacion(nuevoValor){
   if(nuevoValor === 'cerrada_exito') generarSeguimientoPosventaAutomatico();
 
   // Coherencia: si el testigo (CRM) cambia directamente, refleja el mismo
-  // estado en "¿En qué punto estamos?" (Ventas), para que nunca queden en
+  // estado en "¿En qué punto estamos?" (Ventas) y, desde ahí, en "Estado
+  // actual" (Proceso de Venta) — para que los tres nunca queden en
   // desacuerdo (ej. testigo en "Se perdió" y Ventas en "Negociando").
   const estadoOpEl = document.getElementById('estadoOp');
   if(estadoOpEl){
@@ -3831,6 +3850,7 @@ function manejarCambioEstadoFinalOperacion(nuevoValor){
     const representante = MAPA_FINAL_A_ESTADOOP_REPRESENTANTE[nuevoValor];
     if(representante && actual !== nuevoValor){
       estadoOpEl.value = representante;
+      if(typeof sincronizarDesdeEstadoOp === 'function') sincronizarDesdeEstadoOp();
     }
   }
 }
@@ -3945,7 +3965,23 @@ async function verificarPosventaAlAbrir(){
 })();
 
 /* ─── TOGGLES ─── */
-function togglePrueba(){ document.getElementById('datosPrueba').classList.toggle('hidden', document.getElementById('pruebaManejo').value !== 'si'); }
+function togglePrueba(){
+  const val = document.getElementById('pruebaManejo').value;
+  document.getElementById('datosPrueba').classList.toggle('hidden', val !== 'si');
+
+  // Vínculo Proceso de Venta → Información Comercial: si aquí se responde
+  // que NO se hizo prueba de manejo, los campos de detalle en "Información
+  // Comercial" (que preguntan CÓMO fue esa prueba) se rellenan solos como
+  // "Sin prueba / no aplica" — no tiene sentido pedirle al vendedor que lo
+  // repita ni que deje esos campos huérfanos. Si se responde que SÍ, se
+  // desbloquean para que el vendedor capture el detalle (sin borrar nada
+  // que ya haya escrito ahí).
+  const detalleIds = ['crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba'];
+  if (val !== 'si') {
+    detalleIds.forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
+  }
+  detalleIds.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = (val !== 'si'); });
+}
 function toggleOperacion(){
   const v = document.getElementById('tipoOperacion').value;
   document.getElementById('datosContado').classList.toggle('hidden', v !== 'contado');
@@ -6727,19 +6763,6 @@ async function sincronizarSheets(){
   const url = localStorage.getItem('nexus_sheets_url')||'';
   if(!url){ crmMostrarToast('Configura primero la URL del Web App en Configuración.'); return; }
   const est = document.getElementById('sheetsEstado');
-  if(!(document.getElementById('crmNombre').value||'').trim()){
-    est.textContent='Sincronizando…'; est.style.color='var(--muted)';
-    try{
-      const res = await fetch(url+'?action=ping');
-      const data = await res.json();
-      est.textContent = '✅ Base de datos sincronizada — ' + (data.status||'OK');
-      est.style.color = 'var(--green)';
-    }catch(e){
-      est.textContent = '❌ No se pudo sincronizar. Verifica la URL e intenta de nuevo.';
-      est.style.color = 'var(--red)';
-    }
-    return;
-  }
   est.textContent='Sincronizando…'; est.style.color='var(--muted)';
 
   const regalos=[];
