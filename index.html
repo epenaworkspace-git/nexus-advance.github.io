@@ -2543,6 +2543,10 @@
   transition:opacity 0.25s,transform 0.25s;box-shadow:var(--shadow);white-space:nowrap;}#crm-root .toast.show {opacity:1;transform:translateX(-50%) translateY(0);}#crm-root .historial-list {display:flex;flex-direction:column;gap:10px;max-height:360px;overflow-y:auto;}#crm-root .gestion-item {background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:var(--radius-xs);padding:14px;}#crm-root .gestion-meta {display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-bottom:6px;gap:8px;flex-wrap:wrap;}#crm-root .gestion-tipo {background:var(--accent-dim);color:var(--accent-bright);padding:2px 10px;border-radius:99px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap;}#crm-root .gestion-msg {margin-top:8px;padding:10px 12px;background:var(--panel-3);border-radius:var(--radius-xs);border-left:2px solid var(--green);font-size:12px;color:var(--text-dim);line-height:1.55;}#crm-root .gestion-msg-label {font-size:10px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}#menuPrincipal .menu-item {width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;background:none;border:none;border-bottom:1px solid var(--line);font-family:var(--font-body);cursor:pointer;transition:background 0.15s;text-align:left;}#menuPrincipal .menu-item:active {background:var(--gold-dim);}#menuPrincipal .menu-label {font-size:14px;font-weight:600;color:var(--cream);}#menuPrincipal .menu-sub {font-size:11px;font-weight:400;color:var(--textodim);margin-top:1px;}#menuPrincipal .menu-icon {font-size:20px;flex-shrink:0;}#menuPrincipal .menu-item-danger .menu-label {color:var(--red);}#menuPrincipal .menu-item-danger:active {background:var(--red-dim);}
 @media(hover:hover){#menuPrincipal .menu-item:hover {background:var(--panel-2);}#menuPrincipal .menu-item-danger:hover {background:var(--red-dim);}
 }#crm-root .badge {display:inline-flex;align-items:center;background:var(--grad);color:#0D1117;font-size:10px;font-weight:800;padding:2px 10px;border-radius:20px;letter-spacing:0.04em;vertical-align:middle;}#crm-root .bloque-bloqueado {position:relative;}#crm-root .bloque-bloqueado .bloque-overlay {display:none;position:absolute;inset:0;border-radius:var(--radius);background:rgba(13,27,46,0.7);z-index:5;backdrop-filter:blur(2px);align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;padding:20px;}#crm-root .bloque-bloqueado.bloqueado .bloque-overlay {display:flex;}[data-theme="light"] #crm-root .bloque-bloqueado .bloque-overlay {background:rgba(255,255,255,0.8);}#crm-root .overlay-icon {font-size:28px;}#crm-root .overlay-texto {font-size:13px;color:var(--text-dim);max-width:260px;line-height:1.5;}#crm-root .req-row {display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}#crm-root .req-badge {display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:var(--radius-pill);font-size:12px;font-weight:600;background:var(--panel-3);border:1px solid var(--line);color:var(--muted);}#crm-root .req-badge.done {background:var(--green-dim);border-color:var(--green);color:var(--green);}#crm-root .btn-cta-blink{animation:ctaBlinkPulse 1.3s ease-out infinite;position:relative;}#crm-root .btn-cta-blink:disabled{animation:none;}@keyframes ctaBlinkPulse{0%{box-shadow:0 0 0 0 var(--grad-glow);}70%{box-shadow:0 0 0 11px rgba(0,0,0,0);}100%{box-shadow:0 0 0 0 rgba(0,0,0,0);}}#crm-root .btn-ia {display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--grad);color:#0D1117;
+.btn-rw-universal{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--grad);color:#0D1117;border:none;border-radius:999px;padding:7px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font,inherit);box-shadow:0 2px 14px rgba(0,196,154,0.25);transition:transform 0.15s,box-shadow 0.2s,filter 0.15s;}
+.btn-rw-universal:hover{transform:translateY(-2px);filter:brightness(1.07);}
+.btn-rw-universal:active{transform:scale(0.97);}
+.btn-rw-universal:disabled{opacity:0.4;cursor:not-allowed;transform:none;filter:none;}
   border:none;border-radius:var(--radius-pill);padding:11px 22px;font-size:14px;font-weight:700;cursor:pointer;
   font-family:var(--font);transition:transform 0.15s,box-shadow 0.2s,filter 0.15s;box-shadow:0 2px 14px var(--grad-glow);}#crm-root .btn-ia:hover {transform:translateY(-2px);box-shadow:0 8px 24px var(--grad-glow);filter:brightness(1.07);}#crm-root .btn-ia:active {transform:scale(0.97);}#crm-root .btn-ia:disabled {opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;filter:none;}#crm-root .btn-ia.sm {padding:7px 16px;font-size:12px;}#crm-root .accion-recomendada-card {background:var(--accent-dim);border:1px solid var(--accent-glow);border-radius:var(--radius-sm);padding:16px;margin-bottom:14px;}#crm-root .accion-meta-row {display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--muted);font-weight:600;margin-bottom:2px;}#crm-root .accion-status-row {display:flex;gap:8px;flex-wrap:wrap;}#crm-root .accion-btn {flex:1;min-width:110px;display:inline-flex;align-items:center;justify-content:center;gap:6px;
   background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim);border-radius:var(--radius-pill);
@@ -2765,6 +2769,13 @@ function confirmarNuevaFicha(){
       <div class="campo"><label>Correo electrónico</label><input class="inp" type="email" id="correo" placeholder="cliente@email.com" oninput="onCampoChange()"></div>
       <div class="campo"><label>Ciudad / Estado</label><input class="inp" type="text" id="ciudad" placeholder="Monterrey, N.L." oninput="onCampoChange()"></div>
       <div class="campo col-2"><label id="lblVehiculo">Vehículo de interés</label><input class="inp" type="text" id="vehiculo" placeholder="Ej. Mazda CX-5 2024 iSport" oninput="onCampoChange()"></div>
+      <div class="campo"><label>Tipo de unidad a adquirir</label>
+        <select class="inp" id="crmTipoUnidad" onchange="onCampoChange()">
+          <option value="">Seleccionar</option>
+          <option value="nuevo">🆕 Nuevo</option>
+          <option value="seminuevo">♻️ Seminuevo</option>
+        </select>
+      </div>
       <div class="campo"><label>Ocupación del cliente (opcional)</label><input class="inp" type="text" id="ocupacion" placeholder="Ej. Empresario, médico…" oninput="onCampoChange()"></div>
       <div class="campo"><label>Precio de la unidad ($)</label><input class="inp" type="number" id="precio" placeholder="0" min="0" oninput="onCampoChange();calcularFinanciamiento()"></div>
       <div class="campo"><label>Fuente del Lead</label>
@@ -2782,6 +2793,9 @@ function confirmarNuevaFicha(){
     </div>
     <div style="margin-top:16px">
       <button class="btn-primary full" id="btnGuardarDatos" onclick="guardarDatosCliente()">💾 Guardar datos</button>
+    </div>
+    <div style="margin-top:10px">
+      <button class="btn-ghost full" id="btnDescargarSolicitudVenta" onclick="descargarSolicitudVenta()" style="width:100%">📝 Descargar Solicitud de Venta</button>
     </div>
   </div>
 
@@ -2802,7 +2816,11 @@ function confirmarNuevaFicha(){
         <div class="campo"><label>Personas que asistieron</label><input class="inp" type="number" id="asistieron" min="0" oninput="onCampoChange()"></div>
         <div class="campo"><label>Personas que manejaron</label><input class="inp" type="number" id="manejaron" min="0" oninput="onCampoChange()"></div>
       </div>
-      <div class="campo"><label>Reacción del cliente</label><textarea class="inp" id="crmComentariosPrueba" style="min-height:70px" placeholder="¿Qué le gustó o preocupó?" oninput="onCampoChange()"></textarea></div>
+      <div class="campo"><label>Reacción del cliente</label><textarea class="inp" id="crmComentariosPrueba" style="min-height:70px" placeholder="¿Qué le gustó o preocupó?" oninput="onCampoChange()"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-ia sm" type="button" onclick="reescribirTexto('crmComentariosPrueba', this)">🪄 Reescribir</button>
+        </div>
+      </div>
     </div>
     <div class="campo" style="margin-top:14px"><label>Tipo de operación</label>
       <select class="inp" id="tipoOperacion" onchange="toggleOperacion();onCampoChange()">
@@ -2815,6 +2833,10 @@ function confirmarNuevaFicha(){
           <option value="">Seleccionar</option><option value="si">✅ Sí</option><option value="no">❌ No</option>
         </select>
       </div>
+      <div style="margin-top:14px">
+        <button class="btn-ia sm" type="button" id="btnDescargarCotizacionContado" onclick="descargarCotizacionContado()" style="width:100%">📄 Descargar cotización</button>
+      </div>
+      <div id="contadoCotizacionExport" style="position:absolute;left:-9999px;top:0;width:600px;background:var(--panel);padding:24px;border-radius:12px"></div>
     </div>
     <div id="datosFinanciado" class="sub-section hidden">
       <div class="grid-2" style="margin-bottom:12px">
@@ -2832,14 +2854,57 @@ function confirmarNuevaFicha(){
         </div>
       </div>
       <div class="campo"><label>Tasa de interés anual (%) — opcional</label><input class="inp" type="number" id="tasaInteres" min="0" step="0.1" placeholder="Ej. 14.5" oninput="calcularFinanciamiento()"></div>
+
+      <div class="grid-2" style="margin-top:12px">
+        <div class="campo"><label>Comisión por apertura (%)</label><input class="inp" type="number" id="comisionAperturaPct" min="0" step="0.1" placeholder="Ej. 2.5" oninput="calcularFinanciamiento()"></div>
+        <div class="campo"><label>IVA sobre mensualidades (%)</label><input class="inp" type="number" id="ivaMensualidadPct" min="0" step="0.1" placeholder="16" oninput="calcularFinanciamiento()"></div>
+      </div>
+
+      <div class="campo" style="margin-top:2px"><label>¿Lleva seguro?</label>
+        <select class="inp" id="seguroFinLleva" onchange="toggleSeguroFin();calcularFinanciamiento()">
+          <option value="no">❌ No</option><option value="si">✅ Sí</option>
+        </select>
+      </div>
+      <div id="datosSeguroFin" class="sub-section hidden">
+        <div class="grid-2" style="margin-bottom:12px">
+          <div class="campo"><label>Costo anual del seguro ($)</label><input class="inp" type="number" id="seguroFinCostoAnual" min="0" placeholder="Ej. 30000" oninput="calcularFinanciamiento()"></div>
+          <div class="campo"><label>IVA del seguro (%)</label><input class="inp" type="number" id="seguroFinIvaPct" min="0" step="0.1" placeholder="16" oninput="calcularFinanciamiento()"></div>
+        </div>
+        <div class="campo"><label>¿Cómo se paga el seguro?</label>
+          <select class="inp" id="seguroFinFormaPago" onchange="calcularFinanciamiento()">
+            <option value="contado_todo">💵 De contado todo el plazo</option>
+            <option value="contado_primer">💵 De contado solo primer año</option>
+            <option value="financiado_todo">🏦 Financiado todo el plazo</option>
+            <option value="financiado_primer">🏦 Financiado solo primer año</option>
+          </select>
+        </div>
+      </div>
+
       <div class="card-inner" id="resultadoFinanciamiento" style="margin-top:18px;padding:20px;display:none">
         <div class="kpi-row">
           <div class="kpi-item"><div class="kpi-num text-accent" id="kpiEnganche">$0</div><div class="kpi-lbl">Enganche</div></div>
           <div class="kpi-item"><div class="kpi-num" id="kpiMontoFinanciar">$0</div><div class="kpi-lbl">A financiar</div></div>
           <div class="kpi-item"><div class="kpi-num text-green" id="kpiMensualidad">$0</div><div class="kpi-lbl">Mensualidad est.</div></div>
         </div>
-        <p class="text-muted" style="font-size:11px;margin-top:10px;text-align:center">*Estimado. Incluye IVA 16% sobre intereses. No incluye seguro, comisiones u otros cargos.</p>
+        <div id="finDesgloseExtra" style="margin-top:14px;display:none">
+          <div class="grid-2" style="row-gap:10px">
+            <div><div class="text-muted" style="font-size:11px">Comisión por apertura</div><div id="finComisionMonto" style="font-size:14px;font-weight:600">$0</div></div>
+            <div><div class="text-muted" style="font-size:11px">Seguro</div><div id="finSeguroMonto" style="font-size:14px;font-weight:600">—</div></div>
+            <div><div class="text-muted" style="font-size:11px">Pago inicial total</div><div id="finPagoInicial" style="font-size:14px;font-weight:600">$0</div></div>
+            <div><div class="text-muted" style="font-size:11px">IVA sobre mensualidad</div><div id="finIvaMensualidad" style="font-size:14px;font-weight:600">$0</div></div>
+            <div style="grid-column:1/-1"><div class="text-muted" style="font-size:11px">Mensualidad final (con IVA<span id="finMensualidadSeguroLbl"></span>)</div><div id="finMensualidadFinal" class="text-green" style="font-size:16px;font-weight:700">$0</div></div>
+          </div>
+          <div id="finDesgloseAnual" style="margin-top:14px;display:none">
+            <div class="text-muted" style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Desglose del seguro por año</div>
+            <div id="finDesgloseAnualTabla" style="font-size:13px;line-height:1.9"></div>
+          </div>
+        </div>
+        <p class="text-muted" id="finTextoInformativo" style="font-size:11px;margin-top:12px;text-align:center"></p>
+        <div style="margin-top:14px">
+          <button class="btn-ia sm" type="button" id="btnDescargarCotizacion" onclick="descargarCotizacionFinanciamiento()" style="width:100%">📄 Descargar cotización</button>
+        </div>
       </div>
+      <div id="finCotizacionExport" style="position:absolute;left:-9999px;top:0;width:600px;background:var(--panel);padding:24px;border-radius:12px"></div>
     </div>
     <!-- "Estado actual" está de vuelta y ahora vive en un flujo de tres
          puntas: este campo, "Estado final de la operación" (Información
@@ -3175,21 +3240,22 @@ function confirmarNuevaFicha(){
     <div class="section-title" id="tituloPruebaDetalle">Prueba de manejo — detalle</div>
     <div class="grid-2" id="bloquePruebaDetalle">
       <div class="campo"><label id="lblReaccionPrueba">¿Cómo reaccionó durante la prueba?</label>
-        <select class="inp" id="crmReaccionPrueba" onchange="onCampoChange()">
-          <option value="0">Sin prueba / no aplica</option><option value="1">Indiferente</option><option value="3">Le gustó</option><option value="5">Le encantó / muy entusiasmado</option>
+        <select class="inp" id="crmReaccionPrueba" onchange="marcarCampoRespondido(this);onCampoChange()">
+          <option value="">Seleccionar</option><option value="0">Sin prueba / no aplica</option><option value="1">Indiferente</option><option value="3">Le gustó</option><option value="5">Le encantó / muy entusiasmado</option>
         </select>
       </div>
       <div class="campo"><label id="lblNotaVendedor">¿Cómo lo notaste tú como vendedor?</label>
-        <select class="inp" id="crmNotaVendedor" onchange="onCampoChange()">
-          <option value="0">Sin prueba / no aplica</option><option value="1">Frío, poco interés</option><option value="3">Interesado</option><option value="5">Muy convencido, listo para cerrar</option>
+        <select class="inp" id="crmNotaVendedor" onchange="marcarCampoRespondido(this);onCampoChange()">
+          <option value="">Seleccionar</option><option value="0">Sin prueba / no aplica</option><option value="1">Frío, poco interés</option><option value="3">Interesado</option><option value="5">Muy convencido, listo para cerrar</option>
         </select>
       </div>
-      <div class="campo"><label id="lblSegundaPrueba">¿Pidió hacer otra prueba o regresó a preguntar?</label>
-        <select class="inp" id="crmSegundaPrueba" onchange="onCampoChange()">
-          <option value="0">No</option><option value="5">Sí</option>
+      <div class="campo"><label id="lblSegundaPrueba">¿Pidió hacer otra prueba?</label>
+        <select class="inp" id="crmSegundaPrueba" onchange="marcarCampoRespondido(this);onCampoChange()">
+          <option value="">Seleccionar</option><option value="0">No</option><option value="5">Sí</option>
         </select>
       </div>
     </div>
+    <p id="icReqPruebaMsg" class="hidden" style="color:var(--red);font-size:12px;margin:-6px 0 14px">⚠️ Como sí se realizó la prueba de manejo, responde los 3 campos anteriores para poder guardar.</p>
     <div class="section-title">Proceso de venta</div>
     <div class="grid-2">
       <div class="campo"><label>Cotización enviada</label>
@@ -3208,6 +3274,96 @@ function confirmarNuevaFicha(){
         </select>
       </div>
     </div>
+    <div class="section-title">Vehículo a cuenta / cambio</div>
+    <div class="campo">
+      <label>¿Se recibe vehículo a cuenta o a cambio?</label>
+      <select class="inp" id="crmVehiculoCambio" onchange="toggleVehiculoCambio()">
+        <option value="">Seleccionar</option>
+        <option value="si">✅ Sí</option>
+        <option value="no">❌ No</option>
+      </select>
+    </div>
+    <div id="bloqueVehiculoCambio" class="sub-section hidden">
+      <div class="section-title" style="margin-top:0">Estado de la valoración</div>
+      <div class="campo">
+        <label>¿Estado de la unidad a cambio? *</label>
+        <select class="inp" id="vcEstadoValoracion" onchange="marcarCampoRespondido(this);toggleVcEstadoValoracion();evaluarBtnGuardarIC();onCampoChange()">
+          <option value="">Seleccionar</option>
+          <option value="pendiente">⏳ Pendiente por valorar</option>
+          <option value="valorado">✅ Ya valorado</option>
+        </select>
+      </div>
+      <div class="grid-2" id="bloqueVcFechaHora">
+        <div class="campo"><label>Fecha de valoración *</label><input class="inp" type="date" id="vcFechaValoracion" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Hora de valoración *</label><input class="inp" type="time" id="vcHoraValoracion" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+      </div>
+      <div class="grid-2">
+        <div class="campo"><label>Precio de toma acordado</label><input class="inp" type="number" min="0" id="vcPrecioToma" placeholder="Ej. 150000" oninput="onCampoChange()"></div>
+        <div class="campo">
+          <label>Situación de la propuesta</label>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:8px">
+            <label style="display:flex;align-items:center;gap:6px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer"><input type="checkbox" id="vcPropuestaAceptada" onchange="onVcPropuestaChange('vcPropuestaAceptada')"> Aceptó la propuesta</label>
+            <label style="display:flex;align-items:center;gap:6px;font-weight:400;text-transform:none;letter-spacing:0;cursor:pointer"><input type="checkbox" id="vcPropuestaNoAceptada" onchange="onVcPropuestaChange('vcPropuestaNoAceptada')"> No aceptó la propuesta</label>
+          </div>
+        </div>
+      </div>
+      <div class="section-title">Datos generales del vehículo a cuenta/cambio</div>
+      <div class="grid-2">
+        <div class="campo"><label>Marca *</label><input class="inp" type="text" id="vcMarca" placeholder="Ej. Nissan" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Año *</label><input class="inp" type="number" id="vcAnio" min="1950" max="2100" placeholder="Ej. 2019" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Modelo *</label><input class="inp" type="text" id="vcModelo" placeholder="Ej. Versa Advance" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Color *</label><input class="inp" type="text" id="vcColor" placeholder="Ej. Gris plata" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Kilometraje *</label><input class="inp" type="number" min="0" id="vcKilometraje" placeholder="Ej. 45000" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Número de dueños anteriores *</label><input class="inp" type="number" min="0" id="vcDuenos" placeholder="Ej. 1" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+        <div class="campo"><label>Número de facturas que amparan la unidad *</label><input class="inp" type="number" min="0" id="vcFacturas" placeholder="Ej. 1" oninput="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()"></div>
+      </div>
+      <div class="section-title">Uso anterior del vehículo</div>
+      <div class="campo">
+        <label>Uso anterior *</label>
+        <select class="inp" id="vcUsoAnterior" onchange="marcarCampoRespondido(this);toggleVcUsoAnteriorOtro();evaluarBtnGuardarIC();onCampoChange()">
+          <option value="">Seleccionar</option>
+          <option value="particular">🚗 Particular</option>
+          <option value="privado">🚕 Servicio de transporte privado (Uber, DiDi, Cabify o similar)</option>
+          <option value="publico">🚌 Servicio público</option>
+          <option value="carga">📦 Carga / Comercial</option>
+          <option value="otro">✏️ Otro</option>
+        </select>
+      </div>
+      <div class="campo" id="campoVcUsoAnteriorOtro" style="display:none">
+        <label>Especifica el uso anterior</label>
+        <input class="inp" type="text" id="vcUsoAnteriorOtro" placeholder="Describe el uso anterior…" oninput="onCampoChange()">
+      </div>
+      <div class="section-title">Estado del vehículo</div>
+      <div class="grid-2">
+        <div class="campo"><label>Estado físico-estético *</label>
+          <select class="inp" id="vcEstadoFisico" onchange="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="excelente">🌟 Excelente</option>
+            <option value="bueno">👍 Bueno</option>
+            <option value="regular">😐 Regular</option>
+            <option value="malo">👎 Malo</option>
+          </select>
+        </div>
+        <div class="campo"><label>Estado mecánico *</label>
+          <select class="inp" id="vcEstadoMecanico" onchange="marcarCampoRespondido(this);evaluarBtnGuardarIC();onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="excelente">🌟 Excelente</option>
+            <option value="bueno">👍 Bueno</option>
+            <option value="regular">😐 Regular</option>
+            <option value="malo">👎 Malo</option>
+          </select>
+        </div>
+      </div>
+      <div class="campo">
+        <label>Observaciones adicionales</label>
+        <textarea class="inp" id="vcObservaciones" rows="2" placeholder="Detalles extra: golpes, detalles mecánicos, documentos faltantes, etc." oninput="onCampoChange()"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-ia sm" type="button" onclick="reescribirTexto('vcObservaciones', this)">🪄 Reescribir</button>
+        </div>
+      </div>
+    </div>
+    <p id="icReqVehiculoCambioMsg" class="hidden" style="color:var(--red);font-size:12px;margin:-6px 0 14px">⚠️ Como sí se recibe vehículo a cuenta/cambio, completa los campos marcados con * para poder guardar.</p>
+
     <div class="campo">
       <label>Notas personales del cliente</label>
       <textarea class="inp" id="crmNotasPersonales" rows="2" placeholder="Ej. Le gusta llegar temprano, prefiere que le hablen por WhatsApp y no por llamada, viene acompañado de su esposa que también opina en la decisión…" oninput="onCampoChange()"></textarea>
@@ -3372,6 +3528,53 @@ function confirmarNuevaFicha(){
             </div>
           </div>
         </div>
+      </div>
+      <div class="campo" style="margin-top:14px">
+        <label>Teléfono <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="tel" id="userProfilePhone" placeholder="Ej: 55 1234 5678" maxlength="20" autocomplete="off">
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Correo electrónico <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="email" id="userProfileEmail" placeholder="Ej: tu@correo.com" maxlength="80" autocomplete="off">
+      </div>
+      <div id="perfilSaveMsg" class="text-muted" style="font-size:12px;margin-top:10px;min-height:14px"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <button class="btn-primary" id="btnGuardarPerfil" style="flex:1" onclick="guardarPerfilUsuario()">💾 Guardar cambios</button>
+        <button class="btn-ghost" id="btnLimpiarPerfil" style="flex:1" onclick="limpiarPerfilUsuario()">🧹 Limpiar datos</button>
+      </div>
+    </div>
+
+    <!-- Datos de la empresa -->
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-header"><div class="card-icon">🏢</div><div class="card-title">Datos de la empresa</div></div>
+      <div class="campo">
+        <label>Nombre de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="text" id="empresaNombre" placeholder="Ej: Autos del Valle" maxlength="80" autocomplete="off">
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Logotipo de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="file" id="empresaLogoInput" accept="image/*" onchange="onEmpresaLogoSeleccionado(event)">
+        <div id="empresaLogoPreviewWrap" style="display:none;margin-top:10px;align-items:center;gap:10px">
+          <img id="empresaLogoPreview" src="" alt="Logotipo" style="max-width:90px;max-height:90px;border-radius:10px;border:1px solid var(--line);background:#fff;object-fit:contain">
+          <button type="button" class="btn-sm danger" onclick="quitarEmpresaLogo()">Quitar logo</button>
+        </div>
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Teléfono de la agencia <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="tel" id="empresaTelefono" placeholder="Ej: 55 1234 5678" maxlength="20" autocomplete="off">
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Número de WhatsApp empresarial <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="tel" id="empresaWhatsapp" placeholder="Ej: 55 1234 5678" maxlength="20" autocomplete="off">
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Correo electrónico de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="email" id="empresaCorreo" placeholder="Ej: contacto@tuempresa.com" maxlength="80" autocomplete="off">
+      </div>
+      <div id="empresaSaveMsg" class="text-muted" style="font-size:12px;margin-top:10px;min-height:14px"></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <button class="btn-primary" id="btnGuardarEmpresa" style="flex:1" onclick="guardarDatosEmpresa()">💾 Guardar cambios</button>
+        <button class="btn-ghost" id="btnLimpiarEmpresa" style="flex:1" onclick="limpiarDatosEmpresa()">🧹 Limpiar datos</button>
       </div>
     </div>
 
@@ -3840,6 +4043,16 @@ function manejarCambioEstadoOperacion(valor){
 function manejarCambioEstadoFinalOperacion(nuevoValor){
   if(nuevoValor === 'cerrada_exito') generarSeguimientoPosventaAutomatico();
 
+  // "Pendiente de definir": su equivalente lógico en "Estado actual" (Proceso
+  // de Venta, escala simple proceso/cerrada/perdida) es "En proceso". Se
+  // refleja directo aquí porque MAPA_FINAL_A_ESTADOOP_REPRESENTANTE omite a
+  // propósito 'pendiente' (no tiene un único valor detallado en estadoOp), así
+  // que no pasa por ese mapa ni toca el detalle de Ventas.
+  if(nuevoValor === 'pendiente'){
+    const estadoSimpleEl = document.getElementById('estadoOperacion');
+    if(estadoSimpleEl && estadoSimpleEl.value !== 'proceso') estadoSimpleEl.value = 'proceso';
+  }
+
   // Coherencia: si el testigo (CRM) cambia directamente, refleja el mismo
   // estado en "¿En qué punto estamos?" (Ventas) y, desde ahí, en "Estado
   // actual" (Proceso de Venta) — para que los tres nunca queden en
@@ -3916,7 +4129,8 @@ async function verificarPosventaAlAbrir(){
 (function init(){
   const campos = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
     'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
-    'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
+    'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
+    'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
     'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
@@ -3931,7 +4145,7 @@ async function verificarPosventaAlAbrir(){
     const el = document.getElementById(id);
     if(el && clienteData[id] !== undefined) el.checked = clienteData[id];
   });
-  togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo();
+  togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleSeguroFin();
   renderHistorial(); recalcScore(); actualizarPasoSiguiente(); calcularFinanciamiento();
   if(typeof actualizarIndicadorEstadoFinal === 'function') actualizarIndicadorEstadoFinal();
   scheduleScoreIA();
@@ -3978,9 +4192,12 @@ function togglePrueba(){
   // que ya haya escrito ahí).
   const detalleIds = ['crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba'];
   if (val !== 'si') {
-    detalleIds.forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
+    detalleIds.forEach(id => { const el = document.getElementById(id); if (el){ el.value = '0'; el.style.borderColor=''; } });
+    const msg = document.getElementById('icReqPruebaMsg');
+    if(msg) msg.classList.add('hidden');
   }
   detalleIds.forEach(id => { const el = document.getElementById(id); if (el) el.disabled = (val !== 'si'); });
+  if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
 }
 function toggleOperacion(){
   const v = document.getElementById('tipoOperacion').value;
@@ -4022,7 +4239,110 @@ function restaurarRegalosDesdeTexto(regalosStr){
   });
   toggleOtroRegalo();
 }
+// Restaura las casillas "Aceptó la propuesta" / "No aceptó la propuesta" a partir
+// del texto guardado por sincronizarSheets() (mismas etiquetas fijas).
+function restaurarSituacionPropuesta(texto){
+  const aceptada = document.getElementById('vcPropuestaAceptada');
+  const noAceptada = document.getElementById('vcPropuestaNoAceptada');
+  if(aceptada) aceptada.checked = texto === 'Aceptó la propuesta';
+  if(noAceptada) noAceptada.checked = texto === 'No aceptó la propuesta';
+}
 function crmToggleCredito(){ document.getElementById('crmBloqueCredito').classList.toggle('hidden', document.getElementById('tipoOperacion').value !== 'financiado'); }
+
+/* ─── Vehículo a cuenta / cambio (Información Comercial) ───
+   Al elegir "Sí" se muestran y habilitan los campos de detalle (marca, año,
+   modelo, color, kilometraje, dueños, facturas, uso anterior, estado físico
+   y mecánico); al elegir "No" quedan ocultos y deshabilitados, sin borrar lo
+   ya capturado por si el vendedor cambia de opinión. Los datos ya guardados
+   NO se pierden al alternar. */
+const VC_CAMPOS_TODOS = ['vcEstadoValoracion','vcFechaValoracion','vcHoraValoracion','vcPrecioToma','vcPropuestaAceptada','vcPropuestaNoAceptada','vcMarca','vcAnio','vcModelo','vcColor','vcKilometraje','vcDuenos','vcFacturas','vcUsoAnterior','vcUsoAnteriorOtro','vcEstadoFisico','vcEstadoMecanico','vcObservaciones'];
+const VC_CAMPOS_OBLIGATORIOS = ['vcEstadoValoracion','vcMarca','vcAnio','vcModelo','vcColor','vcKilometraje','vcDuenos','vcFacturas','vcUsoAnterior','vcEstadoFisico','vcEstadoMecanico'];
+// Opciones fijas de Estado físico-estético / Estado mecánico cuando la unidad YA fue valorada.
+const VC_ESTADO_OPCIONES_VALORADO = [
+  {value:'', label:'Seleccionar'},
+  {value:'excelente', label:'🌟 Excelente'},
+  {value:'bueno', label:'👍 Bueno'},
+  {value:'regular', label:'😐 Regular'},
+  {value:'malo', label:'👎 Malo'}
+];
+function toggleVehiculoCambio(){
+  const val = document.getElementById('crmVehiculoCambio')?.value || '';
+  const esSi = val === 'si';
+  const bloque = document.getElementById('bloqueVehiculoCambio');
+  if(bloque) bloque.classList.toggle('hidden', !esSi);
+  VC_CAMPOS_TODOS.forEach(id => { const el = document.getElementById(id); if(el) el.disabled = !esSi; });
+  if(!esSi){
+    VC_CAMPOS_OBLIGATORIOS.forEach(id => { const el = document.getElementById(id); if(el) el.style.borderColor = ''; });
+    const msg = document.getElementById('icReqVehiculoCambioMsg');
+    if(msg) msg.classList.add('hidden');
+  }
+  toggleVcUsoAnteriorOtro();
+  toggleVcEstadoValoracion();
+  onCampoChange();
+  if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+}
+function toggleVcUsoAnteriorOtro(){
+  const sel = document.getElementById('vcUsoAnterior');
+  const campo = document.getElementById('campoVcUsoAnteriorOtro');
+  if(campo) campo.style.display = (sel && sel.value === 'otro' && !sel.disabled) ? 'block' : 'none';
+}
+/* ─── Estado de la valoración (dentro de Vehículo a cuenta/cambio) ───
+   "Pendiente por valorar": habilita Fecha/Hora de valoración, y fuerza
+   Estado físico-estético / Estado mecánico a mostrar únicamente la opción
+   "Pendiente por valorar" (sin las demás opciones).
+   "Ya valorado": oculta y deshabilita Fecha/Hora, y Estado físico-estético /
+   Estado mecánico muestran exclusivamente Excelente/Bueno/Regular/Malo,
+   eliminando totalmente la opción "Pendiente por valorar". */
+function toggleVcEstadoValoracion(){
+  const val = document.getElementById('vcEstadoValoracion')?.value || '';
+  const pendiente = val === 'pendiente';
+  const valorado = val === 'valorado';
+  const vcEsSi = document.getElementById('crmVehiculoCambio')?.value === 'si';
+  const bloqueFecha = document.getElementById('bloqueVcFechaHora');
+  const fecha = document.getElementById('vcFechaValoracion');
+  const hora = document.getElementById('vcHoraValoracion');
+  if(bloqueFecha) bloqueFecha.classList.toggle('hidden', !pendiente);
+  if(fecha) fecha.disabled = !(pendiente && vcEsSi);
+  if(hora) hora.disabled = !(pendiente && vcEsSi);
+
+  [document.getElementById('vcEstadoFisico'), document.getElementById('vcEstadoMecanico')].forEach(sel => {
+    if(!sel) return;
+    const prevVal = sel.value;
+    if(pendiente){
+      sel.innerHTML = '<option value="pendiente">⏳ Pendiente por valorar</option>';
+      sel.value = 'pendiente';
+    } else if(valorado){
+      sel.innerHTML = VC_ESTADO_OPCIONES_VALORADO.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+      sel.value = (prevVal && prevVal !== 'pendiente') ? prevVal : '';
+    }
+  });
+}
+// Las dos casillas de "Situación de la propuesta" son mutuamente excluyentes
+// (marcar una desmarca la otra); ambas pueden quedar sin marcar.
+function onVcPropuestaChange(idClicado){
+  const otroId = idClicado === 'vcPropuestaAceptada' ? 'vcPropuestaNoAceptada' : 'vcPropuestaAceptada';
+  const elClicado = document.getElementById(idClicado);
+  const elOtro = document.getElementById(otroId);
+  if(elClicado?.checked && elOtro) elOtro.checked = false;
+  onCampoChange();
+  if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
+}
+// Campos obligatorios de "Vehículo a cuenta/cambio", solo cuando se eligió "Sí".
+// Fecha y hora de valoración solo se exigen cuando el estado es "Pendiente por valorar".
+function camposVehiculoCambioFaltantes(){
+  if(document.getElementById('crmVehiculoCambio')?.value !== 'si') return [];
+  const faltantes = VC_CAMPOS_OBLIGATORIOS.filter(id => {
+    const el = document.getElementById(id);
+    return el && String(el.value).trim() === '';
+  });
+  if(document.getElementById('vcEstadoValoracion')?.value === 'pendiente'){
+    ['vcFechaValoracion','vcHoraValoracion'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el && String(el.value).trim() === '') faltantes.push(id);
+    });
+  }
+  return faltantes;
+}
 
 /* ─── CALCULADOR FINANCIAMIENTO ─── */
 function cambiarModoEnganche(){
@@ -4037,6 +4357,12 @@ function ajustarLimitesEnganche(){
   if(modo === 'pct'){ inp.max=100; inp.placeholder='Ej. 20'; }
   else { inp.max=precio||''; inp.placeholder=precio?`máx. $${precio.toLocaleString('es-MX')}`:'0'; }
 }
+function toggleSeguroFin(){
+  document.getElementById('datosSeguroFin').classList.toggle('hidden', document.getElementById('seguroFinLleva').value !== 'si');
+}
+
+const fmtMXN = n => '$'+Math.round(n||0).toLocaleString('es-MX');
+
 function calcularFinanciamiento(){
   const precio = parseFloat(document.getElementById('precio').value)||0;
   const modo   = document.getElementById('engancheModo').value;
@@ -4047,21 +4373,512 @@ function calcularFinanciamiento(){
   if(modo==='monto' && precio && engVal>precio){ engVal=precio; inp.value=precio; crmMostrarToast('El enganche no puede superar el precio del vehículo.'); }
   const resBox = document.getElementById('resultadoFinanciamiento');
   if(!precio||!engVal){ resBox.style.display='none'; onCampoChange(); return; }
+
   const engancheMonto  = modo==='pct' ? precio*(engVal/100) : engVal;
   const montoFinanciar = Math.max(precio-engancheMonto,0);
-  const plazo    = parseInt(document.getElementById('plazo').value)||0;
-  const tasaAnual= parseFloat(document.getElementById('tasaInteres').value)||0;
-  let mensualidad = plazo ? montoFinanciar/plazo : 0;
+  const plazo     = parseInt(document.getElementById('plazo').value)||0;
+  const tasaAnual = parseFloat(document.getElementById('tasaInteres').value)||0;
+  const ivaPct    = document.getElementById('ivaMensualidadPct').value === '' ? 16 : (parseFloat(document.getElementById('ivaMensualidadPct').value)||0);
+  const comisionPct = parseFloat(document.getElementById('comisionAperturaPct').value)||0;
+
+  // Mensualidad base (amortización estándar, SIN IVA) — la comisión NO se
+  // financia mensualmente, es un cargo único al Pago Inicial.
+  let mensualidadBase = plazo ? montoFinanciar/plazo : 0;
   if(plazo && tasaAnual>0){
     const tm = (tasaAnual/100)/12;
     const f  = Math.pow(1+tm,plazo);
-    mensualidad = montoFinanciar*(tm*f)/(f-1)*1.16;
+    mensualidadBase = montoFinanciar*(tm*f)/(f-1);
   }
-  document.getElementById('kpiEnganche').textContent     = '$'+Math.round(engancheMonto).toLocaleString('es-MX');
-  document.getElementById('kpiMontoFinanciar').textContent = '$'+Math.round(montoFinanciar).toLocaleString('es-MX');
-  document.getElementById('kpiMensualidad').textContent  = plazo ? '$'+Math.round(mensualidad).toLocaleString('es-MX') : '—';
+  const ivaMensualidadMonto = mensualidadBase*(ivaPct/100);
+
+  // ── Comisión por apertura: (% ÷ 100) × Saldo a financiar ──
+  const comisionMonto = montoFinanciar*(comisionPct/100);
+
+  // ── Seguro ──
+  const llevaSeguro = document.getElementById('seguroFinLleva').value === 'si';
+  const seguroCostoAnual = parseFloat(document.getElementById('seguroFinCostoAnual').value)||0;
+  const seguroIvaPct = document.getElementById('seguroFinIvaPct').value === '' ? 16 : (parseFloat(document.getElementById('seguroFinIvaPct').value)||0);
+  const seguroFormaPago = document.getElementById('seguroFinFormaPago').value;
+  const seguroTotalAnual = seguroCostoAnual*(1+seguroIvaPct/100);
+  const anios = plazo ? Math.ceil(plazo/12) : 0;
+
+  let seguroAlPagoInicial = 0;     // se suma al Pago Inicial (modos "de contado")
+  let seguroMensual = 0;           // se suma a la mensualidad (modos "financiado")
+  let seguroMesesFinanciados = 0;  // cuántos meses del plazo llevan el seguro sumado
+  let seguroDesc = '—';
+
+  if(llevaSeguro && seguroCostoAnual>0){
+    if(seguroFormaPago==='contado_todo'){
+      seguroAlPagoInicial = seguroTotalAnual*(anios||1);
+      seguroDesc = fmtMXN(seguroAlPagoInicial)+' (contado, '+(anios||1)+' año(s))';
+    } else if(seguroFormaPago==='contado_primer'){
+      seguroAlPagoInicial = seguroTotalAnual;
+      seguroDesc = fmtMXN(seguroAlPagoInicial)+' (contado, solo 1er año)';
+    } else if(seguroFormaPago==='financiado_todo'){
+      seguroMensual = seguroTotalAnual/12;
+      seguroMesesFinanciados = plazo;
+      seguroDesc = fmtMXN(seguroMensual)+'/mes (financiado, todo el plazo)';
+    } else if(seguroFormaPago==='financiado_primer'){
+      seguroMensual = seguroTotalAnual/12;
+      seguroMesesFinanciados = Math.min(12, plazo);
+      seguroDesc = fmtMXN(seguroMensual)+'/mes (financiado, primeros '+seguroMesesFinanciados+' meses)';
+    }
+  }
+
+  const mensualidadConIva = mensualidadBase + ivaMensualidadMonto;
+  const mensualidadFinal1 = mensualidadConIva + seguroMensual; // meses con seguro financiado (si aplica)
+  const mensualidadFinalResto = mensualidadConIva;              // meses sin seguro (ej. tras el 1er año en "financiado_primer")
+  const pagoInicialTotal = engancheMonto + comisionMonto + seguroAlPagoInicial;
+
+  document.getElementById('kpiEnganche').textContent       = fmtMXN(engancheMonto);
+  document.getElementById('kpiMontoFinanciar').textContent = fmtMXN(montoFinanciar);
+  document.getElementById('kpiMensualidad').textContent    = plazo ? fmtMXN(mensualidadFinal1) : '—';
+
+  const extra = document.getElementById('finDesgloseExtra');
+  extra.style.display = 'block';
+  document.getElementById('finComisionMonto').textContent = comisionPct>0 ? fmtMXN(comisionMonto)+' ('+comisionPct+'%)' : '—';
+  document.getElementById('finSeguroMonto').textContent = llevaSeguro && seguroCostoAnual>0 ? seguroDesc : 'No incluido';
+  document.getElementById('finPagoInicial').textContent = fmtMXN(pagoInicialTotal);
+  document.getElementById('finIvaMensualidad').textContent = fmtMXN(ivaMensualidadMonto)+' ('+ivaPct+'%)';
+
+  const lblSeguro = document.getElementById('finMensualidadSeguroLbl');
+  if(seguroMensual>0 && seguroMesesFinanciados>0 && seguroMesesFinanciados<plazo){
+    lblSeguro.textContent = ' — primeros '+seguroMesesFinanciados+' meses';
+    document.getElementById('finMensualidadFinal').textContent = plazo ? fmtMXN(mensualidadFinal1)+'  (después: '+fmtMXN(mensualidadFinalResto)+')' : '—';
+  } else {
+    lblSeguro.textContent = seguroMensual>0 ? ' + seguro' : '';
+    document.getElementById('finMensualidadFinal').textContent = plazo ? fmtMXN(mensualidadFinal1) : '—';
+  }
+
+  // Desglose año por año (solo aplica al modo "de contado todo el plazo")
+  const boxAnual = document.getElementById('finDesgloseAnual');
+  if(llevaSeguro && seguroFormaPago==='contado_todo' && seguroCostoAnual>0 && anios>0){
+    let filas='';
+    for(let a=1; a<=anios; a++){
+      filas += `<div style="display:flex;justify-content:space-between"><span>Año ${a}</span><span>${fmtMXN(seguroCostoAnual)} + IVA ${fmtMXN(seguroCostoAnual*(seguroIvaPct/100))} = <strong>${fmtMXN(seguroTotalAnual)}</strong></span></div>`;
+    }
+    document.getElementById('finDesgloseAnualTabla').innerHTML = filas;
+    boxAnual.style.display = 'block';
+  } else {
+    boxAnual.style.display = 'none';
+  }
+
+  // ── Texto informativo dinámico ──
+  const partes = ['Valores estimados.'];
+  partes.push(`Incluye IVA del ${ivaPct}% sobre mensualidades.`);
+  if(comisionPct>0) partes.push(`Incluye comisión por apertura del ${comisionPct}% sobre el saldo a financiar.`);
+  if(llevaSeguro && seguroCostoAnual>0){
+    const formaTxt = {contado_todo:'pagado de contado durante todo el plazo', contado_primer:'pagado de contado solo el primer año (a partir del 2° año el cliente lo contrata por su cuenta)', financiado_todo:'financiado dentro de la mensualidad durante todo el plazo', financiado_primer:'financiado dentro de la mensualidad solo el primer año'}[seguroFormaPago] || '';
+    partes.push(`Incluye seguro ${formaTxt}.`);
+  } else {
+    partes.push('No incluye seguro, comisiones adicionales ni otros cargos no especificados arriba.');
+  }
+  partes.push('No incluye otros cargos bancarios adicionales. El precio del seguro es aproximado.');
+  partes.push('La única cotización oficial y válida es la emitida directamente por el banco; este cálculo es solo una referencia para fines informativos.');
+  document.getElementById('finTextoInformativo').textContent = partes.join(' ');
+
   resBox.style.display = 'block';
   onCampoChange();
+}
+
+/* ─── Formato base profesional para cotizaciones (Contado y Financiamiento) ───
+   Encabezado con datos de la empresa (nombre, logo, teléfonos) y pie con los
+   datos del vendedor (Tu perfil) + el texto legal de vigencia/reserva de cambios. */
+const TEXTO_LEGAL_COTIZACION = 'La información, precios, montos y condiciones expresados en esta cotización son vigentes únicamente al momento de su emisión. La empresa y el vendedor se reservan el derecho de modificar cualquier dato, precio o condición sin previo aviso, debido a cambios en el mercado, ajustes de marcas o políticas internas. Esta cotización tiene carácter informativo y no constituye un contrato o compromiso de venta definitivo.';
+
+function construirEncabezadoCotizacionHTML(){
+  const logoHtml = empresaLogoDataUrl ? `<img src="${empresaLogoDataUrl}" style="max-width:64px;max-height:64px;object-fit:contain;border-radius:8px;background:#fff;padding:4px;flex-shrink:0">` : '';
+  const contactos = [empresaTelefono?`📞 ${empresaTelefono}`:'', empresaWhatsapp?`💬 ${empresaWhatsapp}`:'', empresaCorreo?`✉️ ${empresaCorreo}`:''].filter(Boolean).join('&nbsp;&nbsp;·&nbsp;&nbsp;');
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:2px solid var(--accent,#00F5C4);padding-bottom:14px;margin-bottom:18px">
+      <div style="display:flex;align-items:center;gap:12px">
+        ${logoHtml}
+        <div>
+          ${empresaNombre?`<div style="font-size:16px;font-weight:800;color:var(--text)">${empresaNombre}</div>`:''}
+          ${contactos?`<div style="font-size:11px;color:var(--muted);margin-top:2px">${contactos}</div>`:''}
+        </div>
+      </div>
+      <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap">Cotización</div>
+    </div>`;
+}
+
+function construirPiePaginaCotizacionHTML(){
+  const contactoVendedor = [userProfilePhone?`📞 ${userProfilePhone}`:'', userProfileEmail?`✉️ ${userProfileEmail}`:''].filter(Boolean).join('&nbsp;&nbsp;·&nbsp;&nbsp;');
+  return `
+    ${(userProfileName||contactoVendedor) ? `<div style="border-top:1px solid var(--line,#333);margin-top:18px;padding-top:12px;font-size:12px;color:var(--text-dim)">
+      ${userProfileName?`<div><strong>Atendido por:</strong> ${userProfileName}</div>`:''}
+      ${contactoVendedor?`<div style="margin-top:2px">${contactoVendedor}</div>`:''}
+    </div>` : ''}
+    <p style="font-size:10px;color:var(--muted);margin-top:14px;line-height:1.5;text-align:justify">${TEXTO_LEGAL_COTIZACION}</p>`;
+}
+
+async function descargarCotizacionContado(){
+  if(typeof html2canvas==='undefined' || !window.jspdf){ crmMostrarToast('No se pudo generar la cotización.'); return; }
+  const btn = document.getElementById('btnDescargarCotizacionContado');
+  const txtOriginal = btn ? btn.textContent : '';
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Generando…'; }
+  try{
+    const nombre = (document.getElementById('crmNombre')?.value||'').trim() || 'Cliente';
+    const vehiculo = (document.getElementById('vehiculo')?.value||'').trim() || 'Vehículo';
+    const precio = fmtMXN(parseFloat(document.getElementById('precio').value)||0);
+    const seguroVal = document.getElementById('seguro')?.value||'';
+    const seguroTxt = seguroVal==='si' ? 'Incluido con la agencia' : seguroVal==='no' ? 'No incluido' : '—';
+    const hoy = new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});
+
+    const html = `
+      ${construirEncabezadoCotizacionHTML()}
+      <h2 style="margin:0 0 4px;font-size:20px">Cotización de contado</h2>
+      <p style="margin:0 0 18px;font-size:12px;color:var(--muted)">${hoy}</p>
+      <div style="font-size:13px;line-height:1.9;margin-bottom:16px">
+        <div><strong>Cliente:</strong> ${nombre}</div>
+        <div><strong>Vehículo:</strong> ${vehiculo}</div>
+        <div><strong>Forma de pago:</strong> Contado</div>
+        <div><strong>Precio total:</strong> ${precio}</div>
+        <div><strong>Seguro:</strong> ${seguroTxt}</div>
+      </div>
+      ${construirPiePaginaCotizacionHTML()}
+    `;
+    const el = document.getElementById('contadoCotizacionExport');
+    el.innerHTML = html;
+    const theme = document.documentElement.getAttribute('data-theme')||'dark';
+    const bg = theme==='light' ? '#FFFFFF' : '#0D1117';
+    const canvas = await html2canvas(el, {scale:2, backgroundColor:bg, useCORS:true});
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=210, imgW=pageW, imgH=canvas.height*imgW/canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,imgW,imgH);
+    const nombreArchivo = nombre.replace(/[^a-z0-9]+/gi,'_');
+    pdf.save(`Cotizacion_Contado_${nombreArchivo}.pdf`);
+    crmMostrarToast('✓ Cotización descargada');
+  }catch(e){
+    crmMostrarToast('No se pudo generar la cotización.');
+  }
+  if(btn){ btn.disabled=false; btn.textContent=txtOriginal; }
+}
+
+async function descargarCotizacionFinanciamiento(){
+  if(typeof html2canvas==='undefined' || !window.jspdf){ crmMostrarToast('No se pudo generar la cotización.'); return; }
+  const btn = document.getElementById('btnDescargarCotizacion');
+  const txtOriginal = btn ? btn.textContent : '';
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Generando…'; }
+  try{
+    const nombre = (document.getElementById('crmNombre')?.value||'').trim() || 'Cliente';
+    const vehiculo = (document.getElementById('vehiculo')?.value||'').trim() || 'Vehículo';
+    const precio = fmtMXN(parseFloat(document.getElementById('precio').value)||0);
+    const plazo = document.getElementById('plazo').value;
+    const hoy = new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});
+
+    const html = `
+      ${construirEncabezadoCotizacionHTML()}
+      <h2 style="margin:0 0 4px;font-size:20px">Cotización de financiamiento</h2>
+      <p style="margin:0 0 18px;font-size:12px;color:var(--muted)">${hoy}</p>
+      <div style="font-size:13px;line-height:1.9;margin-bottom:16px">
+        <div><strong>Cliente:</strong> ${nombre}</div>
+        <div><strong>Vehículo:</strong> ${vehiculo}</div>
+        <div><strong>Precio:</strong> ${precio}</div>
+        <div><strong>Plazo:</strong> ${plazo ? plazo+' meses' : '—'}</div>
+      </div>
+      <div style="font-size:13px;line-height:2.1;border-top:1px solid var(--line,#333);padding-top:14px">
+        <div><strong>Enganche:</strong> ${document.getElementById('kpiEnganche').textContent}</div>
+        <div><strong>Saldo a financiar:</strong> ${document.getElementById('kpiMontoFinanciar').textContent}</div>
+        <div><strong>Comisión por apertura:</strong> ${document.getElementById('finComisionMonto').textContent}</div>
+        <div><strong>Seguro:</strong> ${document.getElementById('finSeguroMonto').textContent}</div>
+        <div><strong>Pago inicial total:</strong> ${document.getElementById('finPagoInicial').textContent}</div>
+        <div><strong>IVA sobre mensualidad:</strong> ${document.getElementById('finIvaMensualidad').textContent}</div>
+        <div><strong>Mensualidad final:</strong> ${document.getElementById('finMensualidadFinal').textContent}</div>
+      </div>
+      ${document.getElementById('finDesgloseAnual').style.display!=='none' ? `<div style="margin-top:14px;font-size:13px"><strong>Desglose del seguro por año</strong><div style="margin-top:6px;line-height:1.9">${document.getElementById('finDesgloseAnualTabla').innerHTML}</div></div>` : ''}
+      <p style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5">${document.getElementById('finTextoInformativo').textContent}</p>
+      ${construirPiePaginaCotizacionHTML()}
+    `;
+    const el = document.getElementById('finCotizacionExport');
+    el.innerHTML = html;
+    const theme = document.documentElement.getAttribute('data-theme')||'dark';
+    const bg = theme==='light' ? '#FFFFFF' : '#0D1117';
+    const canvas = await html2canvas(el, {scale:2, backgroundColor:bg, useCORS:true});
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=210, imgW=pageW, imgH=canvas.height*imgW/canvas.width;
+    pdf.addImage(canvas.toDataURL('image/png'),'PNG',0,0,imgW,imgH);
+    const nombreArchivo = nombre.replace(/[^a-z0-9]+/gi,'_');
+    pdf.save(`Cotizacion_${nombreArchivo}.pdf`);
+    crmMostrarToast('✓ Cotización descargada');
+  }catch(e){
+    crmMostrarToast('No se pudo generar la cotización.');
+  }
+  if(btn){ btn.disabled=false; btn.textContent=txtOriginal; }
+}
+
+/* ─── "Descargar Solicitud de Venta" ───
+   Documento legal multi-página (numerado "Página X de N"), generado con texto
+   (no captura de pantalla) para que se pueda paginar correctamente. Toma los
+   datos de "Tu perfil" y "Datos de la empresa" (Configuración) y del expediente
+   del cliente/operación abierto en ese momento. Disponible siempre, sin
+   depender del estado de la operación. Se adapta según "Tipo de operación"
+   (auto / inmueble / servicio / otro) y, si la operación es financiada, solo
+   se indica el tipo de operación sin montos ni condiciones específicas (esas
+   se formalizan después en la cotización oficial autorizada por el banco). */
+async function descargarSolicitudVenta(){
+  if(!window.jspdf){ crmMostrarToast('No se pudo generar el documento.'); return; }
+  const btn = document.getElementById('btnDescargarSolicitudVenta');
+  const txtOriginal = btn ? btn.textContent : '';
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Generando…'; }
+  try{
+    const g = id => document.getElementById(id);
+    const nombreCliente = (g('crmNombre')?.value||'').trim() || 'Cliente';
+    const tipoOpVal = g('crmTipoOp')?.value || 'auto';
+    const TIPO_OP_LABELS = {auto:'Vehículo / Automotriz', inmueble:'Bien Raíz / Inmueble', servicio:'Servicio Especializado', otro:'Otro producto'};
+    const bienLabel = (typeof CRM_TIPO_OP_VEHICULO_LABEL!=='undefined' ? CRM_TIPO_OP_VEHICULO_LABEL[tipoOpVal] : null) || 'Producto/servicio de interés';
+    const bienDescripcion = (g('vehiculo')?.value||'').trim() || 'No especificado';
+    const telefonoCliente = (g('telefono')?.value||'').trim() || '—';
+    const correoCliente = (g('correo')?.value||'').trim() || '—';
+    const ciudadCliente = (g('ciudad')?.value||'').trim() || '—';
+    const ocupacionCliente = (g('ocupacion')?.value||'').trim() || '—';
+    const precioNum = parseFloat(g('precio')?.value)||0;
+    const precioTxt = precioNum ? fmtMXN(precioNum) : 'A convenir';
+    const tipoOperacionVal = g('tipoOperacion')?.value || '';
+    const formaPagoTxt = tipoOperacionVal==='contado' ? 'De contado'
+      : tipoOperacionVal==='financiado' ? 'Financiado — sujeto a aprobación de la institución bancaria correspondiente. Los montos, el plazo y las condiciones específicas del crédito se formalizarán posteriormente mediante la cotización oficial autorizada por el banco.'
+      : 'No especificada';
+    const seguroVal = g('seguro')?.value||'';
+    const seguroTxt = tipoOperacionVal==='contado' ? ({si:'Sí, con la agencia', no:'No'}[seguroVal] || 'No definido') : null;
+    const descuentoVal = g('descuento')?.value||'';
+    const montoDescuentoNum = parseFloat(g('montoDescuento')?.value)||0;
+    const descuentoTxt = descuentoVal==='si' ? `Sí — ${fmtMXN(montoDescuentoNum)}` : descuentoVal==='no' ? 'No' : 'No definido';
+    const regalos=[];
+    if(g('rTapetes')?.checked) regalos.push('Tapetes');
+    if(g('rVidrios')?.checked) regalos.push('Vidrios de seguridad');
+    if(g('rPelicula')?.checked) regalos.push('Película antiasalto');
+    if(g('rKitSeguridad')?.checked) regalos.push('Kit de seguridad completo');
+    if(g('rPlacas')?.checked) regalos.push('Placas y tenencia');
+    if(g('rOtro')?.checked) regalos.push((g('otroRegaloDesc')?.value||'').trim() || 'Otro');
+    const regalosTxt = regalos.length ? regalos.join(', ') : 'Ninguno';
+    const anticipoVal = g('anticipo')?.value||'';
+    const anticipoTxt = {anticipo:'Dejó anticipo', pedido:'Firmó pedido', ambos:'Anticipo + pedido firmado', no:'Ninguno aún'}[anticipoVal] || 'No definido';
+    const documentacionVal = g('documentacion')?.value||'';
+    const documentacionTxt = {si:'Sí, entregó documentos', no:'No ha entregado', parcial:'Parcialmente'}[documentacionVal] || 'No definido';
+    const tipoUnidadVal = g('crmTipoUnidad')?.value || '';
+    const tipoUnidadTxt = {nuevo:'Nuevo', seminuevo:'Seminuevo'}[tipoUnidadVal] || 'No especificado';
+    const vcVal = g('crmVehiculoCambio')?.value || '';
+    const vcUsoMap = {particular:'Particular', privado:'Servicio de transporte privado (Uber, DiDi, Cabify o similar)', publico:'Servicio público', carga:'Carga / Comercial', otro:(g('vcUsoAnteriorOtro')?.value||'').trim()||'Otro'};
+    const vcEstadoMap = {excelente:'Excelente', bueno:'Bueno', regular:'Regular', malo:'Malo', pendiente:'Pendiente por valorar'};
+    const vcEstadoValoracionVal = g('vcEstadoValoracion')?.value || '';
+    const vcEstadoValoracionTxt = vcEstadoValoracionVal==='pendiente' ? 'Pendiente por valorar' : vcEstadoValoracionVal==='valorado' ? 'Ya valorado' : 'No especificado';
+    const hoy = new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const W=210, M=16, CW=W-M*2;
+    let y=0;
+    const ACCENT='#00A884', TEXT='#1A1A1A', MUTED='#6B7280', LINE='#DDDDDD';
+    const hex=(h)=>{const r=parseInt(h.slice(1,3),16),gg=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return[r,gg,b];};
+    const setColor=(h)=>{const[r,gg,b]=hex(h);doc.setTextColor(r,gg,b);};
+    const setDraw=(h)=>{const[r,gg,b]=hex(h);doc.setDrawColor(r,gg,b);};
+
+    function dibujarEncabezadoPagina(){
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setColor(MUTED);
+      doc.text((empresaNombre||'SOLICITUD DE VENTA').toUpperCase(), M, 12);
+      doc.text('SOLICITUD DE VENTA', W-M, 12, {align:'right'});
+      setDraw(LINE); doc.setLineWidth(0.3); doc.line(M,15,W-M,15);
+    }
+    const addPage=()=>{ doc.addPage(); y=22; dibujarEncabezadoPagina(); };
+    const checkY=(need=10)=>{ if(y+need>270) addPage(); };
+    const wrapText=(text,x,maxW,lineH=5.2,fontSize=9.5,fontStyle='normal')=>{
+      doc.setFont('helvetica',fontStyle); doc.setFontSize(fontSize); setColor(TEXT);
+      const lines = doc.splitTextToSize(text, maxW);
+      lines.forEach(line=>{ checkY(lineH+2); doc.text(line, x, y); y+=lineH; });
+    };
+    const sectionTitle=(txt)=>{
+      checkY(16);
+      doc.setFont('helvetica','bold'); doc.setFontSize(12.5); setColor(ACCENT);
+      doc.text(txt, M, y); y+=2;
+      setDraw(ACCENT); doc.setLineWidth(0.6); doc.line(M,y,M+CW,y); y+=7;
+    };
+    const fieldLine=(label,value)=>{
+      checkY(7);
+      doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setColor(MUTED);
+      doc.text(label+':', M, y);
+      const labelW = doc.getTextWidth(label+': ')+2;
+      doc.setFont('helvetica','normal'); setColor(TEXT);
+      const lines = doc.splitTextToSize(String(value), CW-labelW);
+      doc.text(lines[0]||'', M+labelW, y);
+      y+=6;
+      for(let i=1;i<lines.length;i++){ checkY(6); doc.text(lines[i], M+labelW, y); y+=6; }
+    };
+
+    // ── Portada ──
+    y=20;
+    if(empresaLogoDataUrl){ try{ doc.addImage(empresaLogoDataUrl,'JPEG', M, y, 22, 22); }catch(e){} }
+    const textX = empresaLogoDataUrl ? M+28 : M;
+    doc.setFont('helvetica','bold'); doc.setFontSize(15); setColor(TEXT);
+    doc.text(empresaNombre || 'Solicitud de Venta', textX, y+8);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9); setColor(MUTED);
+    const empresaContactos=[empresaTelefono?`Tel: ${empresaTelefono}`:'', empresaWhatsapp?`WhatsApp: ${empresaWhatsapp}`:'', empresaCorreo||''].filter(Boolean).join('   ·   ');
+    if(empresaContactos) doc.text(empresaContactos, textX, y+14);
+    y += 30;
+    setDraw(ACCENT); doc.setLineWidth(0.8); doc.line(M,y,M+CW,y); y+=3;
+    doc.setFont('helvetica','bold'); doc.setFontSize(20); setColor(TEXT);
+    doc.text('SOLICITUD DE VENTA', M, y+10);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); setColor(MUTED);
+    doc.text(`Fecha de emisión: ${hoy}`, M, y+17);
+    y += 26;
+
+    sectionTitle('Datos del vendedor y la empresa');
+    fieldLine('Empresa', empresaNombre || 'No especificada');
+    fieldLine('Razón social y RFC', '_______________________________');
+    if(empresaTelefono) fieldLine('Teléfono de la agencia', empresaTelefono);
+    if(empresaWhatsapp) fieldLine('WhatsApp empresarial', empresaWhatsapp);
+    if(empresaCorreo) fieldLine('Correo de la empresa', empresaCorreo);
+    fieldLine('Vendedor', userProfileName || 'No especificado');
+    if(userProfilePhone) fieldLine('Teléfono del vendedor', userProfilePhone);
+    if(userProfileEmail) fieldLine('Correo del vendedor', userProfileEmail);
+    y+=4;
+
+    sectionTitle('Datos del cliente');
+    fieldLine('Nombre completo', nombreCliente);
+    fieldLine('Teléfono / WhatsApp', telefonoCliente);
+    fieldLine('Correo electrónico', correoCliente);
+    fieldLine('Ciudad / Estado', ciudadCliente);
+    fieldLine('Ocupación', ocupacionCliente);
+    y+=4;
+
+    sectionTitle('Detalle de la operación');
+    fieldLine('Tipo de operación', TIPO_OP_LABELS[tipoOpVal] || TIPO_OP_LABELS.auto);
+    fieldLine(bienLabel, bienDescripcion);
+    fieldLine('Tipo de unidad a adquirir', tipoUnidadTxt);
+    fieldLine('Precio acordado', precioTxt);
+    fieldLine('Forma de pago', formaPagoTxt);
+    if(seguroTxt!==null) fieldLine('Seguro', seguroTxt);
+    fieldLine('Descuento aplicado', descuentoTxt);
+    fieldLine('Regalos / beneficios pactados', regalosTxt);
+    fieldLine('Anticipo / pedido', anticipoTxt);
+    fieldLine('Documentación entregada', documentacionTxt);
+    y+=4;
+
+    if(vcVal === 'si'){
+      sectionTitle('Vehículo recibido a cuenta / cambio');
+      fieldLine('Estado de la unidad a cambio', vcEstadoValoracionTxt);
+      if(vcEstadoValoracionVal === 'pendiente'){
+        const vcFechaVal = g('vcFechaValoracion')?.value;
+        const vcFechaTxt = vcFechaVal ? new Date(vcFechaVal+'T00:00:00').toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'}) : 'No especificada';
+        fieldLine('Fecha de valoración', vcFechaTxt);
+        fieldLine('Hora de valoración', g('vcHoraValoracion')?.value || 'No especificada');
+      }
+      fieldLine('Marca', g('vcMarca')?.value || '—');
+      fieldLine('Año', g('vcAnio')?.value || '—');
+      fieldLine('Modelo', g('vcModelo')?.value || '—');
+      fieldLine('Color', g('vcColor')?.value || '—');
+      fieldLine('Kilometraje', g('vcKilometraje')?.value ? `${Number(g('vcKilometraje').value).toLocaleString('es-MX')} km` : '—');
+      fieldLine('Dueños anteriores', g('vcDuenos')?.value || '—');
+      fieldLine('Facturas que amparan la unidad', g('vcFacturas')?.value || '—');
+      fieldLine('Uso anterior', vcUsoMap[g('vcUsoAnterior')?.value] || 'No especificado');
+      fieldLine('Estado físico-estético', vcEstadoMap[g('vcEstadoFisico')?.value] || 'No especificado');
+      fieldLine('Estado mecánico', vcEstadoMap[g('vcEstadoMecanico')?.value] || 'No especificado');
+      const vcObs = (g('vcObservaciones')?.value||'').trim();
+      if(vcObs) fieldLine('Observaciones adicionales', vcObs);
+      // El precio de toma se imprime siempre en blanco: se llena a puño y letra
+      // una vez confirmado por escrito (ver cláusula de aceptación de la unidad a cuenta).
+      fieldLine('Precio de toma de la unidad', '_______________________________');
+      const vcAceptoTxt = `${g('vcPropuestaAceptada')?.checked ? '☑' : '☐'} Aceptó la propuesta      ${g('vcPropuestaNoAceptada')?.checked ? '☑' : '☐'} No aceptó la propuesta`;
+      fieldLine('Situación de la propuesta', vcAceptoTxt);
+      y+=4;
+    }
+
+    sectionTitle('Aviso de privacidad');
+    wrapText(`${empresaNombre||'La empresa'}, con los datos de contacto señalados en este documento, es responsable del tratamiento de los datos personales del cliente. La información proporcionada es confidencial y se utiliza exclusivamente para la gestión de esta operación, el cumplimiento de obligaciones legales y fiscales, y para fines de contacto y seguimiento comercial. No será compartida con terceros sin autorización expresa, salvo requerimiento de autoridad competente. El cliente puede ejercer sus derechos de acceso, rectificación, cancelación u oposición (derechos ARCO) al tratamiento de sus datos, así como conocer el aviso de privacidad integral, a través de los medios de contacto señalados en el presente documento.`, M, CW);
+    y+=4;
+
+    sectionTitle('Condiciones generales');
+    const condiciones = [
+      {text:'La presente solicitud constituye un acuerdo vinculante entre las partes: formaliza el interés y los acuerdos alcanzados, y tiene validez legal desde el momento de su firma, sin plazo de gracia o periodo de arrepentimiento posterior, salvo los derechos irrenunciables que la legislación aplicable conceda al consumidor (por ejemplo, el previsto en el artículo 56 de la Ley Federal de Protección al Consumidor para operaciones celebradas fuera del establecimiento), cuando resulten procedentes.'},
+      {text:'Los precios y condiciones son vigentes al momento de su emisión y están sujetos a cambios sin previo aviso por variaciones del mercado, políticas internas o ajustes de proveedores.'},
+      {text:'En caso de operación financiada, esta queda sujeta a la aprobación final por parte de la institución bancaria. Si el crédito no es autorizado por causas no imputables al cliente, este podrá cancelar la solicitud y solicitar la devolución íntegra de cualquier monto entregado como anticipo o depósito, sin penalización ni gastos adicionales.'},
+      {text:'Disponibilidad y tiempos de entrega:', subs:[
+        'El bien o servicio solicitado puede encontrarse disponible inmediatamente, requerir traslado desde otra ubicación, gestionarse mediante intercambio con terceros, o bien ser solicitado directamente a fabricación o proveedor.',
+        'Los tiempos de entrega estimados incluyen procesos administrativos, negociaciones, logística y traslado, los cuales pueden variar según cada caso. Existen causas externas ajenas a nuestra gestión —como fenómenos naturales, contingencias en vías, retrasos en cadena de suministro, trámites aduanales, siniestros, situaciones de fuerza mayor o caso fortuito— que pueden modificar los plazos o incluso impedir la entrega, sin que esto implique responsabilidad para la empresa. Nos comprometemos a informar oportunamente y buscar siempre la mejor solución posible ante cualquier eventualidad.'
+      ]},
+      {text:'Formas de pago y normativa sobre efectivo:', subs:[
+        'Conforme a la normativa vigente en México, especialmente la Ley Federal para la Prevención e Identificación de Operaciones con Recursos de Procedencia Ilícita y disposiciones del Servicio de Administración Tributaria (SAT), la recepción de pagos en efectivo está limitada hasta los montos máximos autorizados por la ley vigente al momento de la operación. Cualquier monto superior a dicho límite deberá realizarse mediante transferencia electrónica, cheque, tarjeta o cualquier otro medio bancario autorizado. Nos reservamos el derecho de rechazar o condicionar cualquier pago que no cumpla con estas disposiciones legales.',
+        'Estas disposiciones aplican por igual a personas físicas, morales, financieras, arrendadoras y cualquier otro tipo de entidad contratante. Se aplicará siempre lo establecido por las autoridades competentes vigente al momento de la operación.'
+      ]},
+      {text:'Documentación y requisitos para expediente y facturación:', subs:[
+        'La empresa se reserva el derecho de solicitar en cualquier momento la documentación necesaria para la correcta integración del expediente, cumplimiento de obligaciones fiscales y normativas, así como para la entrega del bien o servicio. Entre los documentos que se podrán requerir se encuentran: identificación oficial vigente, comprobante de domicilio, Registro Federal de Contribuyentes (RFC), Constancia de Situación Fiscal, CURP, poderes notariales o cualquier otro documento que sea necesario conforme a la ley o políticas internas.',
+        'La emisión de comprobantes fiscales se realizará conforme a los datos y requisitos que el cliente proporcione y que cumplan con las disposiciones vigentes del SAT.'
+      ]},
+      {text:'Entrega del bien o servicio:', subs:[
+        'La entrega se realizará únicamente al titular de la presente solicitud y a cuyo nombre se formalizó la operación, quien deberá presentar identificación oficial vigente.',
+        'Solo se podrá entregar a una persona distinta al titular cuando se presente una carta poder debidamente firmada por el titular, acompañada de copia de identificación oficial vigente de ambas partes, que acredite de forma fehaciente su autorización expresa para recibir el bien. Sin este requisito completo, no se realizará la entrega a terceros.',
+        'Operaciones por Orden de Compra / Personas Morales / Financieras / Arrendadoras: este tipo de operaciones se regirán por lo establecido en la orden de compra y los acuerdos previos celebrados por escrito con la entidad contratante. La entidad deberá informar de manera oficial y por los conductos autorizados quién será la persona autorizada para recibir el bien o servicio, así como los datos del beneficiario designado. Bajo ninguna circunstancia se aceptarán autorizaciones de entrega por parte del beneficiario final; cualquier designación o cambio de persona autorizada para la recepción deberá ser comunicado directamente por la entidad contratante mediante oficio, correo oficial o documento firmado por sus representantes legales. Toda persona que acuda a recibir el bien deberá presentar identificación oficial vigente y el documento de autorización correspondiente emitido por la entidad contratante. Una vez que el bien se encuentre disponible y listo para entrega, se notificará a la entidad y contará con el plazo establecido en el convenio correspondiente para concluir el trámite. De no existir acuerdo específico, se aplicará un plazo máximo de 30 días naturales contados desde la fecha de notificación de disponibilidad. Transcurrido dicho plazo sin que se haya concluido el trámite o recibido indicaciones por escrito, la empresa se reserva el derecho de reasignar el bien, suspender la relación comercial, rechazar futuras operaciones o cancelar la solicitud, sin responsabilidad ni obligación de indemnización alguna. Lo anterior aplica especialmente en casos de incumplimientos reiterados.'
+      ]},
+      {text:'Cancelaciones, responsabilidades y penalizaciones:', subs:[
+        'Por parte del cliente: al firmar esta solicitud, el cliente acepta la responsabilidad total sobre la operación. Desde este momento el bien o servicio queda reservado y apartado exclusivamente para él, por lo que se retira de la oferta comercial y se deja de promover o vender a terceros, lo que implica una afectación directa a la disponibilidad y posibilidades de venta de la empresa. Si la cancelación se solicita por parte del cliente sin causa justificada, o si elige no continuar con la operación una vez que ya fue aprobada cualquier condición o crédito, la empresa se reserva el derecho de retener, a título de pena convencional, un monto proporcional a los gastos comprobables, costos administrativos y la afectación por la pérdida de oportunidad de venta derivada de haber apartado el bien, monto que en ningún caso excederá el valor de la obligación principal ni el total del anticipo entregado, conforme a lo previsto por el artículo 1843 del Código Civil Federal. Esta condición aplica de igual forma cuando se haya solicitado la reserva del bien, haya sido necesario gestionar su traslado, adquisición o fabricación, o simplemente cuando se haya retirado de la comercialización para su exclusividad.',
+        'Por parte de la empresa: en caso de que por causas ajenas a nuestra voluntad, de fuerza mayor, caso fortuito, desabasto, interrupciones en la cadena de suministro, siniestros o cualquier situación que impida la entrega o cumplimiento de lo acordado, la empresa se reserva el derecho de cancelar la presente solicitud en cualquier momento. En este supuesto, se realizará la devolución íntegra de cualquier monto entregado por el cliente a cuenta de la operación, sin que esto genere derecho a cobro de intereses, compensaciones, indemnizaciones o gastos adicionales por ningún concepto, entendiéndose que la imposibilidad de cumplir deriva de causas que no dependen de nuestra gestión ni control.',
+        'Si la operación no se concluye por causas imputables directamente a la empresa, el cliente tendrá derecho a la cancelación sin penalización y a la devolución completa de los montos entregados.'
+      ]},
+      {text:'Términos y condiciones de devoluciones:', subs:[
+        'En caso de proceder la devolución de recursos, el trámite tiene un plazo promedio de atención de entre 30 y 45 días hábiles, contados a partir de la solicitud formal. Este plazo es estimado y podrá extenderse por causas administrativas, contables, requerimiento de firmas de representantes autorizados, ausencias, viajes o cualquier situación ajena al control del vendedor o de la operación directa. Dicha extensión no generará penalizaciones, cobro de intereses ni responsabilidad alguna para la empresa.',
+        'Pagos por medios electrónicos, cheques o documentos bancarios: la devolución se realizará exclusivamente a la persona, cuenta bancaria, institución o emisor original que realizó el pago, tal como quedó registrado al momento de recibir el depósito o anticipo. Bajo ninguna circunstancia se podrá realizar la devolución a terceros, familiares, representantes o beneficiarios distintos al origen del recurso, aun cuando existan cartas de autorización para la aplicación del pago a favor de otra persona, con el fin de cumplir con normativas de prevención de lavado de activos y seguridad financiera.',
+        'Pagos en efectivo: cuando el pago se haya realizado en efectivo, la devolución se entregará exclusivamente a la persona titular de la operación y a cuyo nombre fue emitido el recibo o comprobante correspondiente, sin excepciones. No se realizará la devolución a personas distintas al titular, aun cuando hayan sido quienes entregaron el dinero.',
+        'En caso de que el pago haya sido realizado por una persona distinta al solicitante, el trámite de devolución siempre se canalizará conforme a lo establecido en el medio de pago utilizado y la normativa aplicable.'
+      ]},
+      {text:'La entrega del bien o prestación del servicio está sujeta a confirmación final de disponibilidad y condiciones por parte de la empresa o proveedor.'},
+      {text:'Para la interpretación y cumplimiento del presente documento, las partes se someten expresamente a la jurisdicción de los tribunales competentes de la Ciudad de México, renunciando a cualquier otro fuero que pudiera corresponderles por razón de su domicilio presente o futuro, o por cualquier otra causa.'},
+      {text:'Cualquier modificación a estos términos debe realizarse por escrito y con la firma de ambas partes para tener validez.'}
+    ];
+    if(vcVal === 'si'){
+      const idxCancelaciones = condiciones.findIndex(c => c.text.startsWith('Cancelaciones'));
+      const clausulaUnidadCambio = {
+        text:'Aceptación de la unidad a cuenta, plazos y vigencia:',
+        subs:[
+          'La aceptación de la unidad a cuenta queda sujeta a la aprobación final y acuerdo mutuo entre las partes. El precio de toma y la aceptación de la unidad por parte de la empresa se formalizarán únicamente mediante confirmación expresa y por escrito, la cual podrá realizarse a través de: correo electrónico, mensajería instantánea (WhatsApp o similar), carta firmada o cualquier otro medio oficial que provenga de los datos de contacto registrados en la presente solicitud, tanto por parte del cliente como por parte de la empresa o del vendedor autorizado.',
+          'De igual forma, la decisión del cliente de continuar con la operación de compra o adquisición de la operación principal sin la unidad a cuenta también requerirá confirmación expresa por los mismos medios antes mencionados, y tendrá exactamente la misma validez legal y efectos sobre la solicitud, sin que esto signifique la cancelación o pérdida de vigencia del presente documento.',
+          'En caso de presentarse carta firmada, esta deberá contar con la firma autógrafa del cliente, idéntica a la que aparece en cualquiera de sus identificaciones oficiales vigentes. No se reconocerán acuerdos ni confirmaciones verbales.',
+          'El campo destinado al Precio de toma de la unidad quedará vacío al momento de imprimir el documento, pudiendo ser completado posteriormente a puño y letra una vez obtenida la confirmación escrita correspondiente. Estas anotaciones manuales no afectan en absoluto la validez ni la vigencia del presente documento, formando parte integrante del mismo. El monto ofrecido podrá registrarse incluso si la propuesta no es aceptada, quedando únicamente como referencia del valor cotizado.',
+          'Plazos para la valoración y operación: el cliente cuenta con un plazo máximo de 15 días naturales contados desde la fecha de la presente solicitud para realizar la valoración de su unidad, recibir la propuesta de precio y definir su aceptación o rechazo.',
+          'Si transcurrido este plazo de 15 días no se ha concretado la valoración o no se ha recibido respuesta definitiva por parte del cliente, se entenderá automáticamente que el cliente opta por continuar con la operación de compra sin la unidad a cuenta. El cliente reconoce y acepta expresamente, mediante su firma en el presente documento, que este mecanismo de aceptación tácita por el transcurso del plazo forma parte de lo pactado entre las partes.',
+          'En caso de que el cliente decida desistir totalmente de la operación después de haber vencido este plazo señalado, se aplicarán automáticamente las mismas penalizaciones, retenciones y condiciones establecidas para cancelaciones por parte del cliente en las condiciones generales del presente documento, ya que la unidad de interés ha sido apartada exclusivamente para él, impidiendo su venta a terceros durante todo este tiempo.',
+          'Vigencia del precio y revalorización: el precio de toma otorgado al vehículo tendrá validez únicamente durante el mismo mes calendario en que se emite la propuesta. Al cambiar de mes, los valores de mercado pueden variar, por lo que será obligatorio realizar nuevamente todo el proceso de valoración para definir el monto actualizado. Asimismo, si transcurre tiempo desde la valoración hasta la formalización, la unidad será revisada nuevamente, ya que cualquier cambio en su estado físico, mecánico, kilometraje o siniestros que pudieran haber ocurrido modificará el valor acordado.',
+          'Excepcionalmente, el plazo podrá extenderse siempre y cuando sea por causas imputables a la empresa o distribuidor, tales como falta de espacio en el área de valoración, agendamiento de servicios o situaciones operativas internas; en estos casos se respetará el precio vigente siempre que la operación se formalice dentro del mismo mes de la propuesta.',
+          'En caso de que no se llegue a un acuerdo sobre la unidad a cuenta, el cliente podrá optar por continuar la operación sin dicha unidad o solicitar la devolución íntegra de los montos entregados como anticipo, sin penalización alguna, siempre dentro de los plazos establecidos.'
+        ]
+      };
+      if(idxCancelaciones >= 0) condiciones.splice(idxCancelaciones+1, 0, clausulaUnidadCambio);
+      else condiciones.push(clausulaUnidadCambio);
+    }
+    condiciones.forEach((c,idx)=>{
+      wrapText(`${idx+1}. ${c.text}`, M, CW, 5.2, 9.5, 'normal');
+      if(c.subs){ c.subs.forEach(s=>{ wrapText(`•  ${s}`, M+5, CW-5, 5, 9, 'normal'); }); }
+      y+=2;
+    });
+
+    sectionTitle('Firmas y validez');
+    wrapText('La presente solicitud adquiere validez legal con la firma del cliente y del vendedor, quien actúa como representante autorizado de la empresa. La firma del representante legal o gerencial es opcional y no necesaria para la validez del documento, por lo que se podrá formalizar la operación al momento de la firma entre las partes mencionadas.', M, CW);
+    y+=10;
+    const firmaLinea=(label)=>{
+      checkY(20);
+      setDraw(LINE); doc.setLineWidth(0.3); doc.line(M, y, M+CW, y); y+=5;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9); setColor(MUTED);
+      doc.text(label, M, y); y+=13;
+    };
+    firmaLinea('Nombre completo y firma del Cliente');
+    firmaLinea('Nombre completo y firma del Vendedor');
+    firmaLinea('(Opcional) Nombre completo y firma del Representante de la Empresa');
+    firmaLinea(`Fecha: ${hoy}`);
+
+    const totalPaginas = doc.internal.getNumberOfPages();
+    for(let i=1;i<=totalPaginas;i++){
+      doc.setPage(i);
+      doc.setFont('helvetica','normal'); doc.setFontSize(8.5); setColor(MUTED);
+      doc.text(`Página ${i} de ${totalPaginas}`, W/2, 289, {align:'center'});
+    }
+
+    const nombreArchivo = nombreCliente.replace(/[^a-z0-9]+/gi,'_');
+    doc.save(`Solicitud_Venta_${nombreArchivo}.pdf`);
+    crmMostrarToast('✓ Solicitud de venta descargada');
+  }catch(e){
+    crmMostrarToast('No se pudo generar el documento.');
+  }
+  if(btn){ btn.disabled=false; btn.textContent=txtOriginal; }
 }
 
 /* ─── SCORE ───
@@ -4273,7 +5090,8 @@ function stepNumberInput(id, delta){
 function onCampoChange(){
   const campos=['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
     'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
-    'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
+    'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
+    'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
     'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
@@ -4286,6 +5104,7 @@ function onCampoChange(){
   recalcScore(); actualizarPasoSiguiente();
   scheduleScoreIA();
   sincronizarVentasDesdeCRM();
+  if(typeof evaluarBtnGuardarIC === 'function') evaluarBtnGuardarIC();
 }
 
 /* ─── LÓGICA BLOQUEO / DESBLOQUEO ─── */
@@ -4319,6 +5138,26 @@ function hayAccionRecomendadaPendiente(){
   return false;
 }
 
+// Marca visualmente un <select> como "respondido" (quita el resaltado rojo de
+// obligatorio) en cuanto el vendedor elige cualquier opción, incluida "0"
+// cuando esa opción es una respuesta real (ej. "No" en ¿Pidió hacer otra
+// prueba?). Se usa en el onchange de los 3 campos de detalle de la prueba.
+function marcarCampoRespondido(el){
+  if(el) el.style.borderColor = '';
+}
+
+// Los 3 campos de detalle de la prueba de manejo (Información Comercial) son
+// obligatorios únicamente cuando en "Proceso de Venta" se confirmó que SÍ se
+// realizó la prueba. Un valor vacío ("") significa que el vendedor todavía no
+// respondió. Devuelve la lista de ids que faltan por responder.
+function camposPruebaFaltantes(){
+  if(document.getElementById('pruebaManejo')?.value !== 'si') return [];
+  return ['crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba'].filter(id => {
+    const el = document.getElementById(id);
+    return el && el.value === '';
+  });
+}
+
 function evaluarBtnGuardarIC(){
   const btn = document.getElementById('btnGuardarIC');
   const btnPasos = document.getElementById('btnIcPasos');
@@ -4326,11 +5165,24 @@ function evaluarBtnGuardarIC(){
   // "Siguientes pasos" y "Mensaje IA" de Información Comercial NO dependen de
   // nada -- ni de la Acción Recomendada anterior ni de ninguna otra cosa -- y
   // se pueden usar indistinta e indiferentemente en cualquier momento y en
-  // cualquier orden. El botón "Guardar" de esta sección tampoco tiene
-  // restricción: el usuario puede guardar en cualquier momento.
+  // cualquier orden.
   if(btnPasos)   btnPasos.disabled   = false;
   if(btnMensaje) btnMensaje.disabled = false;
-  if(btn) btn.disabled = false;
+
+  // El botón "Guardar" solo se bloquea si quedan pendientes los campos de
+  // detalle de la prueba de manejo (obligatorios cuando pruebaManejo = 'si')
+  // o los del vehículo a cuenta/cambio (obligatorios cuando esa opción = 'si').
+  const faltantes = camposPruebaFaltantes();
+  const msg = document.getElementById('icReqPruebaMsg');
+  faltantes.forEach(id => { const el = document.getElementById(id); if(el) el.style.borderColor = 'var(--red)'; });
+  if(msg) msg.classList.toggle('hidden', faltantes.length === 0);
+
+  const faltantesVC = camposVehiculoCambioFaltantes();
+  const msgVC = document.getElementById('icReqVehiculoCambioMsg');
+  faltantesVC.forEach(id => { const el = document.getElementById(id); if(el) el.style.borderColor = 'var(--red)'; });
+  if(msgVC) msgVC.classList.toggle('hidden', faltantesVC.length === 0);
+
+  if(btn) btn.disabled = faltantes.length > 0 || faltantesVC.length > 0;
 }
 
 /* ─── SEGUIMIENTO ("Follow-up") — evalúa su propio botón "Guardar" ───
@@ -5352,6 +6204,8 @@ function generarInformeDetallado(conContacto){
   const tipoOpLabel = {auto:'Vehículo / Automotriz', inmueble:'Bien Raíz / Inmueble', servicio:'Servicio Especializado', otro:'Otro producto'}[tipoOpVal] || 'No especificado';
   const productoLabel = document.getElementById('lblVehiculo')?.textContent || 'Producto de interés';
   const productoVal   = document.getElementById('vehiculo').value.trim() || 'No especificado';
+  const tipoUnidadVal = document.getElementById('crmTipoUnidad')?.value || '';
+  const tipoUnidadTxt = {nuevo:'🆕 Nuevo', seminuevo:'♻️ Seminuevo'}[tipoUnidadVal] || 'No especificado';
   const fuenteMap = {showroom:'Visita al showroom (piso)', web:'Página web', referido:'Referido', redes:'Redes sociales', llamada:'Llamada entrante', evento:'Evento / expo', leads:'Leads'};
   const fuenteVal  = document.getElementById('fuenteLead').value;
   const fuenteTxt  = fuenteMap[fuenteVal] || 'No especificada';
@@ -5532,6 +6386,39 @@ function generarInformeDetallado(conContacto){
       </div>
     </div>` : '';
 
+  // ── Vehículo a cuenta / cambio ──
+  const vcVal = g_('crmVehiculoCambio')?.value || '';
+  const vcUsoMap = {particular:'Particular', privado:'Servicio de transporte privado (Uber, DiDi, Cabify o similar)', publico:'Servicio público', carga:'Carga / Comercial', otro:(g_('vcUsoAnteriorOtro')?.value||'').trim()||'Otro'};
+  const vcEstadoMap = {excelente:'🌟 Excelente', bueno:'👍 Bueno', regular:'😐 Regular', malo:'👎 Malo', pendiente:'⏳ Pendiente por valorar'};
+  const vcEstadoValoracionVal = g_('vcEstadoValoracion')?.value || '';
+  const vcEstadoValoracionTxt = vcEstadoValoracionVal==='pendiente' ? '⏳ Pendiente por valorar' : vcEstadoValoracionVal==='valorado' ? '✅ Ya valorado' : 'No especificado';
+  const vcFechaHoraHTML = vcEstadoValoracionVal==='pendiente' ? `
+        <div><label style="margin-bottom:2px">Fecha de valoración</label><div style="font-size:14px;color:var(--text)">${g_('vcFechaValoracion')?.value ? new Date(g_('vcFechaValoracion').value+'T00:00:00').toLocaleDateString('es-MX',{year:'numeric',month:'long',day:'numeric'}) : '—'}</div></div>
+        <div><label style="margin-bottom:2px">Hora de valoración</label><div style="font-size:14px;color:var(--text)">${g_('vcHoraValoracion')?.value || '—'}</div></div>` : '';
+  const vcPrecioTomaTxt = g_('vcPrecioToma')?.value ? `$${Number(g_('vcPrecioToma').value).toLocaleString('es-MX')} MXN` : 'No definido aún';
+  const vcSituacionPropuestaTxt = g_('vcPropuestaAceptada')?.checked ? '✅ Aceptó la propuesta' : g_('vcPropuestaNoAceptada')?.checked ? '❌ No aceptó la propuesta' : '⏳ Pendiente de definir';
+  const vehiculoCambioHTML = vcVal === 'si' ? `
+    <div class="card-inner" style="margin-bottom:14px">
+      <div class="section-title">Vehículo recibido a cuenta / cambio</div>
+      <div class="grid-2" style="gap:10px">
+        <div><label style="margin-bottom:2px">Estado de la unidad a cambio</label><div style="font-size:14px;color:var(--text)">${vcEstadoValoracionTxt}</div></div>
+        ${vcFechaHoraHTML}
+        <div><label style="margin-bottom:2px">Marca</label><div style="font-size:14px;color:var(--text)">${g_('vcMarca')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Año</label><div style="font-size:14px;color:var(--text)">${g_('vcAnio')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Modelo</label><div style="font-size:14px;color:var(--text)">${g_('vcModelo')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Color</label><div style="font-size:14px;color:var(--text)">${g_('vcColor')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Kilometraje</label><div style="font-size:14px;color:var(--text)">${g_('vcKilometraje')?.value ? Number(g_('vcKilometraje').value).toLocaleString('es-MX')+' km' : '—'}</div></div>
+        <div><label style="margin-bottom:2px">Dueños anteriores</label><div style="font-size:14px;color:var(--text)">${g_('vcDuenos')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Facturas que amparan la unidad</label><div style="font-size:14px;color:var(--text)">${g_('vcFacturas')?.value||'—'}</div></div>
+        <div><label style="margin-bottom:2px">Uso anterior</label><div style="font-size:14px;color:var(--text)">${vcUsoMap[g_('vcUsoAnterior')?.value] || 'No especificado'}</div></div>
+        <div><label style="margin-bottom:2px">Estado físico-estético</label><div style="font-size:14px;color:var(--text)">${vcEstadoMap[g_('vcEstadoFisico')?.value] || 'No especificado'}</div></div>
+        <div><label style="margin-bottom:2px">Estado mecánico</label><div style="font-size:14px;color:var(--text)">${vcEstadoMap[g_('vcEstadoMecanico')?.value] || 'No especificado'}</div></div>
+        <div><label style="margin-bottom:2px">Precio de toma acordado</label><div style="font-size:14px;color:var(--text)">${vcPrecioTomaTxt}</div></div>
+        <div><label style="margin-bottom:2px">Situación de la propuesta</label><div style="font-size:14px;color:var(--text)">${vcSituacionPropuestaTxt}</div></div>
+        ${g_('vcObservaciones')?.value?.trim() ? `<div style="grid-column:1/-1"><label style="margin-bottom:2px">Observaciones adicionales</label><div style="font-size:13px;color:var(--text-dim)">${g_('vcObservaciones').value.trim()}</div></div>` : ''}
+      </div>
+    </div>` : '';
+
   const condicionesHTML = `
     <div class="card-inner" style="margin-bottom:14px">
       <div class="section-title">Condiciones comerciales</div>
@@ -5574,6 +6461,7 @@ function generarInformeDetallado(conContacto){
           <div><label style="margin-bottom:2px">Nombre completo</label><div style="font-size:14px;color:var(--text)">${nombre}</div></div>
           <div><label style="margin-bottom:2px">Tipo de operación</label><div style="font-size:14px;color:var(--text)">${tipoOpLabel}</div></div>
           <div style="grid-column:1/-1"><label style="margin-bottom:2px">${productoLabel}</label><div style="font-size:14px;color:var(--text)">${productoVal}</div></div>
+          <div><label style="margin-bottom:2px">Tipo de unidad a adquirir</label><div style="font-size:14px;color:var(--text)">${tipoUnidadTxt}</div></div>
           <div><label style="margin-bottom:2px">Fecha de registro (primer contacto)</label><div style="font-size:14px;color:var(--text)">${fechaRegistroTxt}</div></div>
           <div><label style="margin-bottom:2px">Días en seguimiento</label><div style="font-size:14px;color:var(--text)">${diasActivo==='—'?'No especificado':diasActivo+' día(s)'}</div></div>
           <div><label style="margin-bottom:2px">Fuente del Lead</label><div style="font-size:14px;color:var(--text)">${fuenteTxt}</div></div>
@@ -5593,6 +6481,7 @@ function generarInformeDetallado(conContacto){
       </div>
 
       ${condicionesHTML}
+      ${vehiculoCambioHTML}
 
       <div class="card-inner" style="margin-bottom:14px">
         <div class="section-title">Gestiones por tipo de contacto</div>
@@ -5840,14 +6729,26 @@ function buildContexto(){
   const tipoOpVal = document.getElementById('crmTipoOp')?.value||'';
   const tipoOpEsAuto = !tipoOpVal || tipoOpVal==='auto';
   const tipoOpLabel = {auto:'Vehículo / Automotriz', inmueble:'Bien Raíz / Inmueble', servicio:'Servicio Especializado', otro:'Otro producto'}[tipoOpVal] || 'No especificado (tratar como automotriz)';
+  const tipoUnidadTxt = {nuevo:'Nuevo', seminuevo:'Seminuevo'}[document.getElementById('crmTipoUnidad')?.value] || 'No especificado';
+  const vcVal = document.getElementById('crmVehiculoCambio')?.value || '';
+  const vcUsoMap = {particular:'Particular', privado:'Transporte privado (Uber/DiDi/similar)', publico:'Servicio público', carga:'Carga / Comercial', otro:(document.getElementById('vcUsoAnteriorOtro')?.value||'').trim()||'Otro'};
+  const vcEstadoMap = {excelente:'Excelente', bueno:'Bueno', regular:'Regular', malo:'Malo', pendiente:'Pendiente por valorar'};
+  const vcEstadoValoracionVal = document.getElementById('vcEstadoValoracion')?.value || '';
+  const vcEstadoValoracionTxt = vcEstadoValoracionVal==='pendiente' ? 'Pendiente por valorar' : vcEstadoValoracionVal==='valorado' ? 'Ya valorado' : 'No especificado';
+  const vcFechaHoraTxt = vcEstadoValoracionVal==='pendiente' ? `, Fecha de valoración: ${document.getElementById('vcFechaValoracion')?.value||'—'}, Hora de valoración: ${document.getElementById('vcHoraValoracion')?.value||'—'}` : '';
+  const vcPrecioTomaTxt = document.getElementById('vcPrecioToma')?.value ? `$${Number(document.getElementById('vcPrecioToma').value).toLocaleString('es-MX')} MXN` : 'No definido aún';
+  const vcSituacionPropuestaTxt = document.getElementById('vcPropuestaAceptada')?.checked ? 'Aceptó la propuesta' : document.getElementById('vcPropuestaNoAceptada')?.checked ? 'No aceptó la propuesta' : 'Pendiente de definir';
+  const vehiculoCambioTxt = vcVal==='si' ? `Sí — Estado de la unidad a cambio: ${vcEstadoValoracionTxt}${vcFechaHoraTxt}, Marca: ${document.getElementById('vcMarca')?.value||'—'}, Año: ${document.getElementById('vcAnio')?.value||'—'}, Modelo: ${document.getElementById('vcModelo')?.value||'—'}, Color: ${document.getElementById('vcColor')?.value||'—'}, Kilometraje: ${document.getElementById('vcKilometraje')?.value||'—'}, Dueños anteriores: ${document.getElementById('vcDuenos')?.value||'—'}, Facturas: ${document.getElementById('vcFacturas')?.value||'—'}, Uso anterior: ${vcUsoMap[document.getElementById('vcUsoAnterior')?.value]||'No especificado'}, Estado físico: ${vcEstadoMap[document.getElementById('vcEstadoFisico')?.value]||'No especificado'}, Estado mecánico: ${vcEstadoMap[document.getElementById('vcEstadoMecanico')?.value]||'No especificado'}, Precio de toma acordado: ${vcPrecioTomaTxt}, Situación de la propuesta: ${vcSituacionPropuestaTxt}${(document.getElementById('vcObservaciones')?.value||'').trim() ? `, Observaciones: ${document.getElementById('vcObservaciones').value.trim()}` : ''}` : vcVal==='no' ? 'No' : 'No registrado';
   return `Nombre: ${document.getElementById('crmNombre').value||'—'}
 Tipo de operación: ${tipoOpLabel}
+Tipo de unidad a adquirir: ${tipoUnidadTxt}
 Teléfono: ${document.getElementById('telefono').value||'—'}
 Ciudad: ${document.getElementById('ciudad').value||'—'}
 Ocupación: ${document.getElementById('ocupacion').value||'No registrada'}
 ${document.getElementById('lblVehiculo')?.textContent||'Vehículo'}: ${document.getElementById('vehiculo').value||'—'}
 Precio: $${document.getElementById('precio').value||'—'} MXN
 Fuente: ${document.getElementById('fuenteLead').value||'—'}
+Vehículo recibido a cuenta/cambio: ${vehiculoCambioTxt}
 ${tipoOpEsAuto ? `Prueba de manejo: ${document.getElementById('pruebaManejo').value||'No realizada'}
 Reacción del cliente en la prueba de manejo: ${(document.getElementById('crmComentariosPrueba')?.value||'').trim()||'No registrada'}` : ''}
 Comentarios de primera visita (borrador actual, aún sin guardar): ${(document.getElementById('comentariosPrimeraVisita')?.value||'').trim()||'Ninguno'} — Sentimiento: ${document.getElementById('calidadPrimeraVisita')?.value||'—'}
@@ -6203,20 +7104,27 @@ function confirmarRegistrarComoNuevo(){
 }
 
 /* ─── CAMPOS QUE SE RESTAURAN AL CARGAR UNA FICHA EXISTENTE ─── */
-const CAMPOS_CLIENTE_FORM = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
+const CAMPOS_CLIENTE_FORM = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','crmTipoUnidad','ocupacion','precio','fuenteLead',
   'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','enganche','engancheModo','plazo','seguro',
-  'tasaInteres','asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
+  'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
+  'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
   'descuento','montoDescuento','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
   'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
   'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
-  'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos'];
+  'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos',
+  'crmVehiculoCambio','vcEstadoValoracion','vcFechaValoracion','vcHoraValoracion','vcPrecioToma',
+  'vcMarca','vcAnio','vcModelo','vcColor','vcKilometraje','vcDuenos','vcFacturas',
+  'vcUsoAnterior','vcUsoAnteriorOtro','vcEstadoFisico','vcEstadoMecanico','vcObservaciones'];
 
 const MAPA_CAMPOS_BACKEND = {
   crmNombre:'Nombre', crmTipoOp:'TipoProducto', telefono:'Telefono', correo:'Correo', ciudad:'Ciudad', ocupacion:'Ocupacion',
-  fuenteLead:'FuenteLead', vehiculo:'Vehiculo', precio:'Precio', pruebaManejo:'PruebaManejo',
+  fuenteLead:'FuenteLead', vehiculo:'Vehiculo', crmTipoUnidad:'TipoUnidad', precio:'Precio', pruebaManejo:'PruebaManejo',
   asistieron:'Asistieron', manejaron:'Manejaron', crmComentariosPrueba:'ComentariosPrueba',
   tipoOperacion:'TipoOperacion', enganche:'Enganche', engancheModo:'EngancheModo',
   plazo:'Plazo', tasaInteres:'TasaInteres', seguro:'Seguro',
+  comisionAperturaPct:'ComisionAperturaPct', ivaMensualidadPct:'IvaMensualidadPct',
+  seguroFinLleva:'SeguroFinLleva', seguroFinCostoAnual:'SeguroFinCostoAnual',
+  seguroFinIvaPct:'SeguroFinIvaPct', seguroFinFormaPago:'SeguroFinFormaPago',
   estadoOperacion:'EstadoOperacion', disponibilidad:'Disponibilidad', tiempoLlegada:'TiempoLlegada',
   estadoFinalOperacion:'EstadoFinalOperacion',
   descuento:'Descuento', montoDescuento:'MontoDescuento', anticipo:'Anticipo',
@@ -6228,7 +7136,14 @@ const MAPA_CAMPOS_BACKEND = {
   crmPreguntasCliente:'PreguntasCliente', crmReaccionPrueba:'ReaccionPrueba',
   crmNotaVendedor:'NotaVendedor', crmSegundaPrueba:'SegundaPrueba', crmCotizacion:'Cotizacion',
   crmCompetencia:'Competencia', crmObjecion:'Objecion', crmNotasPersonales:'NotasPersonales',
-  crmCompromisos:'Compromisos'
+  crmCompromisos:'Compromisos',
+  // Vehículo a cuenta / cambio
+  crmVehiculoCambio:'VehiculoCambio', vcEstadoValoracion:'VCEstadoValoracion', vcFechaValoracion:'VCFechaValoracion',
+  vcHoraValoracion:'VCHoraValoracion', vcPrecioToma:'VCPrecioToma',
+  vcMarca:'VCMarca', vcAnio:'VCAnio', vcModelo:'VCModelo', vcColor:'VCColor',
+  vcKilometraje:'VCKilometraje', vcDuenos:'VCDuenos', vcFacturas:'VCFacturas', vcUsoAnterior:'VCUsoAnterior',
+  vcUsoAnteriorOtro:'VCUsoAnteriorOtro', vcEstadoFisico:'VCEstadoFisico', vcEstadoMecanico:'VCEstadoMecanico',
+  vcObservaciones:'VCObservaciones'
 };
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -6473,6 +7388,10 @@ async function cargarClienteCompleto(id, btnOrigen){
     // (mismas etiquetas que usa sincronizarSheets al armar ese texto).
     restaurarRegalosDesdeTexto(data.cliente.Regalos || '');
 
+    // Restaurar casillas de "Situación de la propuesta" (unidad a cuenta/cambio)
+    // a partir del texto guardado por sincronizarSheets().
+    restaurarSituacionPropuesta(data.cliente.VcSituacionPropuesta || '');
+
     // Poblar gestiones descargadas (formato backend → formato local)
     gestiones = (data.gestiones||[]).map(g => ({
       id: g.GestionID, gestionId: g.GestionID, fecha: g.Fecha, tipo: mapearTipoBackendALocal(g.Tipo), calidad: g.Calidad,
@@ -6493,7 +7412,18 @@ async function cargarClienteCompleto(id, btnOrigen){
     document.getElementById('resultadosBuscarCliente').classList.add('hidden');
     document.getElementById('buscarClienteInput').value = '';
 
-    togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo();
+    togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleVehiculoCambio(); toggleSeguroFin();
+    // toggleVehiculoCambio() ya reconstruyó las opciones de Estado físico-estético /
+    // Estado mecánico según "Estado de la unidad a cambio"; se vuelven a aplicar sus
+    // valores guardados porque al restaurarlos antes (arriba) esas opciones aún no existían.
+    if(data.cliente[MAPA_CAMPOS_BACKEND.vcEstadoFisico] !== undefined){
+      const elFisico = document.getElementById('vcEstadoFisico');
+      if(elFisico) elFisico.value = data.cliente[MAPA_CAMPOS_BACKEND.vcEstadoFisico];
+    }
+    if(data.cliente[MAPA_CAMPOS_BACKEND.vcEstadoMecanico] !== undefined){
+      const elMecanico = document.getElementById('vcEstadoMecanico');
+      if(elMecanico) elMecanico.value = data.cliente[MAPA_CAMPOS_BACKEND.vcEstadoMecanico];
+    }
     adaptarCuestionarioTipoOp();
     calcularFinanciamiento();
     aplicarEstadoDesdeGestiones();
@@ -6786,6 +7716,7 @@ async function sincronizarSheets(){
     ocupacion:       document.getElementById('ocupacion').value||'',
     fuenteLead:      document.getElementById('fuenteLead').value||'',
     vehiculo:        document.getElementById('vehiculo').value||'',
+    tipoUnidad:      document.getElementById('crmTipoUnidad')?.value||'',
     precio:          document.getElementById('precio').value||'',
     pruebaManejo:    document.getElementById('pruebaManejo').value||'',
     asistieron:      document.getElementById('asistieron').value||'',
@@ -6796,6 +7727,12 @@ async function sincronizarSheets(){
     engancheModo:    document.getElementById('engancheModo').value||'',
     plazo:           document.getElementById('plazo').value||'',
     tasaInteres:     document.getElementById('tasaInteres').value||'',
+    comisionAperturaPct: document.getElementById('comisionAperturaPct')?.value||'',
+    ivaMensualidadPct:   document.getElementById('ivaMensualidadPct')?.value||'',
+    seguroFinLleva:      document.getElementById('seguroFinLleva')?.value||'',
+    seguroFinCostoAnual: document.getElementById('seguroFinCostoAnual')?.value||'',
+    seguroFinIvaPct:     document.getElementById('seguroFinIvaPct')?.value||'',
+    seguroFinFormaPago:  document.getElementById('seguroFinFormaPago')?.value||'',
     seguro:          document.getElementById('seguro').value||'',
     mensualidad:     mensualidadEl ? mensualidadEl.textContent : '',
     estadoOperacion: document.getElementById('estadoOperacion').value||'',
@@ -6826,6 +7763,24 @@ async function sincronizarSheets(){
     objecion:           document.getElementById('crmObjecion')?.value||'',
     notasPersonales:    document.getElementById('crmNotasPersonales')?.value||'',
     compromisos:        document.getElementById('crmCompromisos')?.value||'',
+    vehiculoCambio:     document.getElementById('crmVehiculoCambio')?.value||'',
+    vcEstadoValoracion: document.getElementById('vcEstadoValoracion')?.value||'',
+    vcFechaValoracion:  document.getElementById('vcFechaValoracion')?.value||'',
+    vcHoraValoracion:   document.getElementById('vcHoraValoracion')?.value||'',
+    vcPrecioToma:       document.getElementById('vcPrecioToma')?.value||'',
+    vcSituacionPropuesta: document.getElementById('vcPropuestaAceptada')?.checked ? 'Aceptó la propuesta' : (document.getElementById('vcPropuestaNoAceptada')?.checked ? 'No aceptó la propuesta' : ''),
+    vcMarca:            document.getElementById('vcMarca')?.value||'',
+    vcAnio:             document.getElementById('vcAnio')?.value||'',
+    vcModelo:           document.getElementById('vcModelo')?.value||'',
+    vcColor:            document.getElementById('vcColor')?.value||'',
+    vcKilometraje:      document.getElementById('vcKilometraje')?.value||'',
+    vcDuenos:           document.getElementById('vcDuenos')?.value||'',
+    vcFacturas:         document.getElementById('vcFacturas')?.value||'',
+    vcUsoAnterior:      document.getElementById('vcUsoAnterior')?.value||'',
+    vcUsoAnteriorOtro:  document.getElementById('vcUsoAnteriorOtro')?.value||'',
+    vcEstadoFisico:     document.getElementById('vcEstadoFisico')?.value||'',
+    vcEstadoMecanico:   document.getElementById('vcEstadoMecanico')?.value||'',
+    vcObservaciones:    document.getElementById('vcObservaciones')?.value||'',
     totalGestiones:  gestiones.length,
     score:           document.getElementById('scoreNum').textContent||'—',
     gestiones:       gestiones.map(g => ({
@@ -7044,6 +7999,9 @@ async function sincronizarSheets(){
       <div class="field">
         <label class="field-label">Últimos comentarios del cliente <span style="color:var(--menta);font-size:10px;">← IA analiza esto</span></label>
         <textarea id="comentarios" rows="3" class="inp" style="resize:none;" placeholder="Ej: 'Lo veo caro', 'Me gustó mucho, voy a pensarlo', 'Mi esposa también quiere verlo'…"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-rw-universal" type="button" onclick="reescribirTexto('comentarios', this)">🪄 Reescribir</button>
+        </div>
       </div>
       <div class="field">
         <label class="field-label">¿Ha traído a alguien más? (acompañante)</label>
@@ -7108,6 +8066,9 @@ async function sincronizarSheets(){
         <div class="field">
           <label class="field-label">Comentarios del cliente durante / después de la prueba <span style="color:var(--menta);font-size:10px;">← IA analiza esto</span></label>
           <textarea id="comentariosPrueba" rows="3" class="inp" style="resize:none;" placeholder="Ej: 'Se maneja muy suave', 'Me gusta el sonido del motor', 'Sí, cuando lo tengamos lo llevamos al taller de mi cuñado'…"></textarea>
+          <div style="display:flex;justify-content:flex-end;margin-top:6px">
+            <button class="btn-rw-universal" type="button" onclick="reescribirTexto('comentariosPrueba', this)">🪄 Reescribir</button>
+          </div>
         </div>
 
         <div class="field">
@@ -7318,10 +8279,16 @@ async function sincronizarSheets(){
       <div class="field">
         <label class="field-label">Notas personales del cliente</label>
         <textarea id="notasPersonales" rows="3" class="inp" style="resize:none;" placeholder="Ej: Tiene hijos, le gusta el golf, viaja seguido, su cumpleaños es en marzo…"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-rw-universal" type="button" onclick="reescribirTexto('notasPersonales', this)">🪄 Reescribir</button>
+        </div>
       </div>
       <div class="field">
         <label class="field-label">Compromisos pendientes (vendedor)</label>
         <textarea id="compromisos" rows="2" class="inp" style="resize:none;" placeholder="Ej: Enviar catálogo el lunes, agendar prueba de manejo…"></textarea>
+        <div style="display:flex;justify-content:flex-end;margin-top:6px">
+          <button class="btn-rw-universal" type="button" onclick="reescribirTexto('compromisos', this)">🪄 Reescribir</button>
+        </div>
       </div>
     </div>
 
@@ -7718,6 +8685,9 @@ async function sincronizarSheets(){
       <textarea id="notasRecalculo" class="inp" rows="4"
         placeholder="Ej: El cliente llamó por iniciativa propia, mencionó que ya habló con su pareja y ambos están de acuerdo..."
         style="resize:none; line-height:1.5; font-size:13px;"></textarea>
+      <div style="display:flex;justify-content:flex-end;margin-top:6px">
+        <button class="btn-rw-universal" type="button" onclick="reescribirTexto('notasRecalculo', this)">🪄 Reescribir</button>
+      </div>
     </div>
 
     <div style="display:flex; gap:10px; margin-top:4px;">
@@ -8102,7 +9072,17 @@ function fbApplyRemoteData(d){
     if(d.profile){
       if(typeof d.profile.name==='string') userProfileName = d.profile.name;
       if(d.profile.gender) userProfileGender = d.profile.gender;
+      if(typeof d.profile.phone==='string') userProfilePhone = d.profile.phone;
+      if(typeof d.profile.email==='string') userProfileEmail = d.profile.email;
       fbRefreshProfileInputs();
+    }
+    if(d.empresa){
+      empresaNombre = typeof d.empresa.nombre==='string' ? d.empresa.nombre : '';
+      empresaTelefono = typeof d.empresa.telefono==='string' ? d.empresa.telefono : '';
+      empresaWhatsapp = typeof d.empresa.whatsapp==='string' ? d.empresa.whatsapp : '';
+      empresaCorreo = typeof d.empresa.correo==='string' ? d.empresa.correo : '';
+      empresaLogoDataUrl = typeof d.empresa.logo==='string' ? d.empresa.logo : '';
+      fbRefreshEmpresaInputs();
     }
     if(d.theme) setTheme(d.theme);
     if(d.outputLang){ outputLang = d.outputLang; fbRefreshLangChip(); }
@@ -8147,7 +9127,18 @@ async function fbFlushWrites(){
 function fbRefreshProfileInputs(){
   const nameInput = document.getElementById('userProfileName');
   if(nameInput && document.activeElement!==nameInput) nameInput.value = userProfileName;
+  const phoneInput = document.getElementById('userProfilePhone');
+  if(phoneInput && document.activeElement!==phoneInput) phoneInput.value = userProfilePhone;
+  const emailInput = document.getElementById('userProfileEmail');
+  if(emailInput && document.activeElement!==emailInput) emailInput.value = userProfileEmail;
   document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active', b.dataset.gender===userProfileGender));
+}
+function fbRefreshEmpresaInputs(){
+  const nInp=document.getElementById('empresaNombre'); if(nInp && document.activeElement!==nInp) nInp.value = empresaNombre;
+  const tInp=document.getElementById('empresaTelefono'); if(tInp && document.activeElement!==tInp) tInp.value = empresaTelefono;
+  const wInp=document.getElementById('empresaWhatsapp'); if(wInp && document.activeElement!==wInp) wInp.value = empresaWhatsapp;
+  const cInp=document.getElementById('empresaCorreo'); if(cInp && document.activeElement!==cInp) cInp.value = empresaCorreo;
+  if(empresaLogoDataUrl) mostrarPreviewLogo(empresaLogoDataUrl); else ocultarPreviewLogo();
 }
 function fbRefreshLangChip(){
   document.querySelectorAll('#settingsLangChips .settings-chip').forEach(c=>c.classList.toggle('active', c.dataset.lang===outputLang));
@@ -9185,6 +10176,13 @@ function chatAvatarHtml(role){
 // ─── User Profile ─────────────────────────────────────────────────────────────
 let userProfileName = '';
 let userProfileGender = 'masculino'; // 'masculino' | 'femenino'
+let userProfilePhone = '';
+let userProfileEmail = '';
+let empresaNombre = '';
+let empresaTelefono = '';
+let empresaWhatsapp = '';
+let empresaCorreo = '';
+let empresaLogoDataUrl = '';
 
 function getUserProfileContext(){
   const name = userProfileName.trim();
@@ -15761,13 +16759,26 @@ document.addEventListener('DOMContentLoaded',async()=>{
     // 4) Perfil de usuario
     userProfileName='';
     userProfileGender='masculino';
+    userProfilePhone='';
+    userProfileEmail='';
     const nameInp=document.getElementById('userProfileName'); if(nameInp) nameInp.value='';
+    const phoneInp=document.getElementById('userProfilePhone'); if(phoneInp) phoneInp.value='';
+    const emailInp=document.getElementById('userProfileEmail'); if(emailInp) emailInp.value='';
     document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active', b.dataset.gender==='masculino'));
 
-    // 5) Sincronizar el borrado con la nube
-    fbQueueWrite({history:[], apiKeys:{claude:'',gemini:'',chatgpt:'',grok:''}, profile:{name:'',gender:'masculino'}});
+    // 4b) Datos de la empresa
+    empresaNombre=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
+    const empN=document.getElementById('empresaNombre'); if(empN) empN.value='';
+    const empT=document.getElementById('empresaTelefono'); if(empT) empT.value='';
+    const empW=document.getElementById('empresaWhatsapp'); if(empW) empW.value='';
+    const empC=document.getElementById('empresaCorreo'); if(empC) empC.value='';
+    const empLogoInput=document.getElementById('empresaLogoInput'); if(empLogoInput) empLogoInput.value='';
+    if(typeof ocultarPreviewLogo==='function') ocultarPreviewLogo();
 
-    showToast('Historial, claves, Sheets y perfil borrados');
+    // 5) Sincronizar el borrado con la nube
+    fbQueueWrite({history:[], apiKeys:{claude:'',gemini:'',chatgpt:'',grok:''}, profile:{name:'',gender:'masculino',phone:'',email:''}, empresa:{nombre:'',telefono:'',whatsapp:'',correo:'',logo:''}});
+
+    showToast('Historial, claves, Sheets, perfil y empresa borrados');
   });
   document.querySelectorAll('#settingsThemeChips .settings-chip').forEach(c=>{
     c.addEventListener('click',()=>{
@@ -15805,28 +16816,149 @@ document.addEventListener('DOMContentLoaded',async()=>{
   if(wrapEl) wrapEl.style.paddingBottom = currentMode==='comercial' ? '4px' : (currentMode==='tutorial'||currentMode==='presentacion'||currentMode==='emocional'||currentMode==='pnl'||currentMode==='crm') ? '0' : '100px';
 });
 
-let fbProfileSaveTimer=null;
-function fbQueueProfileWrite(){
-  if(fbApplyingRemote) return;
-  if(fbProfileSaveTimer) clearTimeout(fbProfileSaveTimer);
-  fbProfileSaveTimer=setTimeout(()=>{
-    fbQueueWrite({profile:{name:userProfileName, gender:userProfileGender}});
-  }, 500);
-}
-
 function initProfileUI(){
   const nameInput = document.getElementById('userProfileName');
-  if(nameInput){
-    nameInput.addEventListener('input', e => { userProfileName = e.target.value; fbQueueProfileWrite(); });
-  }
-  document.querySelectorAll('.gender-btn').forEach(btn => {
+  if(nameInput){ nameInput.addEventListener('input', e => { userProfileName = e.target.value; }); }
+  const phoneInput = document.getElementById('userProfilePhone');
+  if(phoneInput){ phoneInput.addEventListener('input', e => { userProfilePhone = e.target.value; }); }
+  const emailInput = document.getElementById('userProfileEmail');
+  if(emailInput){ emailInput.addEventListener('input', e => { userProfileEmail = e.target.value; }); }
+  document.querySelectorAll('#userProfileCard .gender-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#userProfileCard .gender-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       userProfileGender = btn.dataset.gender;
-      fbQueueProfileWrite();
     });
   });
+  const empNombreInput = document.getElementById('empresaNombre');
+  if(empNombreInput){ empNombreInput.addEventListener('input', e => { empresaNombre = e.target.value; }); }
+  const empTelInput = document.getElementById('empresaTelefono');
+  if(empTelInput){ empTelInput.addEventListener('input', e => { empresaTelefono = e.target.value; }); }
+  const empWaInput = document.getElementById('empresaWhatsapp');
+  if(empWaInput){ empWaInput.addEventListener('input', e => { empresaWhatsapp = e.target.value; }); }
+  const empCorreoInput = document.getElementById('empresaCorreo');
+  if(empCorreoInput){ empCorreoInput.addEventListener('input', e => { empresaCorreo = e.target.value; }); }
+}
+
+/* ─── Guardar / Limpiar: Tu perfil (se sincroniza a Firebase, ligado a la cuenta) ─── */
+async function persistPerfil(mensajeExito){
+  const msg = document.getElementById('perfilSaveMsg');
+  try{
+    if(fbUserDocRef){
+      await fbUserDocRef.set({profile:{name:userProfileName, gender:userProfileGender, phone:userProfilePhone, email:userProfileEmail}}, {merge:true});
+      if(msg) msg.textContent = mensajeExito+' Se sincroniza en todos tus dispositivos.';
+    } else if(msg) {
+      msg.textContent = mensajeExito+' (guardado localmente; inicia sesión para sincronizar en la nube).';
+    }
+    showToast(mensajeExito);
+    return true;
+  }catch(e){
+    if(msg) msg.textContent = 'No se pudo guardar en la nube. Intenta de nuevo.';
+    showToast('No se pudo guardar el perfil');
+    return false;
+  }
+}
+async function guardarPerfilUsuario(){
+  const btn = document.getElementById('btnGuardarPerfil');
+  userProfileName = (document.getElementById('userProfileName')?.value||'').trim();
+  userProfilePhone = (document.getElementById('userProfilePhone')?.value||'').trim();
+  userProfileEmail = (document.getElementById('userProfileEmail')?.value||'').trim();
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Guardando…'; }
+  await persistPerfil('✓ Perfil guardado.');
+  if(btn){ btn.disabled=false; btn.textContent='💾 Guardar cambios'; }
+}
+async function limpiarPerfilUsuario(){
+  userProfileName=''; userProfileGender='masculino'; userProfilePhone=''; userProfileEmail='';
+  const nameInp=document.getElementById('userProfileName'); if(nameInp) nameInp.value='';
+  const phoneInp=document.getElementById('userProfilePhone'); if(phoneInp) phoneInp.value='';
+  const emailInp=document.getElementById('userProfileEmail'); if(emailInp) emailInp.value='';
+  document.querySelectorAll('#userProfileCard .gender-btn').forEach(b=>b.classList.toggle('active', b.dataset.gender==='masculino'));
+  const btn = document.getElementById('btnLimpiarPerfil');
+  if(btn) btn.disabled=true;
+  await persistPerfil('🧹 Datos del perfil borrados.');
+  if(btn) btn.disabled=false;
+}
+
+/* ─── Guardar / Limpiar: Datos de la empresa (se sincroniza a Firebase, ligado a la cuenta) ─── */
+function ocultarPreviewLogo(){
+  const wrap=document.getElementById('empresaLogoPreviewWrap');
+  if(wrap) wrap.style.display='none';
+}
+function mostrarPreviewLogo(dataUrl){
+  const wrap=document.getElementById('empresaLogoPreviewWrap');
+  const img=document.getElementById('empresaLogoPreview');
+  if(img) img.src=dataUrl;
+  if(wrap) wrap.style.display='flex';
+}
+function quitarEmpresaLogo(){
+  empresaLogoDataUrl='';
+  const logoInput=document.getElementById('empresaLogoInput'); if(logoInput) logoInput.value='';
+  ocultarPreviewLogo();
+}
+function onEmpresaLogoSeleccionado(evt){
+  const file = evt.target.files && evt.target.files[0];
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ showToast('Selecciona un archivo de imagen'); return; }
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      // Se redimensiona para no exceder el límite de tamaño de un documento en Firestore (1 MB).
+      const maxDim = 240;
+      let w = img.width, h = img.height;
+      if(w>h){ if(w>maxDim){ h = Math.round(h*maxDim/w); w = maxDim; } }
+      else { if(h>maxDim){ w = Math.round(w*maxDim/h); h = maxDim; } }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);
+      ctx.drawImage(img, 0, 0, w, h);
+      empresaLogoDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      mostrarPreviewLogo(empresaLogoDataUrl);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+async function persistEmpresa(mensajeExito){
+  const msg = document.getElementById('empresaSaveMsg');
+  try{
+    if(fbUserDocRef){
+      await fbUserDocRef.set({empresa:{nombre:empresaNombre, telefono:empresaTelefono, whatsapp:empresaWhatsapp, correo:empresaCorreo, logo:empresaLogoDataUrl}}, {merge:true});
+      if(msg) msg.textContent = mensajeExito+' Se sincroniza en todos tus dispositivos.';
+    } else if(msg) {
+      msg.textContent = mensajeExito+' (guardado localmente; inicia sesión para sincronizar en la nube).';
+    }
+    showToast(mensajeExito);
+    return true;
+  }catch(e){
+    if(msg) msg.textContent = 'No se pudo guardar en la nube. Intenta de nuevo.';
+    showToast('No se pudo guardar los datos de la empresa');
+    return false;
+  }
+}
+async function guardarDatosEmpresa(){
+  const btn = document.getElementById('btnGuardarEmpresa');
+  empresaNombre = (document.getElementById('empresaNombre')?.value||'').trim();
+  empresaTelefono = (document.getElementById('empresaTelefono')?.value||'').trim();
+  empresaWhatsapp = (document.getElementById('empresaWhatsapp')?.value||'').trim();
+  empresaCorreo = (document.getElementById('empresaCorreo')?.value||'').trim();
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Guardando…'; }
+  await persistEmpresa('✓ Datos de la empresa guardados.');
+  if(btn){ btn.disabled=false; btn.textContent='💾 Guardar cambios'; }
+}
+async function limpiarDatosEmpresa(){
+  empresaNombre=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
+  const nInp=document.getElementById('empresaNombre'); if(nInp) nInp.value='';
+  const tInp=document.getElementById('empresaTelefono'); if(tInp) tInp.value='';
+  const wInp=document.getElementById('empresaWhatsapp'); if(wInp) wInp.value='';
+  const cInp=document.getElementById('empresaCorreo'); if(cInp) cInp.value='';
+  const logoInput=document.getElementById('empresaLogoInput'); if(logoInput) logoInput.value='';
+  ocultarPreviewLogo();
+  const btn = document.getElementById('btnLimpiarEmpresa');
+  if(btn) btn.disabled=true;
+  await persistEmpresa('🧹 Datos de la empresa borrados.');
+  if(btn) btn.disabled=false;
 }
 
 // ════════════════════════════════════════════════════════════════════════════
