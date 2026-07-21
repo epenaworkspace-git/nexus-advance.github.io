@@ -3891,9 +3891,10 @@ function confirmarNuevaFicha(){
 
     <!-- Paso 2: reporte generado -->
     <div id="informeReporte" class="hidden">
-      <div style="display:flex;gap:8px;margin-bottom:14px">
+      <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
         <button class="btn-sm" style="flex:1" onclick="volverSeleccionInforme()">↩️ Elegir otra opción</button>
         <button class="btn-ia sm" style="flex:1" id="btnDescargarInformePDF" onclick="descargarInformePDF()">⬇️ Descargar PDF</button>
+        <button class="btn-sm" style="flex:1" id="btnGuardarInformeManual" onclick="guardarInformeManual(this)">💾 Guardar en Historial</button>
       </div>
       <div id="informeReporteContenido"></div>
     </div>
@@ -6517,25 +6518,70 @@ async function abrirHistorialInformes(){
   try{
     const res = await fetch(url + '?action=listarInformes');
     const data = await res.json();
-    historialInformesActual = (data.success && Array.isArray(data.informes)) ? data.informes : [];
-    if(!historialInformesActual.length){
-      cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">Aún no hay informes guardados. Se registran automáticamente cada vez que generas un Informe Detallado.</p>';
-      return;
-    }
-    cont.innerHTML = historialInformesActual.map((inf,i) => `
-      <div class="card-inner" style="margin-bottom:10px">
-        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
-          <div>
-            <div style="font-weight:700;color:var(--text)">${inf.clienteNombre||'Sin nombre'}</div>
-            <div style="font-size:11px;color:var(--muted);margin-top:2px">${inf.fechaGuardado||'—'} · ${inf.estadoProceso||'Sin estado'}</div>
-          </div>
-          <button class="btn-ia sm" onclick="descargarInformeDesdeHistorial(${i}, this)">⬇️ Descargar Informe en PDF</button>
-        </div>
-      </div>`).join('');
+    const todos = (data.success && Array.isArray(data.informes)) ? data.informes : [];
+    const ocultos = new Set(obtenerInformesOcultos());
+    historialInformesActual = todos.filter(inf => !ocultos.has(inf.id));
+    renderListaHistorialInformes(todos.length - historialInformesActual.length);
   }catch(e){
     cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">❌ Error al cargar el historial. Verifica tu conexión.</p>';
   }
 }
+
+// El "eliminar" de un informe es solo una preferencia local (este navegador):
+// oculta el informe de esta lista y del Análisis Resumido, pero el registro
+// permanece guardado en la hoja "Informes" del script — el historial completo
+// nunca se borra ni se pierde, y sigue funcionando igual que antes.
+function obtenerInformesOcultos(){
+  try{ return JSON.parse(localStorage.getItem('nexus_informes_ocultos')||'[]'); }catch(e){ return []; }
+}
+function guardarInformesOcultos(arr){
+  try{ localStorage.setItem('nexus_informes_ocultos', JSON.stringify(arr)); }catch(e){}
+}
+
+function renderListaHistorialInformes(ocultosCount){
+  ocultosCount = ocultosCount || 0;
+  const cont = document.getElementById('listaHistorialInformes');
+  const avisoOcultos = ocultosCount > 0
+    ? `<button class="btn-sm full" style="margin-bottom:10px" onclick="restaurarInformesOcultos()">↺ Mostrar ${ocultosCount} informe(s) quitado(s) de esta lista</button>`
+    : '';
+  if(!historialInformesActual.length){
+    cont.innerHTML = avisoOcultos + '<p class="text-muted" style="text-align:center;padding:30px 0">' + (ocultosCount>0 ? 'No hay informes visibles en esta lista.' : 'Aún no hay informes guardados. Se registran automáticamente cada vez que generas un Informe Detallado, o puedes guardarlos manualmente desde el botón "Guardar en Historial" dentro de cada informe.') + '</p>';
+    return;
+  }
+  cont.innerHTML = avisoOcultos + historialInformesActual.map((inf,i) => `
+    <div class="card-inner" style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+        <div>
+          <div style="font-weight:700;color:var(--text)">${inf.clienteNombre||'Sin nombre'}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${inf.fechaGuardado||'—'} · ${inf.estadoProceso||'Sin estado'}</div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-ia sm" onclick="descargarInformeDesdeHistorial(${i}, this)">⬇️ Descargar Informe en PDF</button>
+          <button class="btn-sm" style="color:var(--elec-red,#EF4444)" onclick="eliminarInformeDelHistorial(${i}, this)" title="Quitar de esta lista (sigue guardado en el historial completo del script)">🗑️ Quitar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function eliminarInformeDelHistorial(i, btn){
+  const inf = historialInformesActual[i];
+  if(!inf){ crmMostrarToast('No se pudo identificar el informe.'); return; }
+  if(!confirm(`¿Quitar el informe de "${inf.clienteNombre||'este cliente'}" de esta lista? Seguirá guardado en el historial completo del script y podrás recuperarlo con "Mostrar informes quitados"; solo dejará de contarse en el Análisis Resumido mientras esté quitado.`)) return;
+  if(inf.id){
+    const ocultos = obtenerInformesOcultos();
+    if(!ocultos.includes(inf.id)){ ocultos.push(inf.id); guardarInformesOcultos(ocultos); }
+  }
+  historialInformesActual.splice(i,1);
+  const ocultosCount = obtenerInformesOcultos().length;
+  renderListaHistorialInformes(ocultosCount);
+  crmMostrarToast('✓ Informe quitado de esta lista');
+}
+
+function restaurarInformesOcultos(){
+  guardarInformesOcultos([]);
+  abrirHistorialInformes();
+}
+
 function cerrarHistorialInformes(){ document.getElementById('modalHistorialInformes').classList.add('hidden'); }
 
 async function descargarInformeDesdeHistorial(i, btn){
@@ -7388,17 +7434,24 @@ function generarInformeDetallado(conContacto){
   document.getElementById('informeReporteContenido').innerHTML = html;
   document.getElementById('informeSeleccion').classList.add('hidden');
   document.getElementById('informeReporte').classList.remove('hidden');
+  informeActualDatos = { nombre: nombre, conContacto: !!conContacto, estadoProceso: estadoFinalTxt };
   registrarInformeEnHistorial(nombre, conContacto, estadoFinalTxt);
 }
 
-// Registro en segundo plano (no bloqueante) del informe recién generado en
-// el "Historial de Reportes" del backend. Si no hay Google Sheets configurado
-// o falla la red, simplemente no queda en el historial — no interrumpe al
-// vendedor ni el PDF que ya se generó.
+// Datos del último informe renderizado en pantalla (Paso 2), usados por el
+// botón manual "Guardar en Historial" para poder re-registrarlo a demanda.
+let informeActualDatos = null;
+
+// Registra el informe recién generado en el "Historial de Reportes" del
+// backend y devuelve la respuesta ({success,...}) para quien quiera
+// mostrar confirmación (ver guardarInformeManual). El registro automático
+// que dispara generarInformeDetallado ignora esta respuesta a propósito:
+// si no hay Google Sheets configurado o falla la red, simplemente no queda
+// en el historial — no interrumpe al vendedor ni el PDF que ya se generó.
 function registrarInformeEnHistorial(nombreCliente, conContacto, estadoProceso){
   const url = localStorage.getItem('nexus_sheets_url')||'';
-  if(!url) return;
-  fetch(url, {
+  if(!url) return Promise.resolve({success:false, error:'Sin URL configurada'});
+  return fetch(url, {
     method:'POST',
     headers:{'Content-Type':'text/plain'},
     body: JSON.stringify({
@@ -7408,7 +7461,21 @@ function registrarInformeEnHistorial(nombreCliente, conContacto, estadoProceso){
       conDatosContacto: !!conContacto,
       estadoProceso: estadoProceso||''
     })
-  }).catch(()=>{});
+  }).then(r=>r.json()).catch(()=>({success:false, error:'Error de conexión'}));
+}
+
+// Guardado manual: el vendedor puede registrar el informe actualmente en
+// pantalla (Paso 2) en el Historial de Reportes cuantas veces quiera,
+// además del registro automático que ya ocurre al generarlo.
+async function guardarInformeManual(btn){
+  if(!informeActualDatos){ crmMostrarToast('No hay informe generado para guardar.'); return; }
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url){ crmMostrarToast('Configura la URL de Google Sheets (Configuración) para guardar en el historial.'); return; }
+  const txtOriginal = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled=true; btn.innerHTML='⏳ Guardando…'; }
+  const data = await registrarInformeEnHistorial(informeActualDatos.nombre, informeActualDatos.conContacto, informeActualDatos.estadoProceso);
+  if(btn){ btn.disabled=false; btn.innerHTML=txtOriginal; }
+  crmMostrarToast(data && data.success ? '✓ Informe guardado en el historial' : '❌ ' + (data && data.error ? data.error : 'No se pudo guardar el informe.'));
 }
 
 // Núcleo reutilizable: convierte #informeParaExportar (ya renderizado por
