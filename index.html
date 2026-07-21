@@ -2794,9 +2794,6 @@ function confirmarNuevaFicha(){
     <div style="margin-top:16px">
       <button class="btn-primary full" id="btnGuardarDatos" onclick="guardarDatosCliente()">💾 Guardar datos</button>
     </div>
-    <div style="margin-top:10px">
-      <button class="btn-ghost full" id="btnDescargarSolicitudVenta" onclick="descargarSolicitudVenta()" style="width:100%">📝 Descargar Solicitud de Venta</button>
-    </div>
   </div>
 
   <!-- ══ PROCESO DE VENTA ══ -->
@@ -2829,9 +2826,13 @@ function confirmarNuevaFicha(){
     </div>
     <div id="datosContado" class="sub-section hidden">
       <div class="campo"><label>¿Adquirió el seguro con nosotros?</label>
-        <select class="inp" id="seguro" onchange="onCampoChange()">
+        <select class="inp" id="seguro" onchange="toggleSeguroContado();onCampoChange()">
           <option value="">Seleccionar</option><option value="si">✅ Sí</option><option value="no">❌ No</option>
         </select>
+      </div>
+      <div class="campo hidden" id="campoSeguroContadoCosto" style="margin-top:10px">
+        <label>Costo del seguro</label>
+        <input class="inp" type="number" id="seguroContadoCosto" min="0" step="0.01" placeholder="$0.00" oninput="onCampoChange()">
       </div>
       <div style="margin-top:14px">
         <button class="btn-ia sm" type="button" id="btnDescargarCotizacionContado" onclick="descargarCotizacionContado()" style="width:100%">📄 Descargar cotización</button>
@@ -2998,6 +2999,9 @@ function confirmarNuevaFicha(){
           <option value="">Seleccionar / No mencionó</option><option value="inmediato">🔥 De inmediato / ya</option><option value="semana">📅 Esta semana</option><option value="quincena">📅 Esta quincena</option><option value="mes">🗓 Este mes</option><option value="sinprisa">😌 Sin prisa definida</option>
         </select>
       </div>
+    </div>
+    <div style="margin-top:16px">
+      <button class="btn-ghost full" id="btnDescargarSolicitudVenta" onclick="descargarSolicitudVenta()" style="width:100%">📝 Descargar Solicitud de Venta</button>
     </div>
   </div>
 
@@ -3274,6 +3278,77 @@ function confirmarNuevaFicha(){
         </select>
       </div>
     </div>
+    <div class="section-title">Trámite de crédito</div>
+    <div class="campo">
+      <label>Estado del trámite de crédito</label>
+      <select class="inp" id="icEstadoCredito" onchange="onCampoChange()">
+        <option value="">Seleccionar</option>
+        <option value="proceso">🕓 En proceso</option>
+        <option value="aprobado">✅ Aprobado</option>
+        <option value="rechazado">❌ Rechazado</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label>Instituciones bancarias consultadas</label>
+      <div class="grid-2" id="bloqueIcBancos">
+        <div class="campo">
+          <label style="font-weight:400;text-transform:none;letter-spacing:0">Institución 1</label>
+          <select class="inp" id="icBanco1" onchange="toggleIcBancoOtro(1);onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="financiera_casa">Financiera de Casa</option>
+            <option value="bbva">BBVA</option>
+            <option value="banorte">Banorte</option>
+            <option value="scotiabank">Scotiabank</option>
+            <option value="hsbc">HSBC</option>
+            <option value="banregio">Banregio</option>
+            <option value="otro">✏️ Otro</option>
+          </select>
+          <input class="inp" type="text" id="icBanco1Otro" placeholder="Especifica la institución…" style="display:none;margin-top:6px" oninput="onCampoChange()">
+        </div>
+        <div class="campo">
+          <label style="font-weight:400;text-transform:none;letter-spacing:0">Institución 2</label>
+          <select class="inp" id="icBanco2" onchange="toggleIcBancoOtro(2);onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="financiera_casa">Financiera de Casa</option>
+            <option value="bbva">BBVA</option>
+            <option value="banorte">Banorte</option>
+            <option value="scotiabank">Scotiabank</option>
+            <option value="hsbc">HSBC</option>
+            <option value="banregio">Banregio</option>
+            <option value="otro">✏️ Otro</option>
+          </select>
+          <input class="inp" type="text" id="icBanco2Otro" placeholder="Especifica la institución…" style="display:none;margin-top:6px" oninput="onCampoChange()">
+        </div>
+        <div class="campo">
+          <label style="font-weight:400;text-transform:none;letter-spacing:0">Institución 3</label>
+          <select class="inp" id="icBanco3" onchange="toggleIcBancoOtro(3);onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="financiera_casa">Financiera de Casa</option>
+            <option value="bbva">BBVA</option>
+            <option value="banorte">Banorte</option>
+            <option value="scotiabank">Scotiabank</option>
+            <option value="hsbc">HSBC</option>
+            <option value="banregio">Banregio</option>
+            <option value="otro">✏️ Otro</option>
+          </select>
+          <input class="inp" type="text" id="icBanco3Otro" placeholder="Especifica la institución…" style="display:none;margin-top:6px" oninput="onCampoChange()">
+        </div>
+        <div class="campo">
+          <label style="font-weight:400;text-transform:none;letter-spacing:0">Institución 4</label>
+          <select class="inp" id="icBanco4" onchange="toggleIcBancoOtro(4);onCampoChange()">
+            <option value="">Seleccionar</option>
+            <option value="financiera_casa">Financiera de Casa</option>
+            <option value="bbva">BBVA</option>
+            <option value="banorte">Banorte</option>
+            <option value="scotiabank">Scotiabank</option>
+            <option value="hsbc">HSBC</option>
+            <option value="banregio">Banregio</option>
+            <option value="otro">✏️ Otro</option>
+          </select>
+          <input class="inp" type="text" id="icBanco4Otro" placeholder="Especifica la institución…" style="display:none;margin-top:6px" oninput="onCampoChange()">
+        </div>
+      </div>
+    </div>
     <div class="section-title">Vehículo a cuenta / cambio</div>
     <div class="campo">
       <label>¿Se recibe vehículo a cuenta o a cambio?</label>
@@ -3464,6 +3539,15 @@ function confirmarNuevaFicha(){
     <button class="btn-primary full" onclick="abrirInformeDetallado()">📄 Informe Detallado</button>
   </div>
 
+  <!-- ══ EVALUACIÓN DE DESEMPEÑO — no depende de tener un cliente cargado ══ -->
+  <div class="card" id="cardEvaluacionDesempeno">
+    <div class="card-header">
+      <div class="card-icon">📈</div><div class="card-title">Evaluación de Desempeño</div>
+    </div>
+    <p class="text-muted" style="font-size:12.5px;line-height:1.55;margin-bottom:14px">Mide cómo vas: elige semana, mes o año y consulta cuántos clientes contactaste, cuántas ventas cerraste, cuántas se cayeron y tu tasa de cierre, con gráficos.</p>
+    <button class="btn-primary full" onclick="abrirEvaluacionDesempeno()">📈 Ver mi evaluación</button>
+  </div>
+
   <!-- ══ CONFIGURACIÓN — ya no es card inline, es modal ══ -->
 
 
@@ -3550,6 +3634,10 @@ function confirmarNuevaFicha(){
       <div class="campo">
         <label>Nombre de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
         <input class="inp" type="text" id="empresaNombre" placeholder="Ej: Autos del Valle" maxlength="80" autocomplete="off">
+      </div>
+      <div class="campo" style="margin-top:10px">
+        <label>Razón social de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
+        <input class="inp" type="text" id="empresaRazonSocial" placeholder="Ej: Autos del Valle, S.A. de C.V." maxlength="120" autocomplete="off">
       </div>
       <div class="campo" style="margin-top:10px">
         <label>Logotipo de la empresa <span style="font-weight:400;text-transform:none;letter-spacing:0;">(opcional)</span></label>
@@ -3794,6 +3882,10 @@ function confirmarNuevaFicha(){
           <button class="btn-ghost full" onclick="generarInformeDetallado(false)">✅ Sin datos de contacto</button>
         </div>
         <p class="text-muted" style="font-size:11.5px;line-height:1.5;margin-top:12px">En la versión "sin datos de contacto" solo se muestra el nombre del cliente — no se incluye teléfono ni correo electrónico.</p>
+        <div style="display:flex;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
+          <button class="btn-sm" style="flex:1" onclick="abrirHistorialInformes()">📂 Historial de Reportes</button>
+          <button class="btn-sm" style="flex:1" onclick="abrirReportesPeriodo()">📅 Reportes por Periodo</button>
+        </div>
       </div>
     </div>
 
@@ -3804,6 +3896,158 @@ function confirmarNuevaFicha(){
         <button class="btn-ia sm" style="flex:1" id="btnDescargarInformePDF" onclick="descargarInformePDF()">⬇️ Descargar PDF</button>
       </div>
       <div id="informeReporteContenido"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL HISTORIAL DE REPORTES ══ -->
+<div id="modalHistorialInformes" class="hidden" style="position:fixed;inset:0;z-index:1060;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
+  <div class="wrap" style="padding-top:20px;padding-bottom:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <button class="btn-back" onclick="cerrarHistorialInformes()">←</button>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;color:var(--text)">📂 Historial de Reportes</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Informes generados anteriormente</div>
+      </div>
+    </div>
+    <button class="btn-ia full" id="btnAnalisisResumidoHistorial" style="margin-bottom:16px" onclick="generarAnalisisResumidoDesdeHistorial()">📊 Generar Análisis Resumido</button>
+    <div id="listaHistorialInformes">
+      <p class="text-muted" style="text-align:center;padding:30px 0">Cargando historial…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL REPORTES POR PERIODO ══ -->
+<div id="modalReportesPeriodo" class="hidden" style="position:fixed;inset:0;z-index:1060;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
+  <div class="wrap" style="padding-top:20px;padding-bottom:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <button class="btn-back" onclick="cerrarReportesPeriodo()">←</button>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;color:var(--text)">📅 Reportes por Periodo</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Botón maestro — descarga masiva + análisis gerencial</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-icon">🗓️</div><div class="card-title">Selecciona el periodo</div></div>
+      <div class="campo">
+        <label>Tipo de periodo</label>
+        <select class="inp" id="rpModo" onchange="actualizarCamposReportesPeriodo()">
+          <option value="semana">Por Semana</option>
+          <option value="mes">Por Mes</option>
+          <option value="anio">Por Año</option>
+        </select>
+      </div>
+      <div class="grid-2">
+        <div class="campo" id="campoRpMes">
+          <label>Mes</label>
+          <select class="inp" id="rpMes">
+            <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option>
+            <option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option>
+            <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
+            <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="campo"><label>Año</label>
+          <input class="inp" type="number" id="rpAnio" min="2000" max="2100" placeholder="Ej. 2026">
+        </div>
+      </div>
+      <div class="campo" id="campoRpSemana">
+        <label>Semana del mes</label>
+        <select class="inp" id="rpSemana">
+          <option value="1">Semana 1 (días 1–7)</option>
+          <option value="2">Semana 2 (días 8–14)</option>
+          <option value="3">Semana 3 (días 15–21)</option>
+          <option value="4">Semana 4 (días 22–28)</option>
+          <option value="5">Semana 5 (día 29 en adelante)</option>
+        </select>
+      </div>
+      <button class="btn-primary full" id="btnConfirmarReportesPeriodo" onclick="confirmarReportesPeriodo()">⚡ Generar reportes del periodo</button>
+      <p class="text-muted" style="font-size:11.5px;line-height:1.5;margin-top:10px">Se buscan los clientes con esa Fecha de Primer Contacto, se descarga el Informe Detallado (con datos de contacto) de cada uno, y al final se genera el Análisis Resumido Gerencial del periodo.</p>
+    </div>
+    <div id="rpProgreso" class="hidden" style="margin-top:16px">
+      <div class="card">
+        <div class="card-header"><div class="card-icon">⏳</div><div class="card-title">Generando…</div></div>
+        <p id="rpProgresoTexto" class="text-muted" style="font-size:13px">Preparando…</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL EVALUACIÓN DE DESEMPEÑO ══ -->
+<div id="modalEvaluacion" class="hidden" style="position:fixed;inset:0;z-index:1060;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
+  <div class="wrap" style="padding-top:20px;padding-bottom:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <button class="btn-back" onclick="cerrarEvaluacionDesempeno()">←</button>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;color:var(--text)">📈 Evaluación de Desempeño</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">¿Cómo voy?</div>
+      </div>
+    </div>
+    <div class="card" id="evSeleccion">
+      <div class="card-header"><div class="card-icon">🗓️</div><div class="card-title">Selecciona el periodo a evaluar</div></div>
+      <div class="campo">
+        <label>Tipo de periodo</label>
+        <select class="inp" id="evModo" onchange="actualizarCamposEvaluacion()">
+          <option value="semana">Por Semana</option>
+          <option value="mes">Por Mes</option>
+          <option value="anio">Por Año</option>
+        </select>
+      </div>
+      <div class="grid-2">
+        <div class="campo" id="campoEvMes">
+          <label>Mes</label>
+          <select class="inp" id="evMes">
+            <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option>
+            <option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option>
+            <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
+            <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="campo"><label>Año</label>
+          <input class="inp" type="number" id="evAnio" min="2000" max="2100" placeholder="Ej. 2026">
+        </div>
+      </div>
+      <div class="campo" id="campoEvSemana">
+        <label>Semana del mes</label>
+        <select class="inp" id="evSemana">
+          <option value="1">Semana 1 (días 1–7)</option>
+          <option value="2">Semana 2 (días 8–14)</option>
+          <option value="3">Semana 3 (días 15–21)</option>
+          <option value="4">Semana 4 (días 22–28)</option>
+          <option value="5">Semana 5 (día 29 en adelante)</option>
+        </select>
+      </div>
+      <button class="btn-primary full" id="btnVerEvaluacion" onclick="confirmarEvaluacionDesempeno()">📊 Ver mi evaluación</button>
+    </div>
+
+    <div id="evResultado" class="hidden">
+      <div class="card" style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:4px">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text)" id="evPeriodoLabel">—</div>
+            <div style="font-size:11px;color:var(--muted)">Resultados de tu evaluación</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-sm" onclick="volverSeleccionEvaluacion()">↩️ Cambiar periodo</button>
+            <button class="btn-ia sm" id="btnDescargarEvaluacionPDF" onclick="descargarEvaluacionPDF()">⬇️ Descargar PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:12px;gap:10px" id="evKpis"></div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="card-header"><div class="card-icon">🥧</div><div class="card-title">Distribución de resultados</div></div>
+        <div style="position:relative;height:220px"><canvas id="evChartPie"></canvas></div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <div class="card-header"><div class="card-icon">📊</div><div class="card-title">Clasificación por probabilidad de cierre</div></div>
+        <div style="position:relative;height:220px"><canvas id="evChartBar"></canvas></div>
+      </div>
+      <div class="card" style="margin-top:14px" id="evTendenciaCard">
+        <div class="card-header"><div class="card-icon">📈</div><div class="card-title">Tendencia del periodo</div></div>
+        <div style="position:relative;height:220px"><canvas id="evChartLine"></canvas></div>
+      </div>
     </div>
   </div>
 </div>
@@ -4128,13 +4372,14 @@ async function verificarPosventaAlAbrir(){
 /* ─── INIT ─── */
 (function init(){
   const campos = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
-    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
+    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','seguroContadoCosto','enganche','engancheModo','plazo',
     'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
     'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
     'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
-    'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos'];
+    'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos',
+    'icEstadoCredito','icBanco1','icBanco1Otro','icBanco2','icBanco2Otro','icBanco3','icBanco3Otro','icBanco4','icBanco4Otro'];
   campos.forEach(id => {
     const el = document.getElementById(id);
     if(el && clienteData[id] !== undefined) el.value = clienteData[id];
@@ -4145,7 +4390,8 @@ async function verificarPosventaAlAbrir(){
     const el = document.getElementById(id);
     if(el && clienteData[id] !== undefined) el.checked = clienteData[id];
   });
-  togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleSeguroFin();
+  togglePrueba(); toggleOperacion(); toggleSeguroContado(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleSeguroFin();
+  inicializarIcBancosOtro();
   renderHistorial(); recalcScore(); actualizarPasoSiguiente(); calcularFinanciamiento();
   if(typeof actualizarIndicadorEstadoFinal === 'function') actualizarIndicadorEstadoFinal();
   scheduleScoreIA();
@@ -4204,6 +4450,13 @@ function toggleOperacion(){
   document.getElementById('datosContado').classList.toggle('hidden', v !== 'contado');
   document.getElementById('datosFinanciado').classList.toggle('hidden', v !== 'financiado');
   crmToggleCredito();
+}
+function toggleSeguroContado(){
+  const val = document.getElementById('seguro')?.value || '';
+  const campo = document.getElementById('campoSeguroContadoCosto');
+  if(!campo) return;
+  campo.classList.toggle('hidden', val !== 'si');
+  if(val !== 'si'){ const inp = document.getElementById('seguroContadoCosto'); if(inp) inp.value=''; }
 }
 function toggleDisponibilidad(){ document.getElementById('campoTiempoLlegada').style.display = document.getElementById('disponibilidad').value === 'no' ? 'block' : 'none'; }
 function toggleDescuento(){ document.getElementById('campoMontoDescuento').style.display = document.getElementById('descuento').value === 'si' ? 'block' : 'none'; }
@@ -4286,6 +4539,17 @@ function toggleVcUsoAnteriorOtro(){
   const campo = document.getElementById('campoVcUsoAnteriorOtro');
   if(campo) campo.style.display = (sel && sel.value === 'otro' && !sel.disabled) ? 'block' : 'none';
 }
+/* ─── Instituciones bancarias consultadas (Trámite de crédito) ───
+   Cada uno de los 4 registros independientes muestra su campo de texto libre
+   únicamente cuando se elige "Otro". */
+function toggleIcBancoOtro(n){
+  const sel = document.getElementById('icBanco'+n);
+  const campo = document.getElementById('icBanco'+n+'Otro');
+  if(!campo) return;
+  campo.style.display = (sel && sel.value === 'otro') ? 'block' : 'none';
+  if(!(sel && sel.value === 'otro')) campo.value = '';
+}
+function inicializarIcBancosOtro(){ [1,2,3,4].forEach(toggleIcBancoOtro); }
 /* ─── Estado de la valoración (dentro de Vehículo a cuenta/cambio) ───
    "Pendiente por valorar": habilita Fecha/Hora de valoración, y fuerza
    Estado físico-estético / Estado mecánico a mostrar únicamente la opción
@@ -4522,7 +4786,10 @@ async function descargarCotizacionContado(){
     const vehiculo = (document.getElementById('vehiculo')?.value||'').trim() || 'Vehículo';
     const precio = fmtMXN(parseFloat(document.getElementById('precio').value)||0);
     const seguroVal = document.getElementById('seguro')?.value||'';
-    const seguroTxt = seguroVal==='si' ? 'Incluido con la agencia' : seguroVal==='no' ? 'No incluido' : '—';
+    const seguroCostoNum = parseFloat(document.getElementById('seguroContadoCosto')?.value)||0;
+    const seguroTxt = seguroVal==='si'
+      ? ('Incluido con la agencia' + (seguroCostoNum ? ` — ${fmtMXN(seguroCostoNum)}` : ''))
+      : seguroVal==='no' ? 'No incluido' : '—';
     const hoy = new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});
 
     const html = `
@@ -4535,6 +4802,7 @@ async function descargarCotizacionContado(){
         <div><strong>Forma de pago:</strong> Contado</div>
         <div><strong>Precio total:</strong> ${precio}</div>
         <div><strong>Seguro:</strong> ${seguroTxt}</div>
+        ${(seguroVal==='si' && seguroCostoNum) ? `<div><strong>Costo del seguro:</strong> ${fmtMXN(seguroCostoNum)}</div>` : ''}
       </div>
       ${construirPiePaginaCotizacionHTML()}
     `;
@@ -4725,6 +4993,7 @@ async function descargarSolicitudVenta(){
 
     sectionTitle('Datos del vendedor y la empresa');
     fieldLine('Empresa', empresaNombre || 'No especificada');
+    if(empresaRazonSocial) fieldLine('Razón social', empresaRazonSocial);
     fieldLine('Razón social y RFC', '_______________________________');
     if(empresaTelefono) fieldLine('Teléfono de la agencia', empresaTelefono);
     if(empresaWhatsapp) fieldLine('WhatsApp empresarial', empresaWhatsapp);
@@ -5089,13 +5358,14 @@ function stepNumberInput(id, delta){
 /* ─── AUTO-SAVE ─── */
 function onCampoChange(){
   const campos=['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','ocupacion','precio','fuenteLead',
-    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','enganche','engancheModo','plazo',
+    'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','seguro','seguroContadoCosto','enganche','engancheModo','plazo',
     'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
     'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
     'descuento','montoDescuento','otroRegaloDesc','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
     'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
     'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
-    'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos'];
+    'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos',
+    'icEstadoCredito','icBanco1','icBanco1Otro','icBanco2','icBanco2Otro','icBanco3','icBanco3Otro','icBanco4','icBanco4Otro'];
   campos.forEach(id => { const el=document.getElementById(id); if(el) clienteData[id]=el.value; });
   const checks=['rTapetes','rVidrios','rPelicula','rKitSeguridad','rPlacas','rOtro'];
   checks.forEach(id => { const el=document.getElementById(id); if(el) clienteData[id]=el.checked; });
@@ -6177,6 +6447,598 @@ function volverSeleccionInforme(){
   document.getElementById('informeReporte').classList.add('hidden');
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   HISTORIAL DE REPORTES / REPORTES POR PERIODO
+   ──────────────────────────────────────────────────────────────────────
+   Ninguno de los dos guarda el PDF en sí: siempre se regenera al vuelo con
+   los datos MÁS RECIENTES del cliente (misma filosofía que "Descargar PDF"
+   normal). Para poder generar el informe de un cliente distinto al que está
+   abierto en la ficha, sin perder el trabajo en curso del vendedor, se toma
+   una "foto" de todo el formulario antes de cambiar de cliente y se
+   restaura exactamente igual al terminar.
+   ══════════════════════════════════════════════════════════════════════ */
+function capturarSnapshotFormularioCRM(){
+  const snap = { clienteId, fichaDesbloqueada, valores:{}, checks:{}, gestiones: JSON.parse(JSON.stringify(gestiones)) };
+  CAMPOS_CLIENTE_FORM.forEach(id => { const el=document.getElementById(id); if(el) snap.valores[id]=el.value; });
+  ['rTapetes','rVidrios','rPelicula','rKitSeguridad','rPlacas','rOtro','vcPropuestaAceptada','vcPropuestaNoAceptada'].forEach(id => {
+    const el=document.getElementById(id); if(el) snap.checks[id]=el.checked;
+  });
+  return snap;
+}
+async function restaurarSnapshotFormularioCRM(snap){
+  clienteId = snap.clienteId;
+  localStorage.setItem('crm_cliente_id', clienteId||'');
+  Object.keys(snap.valores).forEach(id => { const el=document.getElementById(id); if(el) el.value = snap.valores[id]; });
+  Object.keys(snap.checks).forEach(id => { const el=document.getElementById(id); if(el) el.checked = snap.checks[id]; });
+  gestiones = snap.gestiones;
+  localStorage.setItem('crm_gestiones', JSON.stringify(gestiones));
+  onCampoChange();
+  localStorage.setItem('crm_cliente', JSON.stringify(clienteData));
+
+  fichaDesbloqueada = snap.fichaDesbloqueada;
+  if(fichaDesbloqueada) desbloquearSeccionesGenerales(); else bloquearSeccionesIniciales();
+
+  togglePrueba(); toggleOperacion(); toggleSeguroContado(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleVehiculoCambio(); toggleSeguroFin(); inicializarIcBancosOtro();
+  if(snap.valores.vcEstadoFisico!==undefined){ const e=document.getElementById('vcEstadoFisico'); if(e) e.value=snap.valores.vcEstadoFisico; }
+  if(snap.valores.vcEstadoMecanico!==undefined){ const e=document.getElementById('vcEstadoMecanico'); if(e) e.value=snap.valores.vcEstadoMecanico; }
+  if(typeof adaptarCuestionarioTipoOp==='function') adaptarCuestionarioTipoOp();
+  if(typeof calcularFinanciamiento==='function') calcularFinanciamiento();
+  if(typeof aplicarEstadoDesdeGestiones==='function') aplicarEstadoDesdeGestiones();
+  renderHistorial(); recalcScore();
+  if(typeof inicializarAccionRecomendada==='function') inicializarAccionRecomendada();
+  actualizarClienteIdBadge();
+}
+
+// Descarga la ficha del cliente indicado, genera su Informe Detallado y lo
+// exporta a PDF, y al terminar (éxito o error) restaura la ficha que estaba
+// abierta antes de empezar. Se usa desde el Historial de Reportes y desde
+// el botón maestro "Reportes por Periodo".
+async function generarYDescargarInformeParaCliente(clienteIdObjetivo, conContacto){
+  if(!clienteIdObjetivo) throw new Error('Cliente sin ID registrado.');
+  const snap = capturarSnapshotFormularioCRM();
+  try{
+    const ok = await cargarClienteCompleto(clienteIdObjetivo, null, true);
+    if(!ok) throw new Error('No se pudo descargar la ficha del cliente.');
+    generarInformeDetallado(!!conContacto);
+    await new Promise(r=>setTimeout(r,80));
+    await generarPDFdesdeInformeActual();
+  } finally {
+    await restaurarSnapshotFormularioCRM(snap);
+  }
+}
+
+let historialInformesActual = [];
+async function abrirHistorialInformes(){
+  document.getElementById('modalHistorialInformes').classList.remove('hidden');
+  const cont = document.getElementById('listaHistorialInformes');
+  cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">Cargando historial…</p>';
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url){ cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">Configura la URL de Google Sheets (Configuración) para ver el historial de reportes.</p>'; return; }
+  try{
+    const res = await fetch(url + '?action=listarInformes');
+    const data = await res.json();
+    historialInformesActual = (data.success && Array.isArray(data.informes)) ? data.informes : [];
+    if(!historialInformesActual.length){
+      cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">Aún no hay informes guardados. Se registran automáticamente cada vez que generas un Informe Detallado.</p>';
+      return;
+    }
+    cont.innerHTML = historialInformesActual.map((inf,i) => `
+      <div class="card-inner" style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+          <div>
+            <div style="font-weight:700;color:var(--text)">${inf.clienteNombre||'Sin nombre'}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:2px">${inf.fechaGuardado||'—'} · ${inf.estadoProceso||'Sin estado'}</div>
+          </div>
+          <button class="btn-ia sm" onclick="descargarInformeDesdeHistorial(${i}, this)">⬇️ Descargar Informe en PDF</button>
+        </div>
+      </div>`).join('');
+  }catch(e){
+    cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">❌ Error al cargar el historial. Verifica tu conexión.</p>';
+  }
+}
+function cerrarHistorialInformes(){ document.getElementById('modalHistorialInformes').classList.add('hidden'); }
+
+async function descargarInformeDesdeHistorial(i, btn){
+  const inf = historialInformesActual[i];
+  if(!inf){ crmMostrarToast('No se pudo identificar el informe.'); return; }
+  const txtOriginal = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled=true; btn.innerHTML='⏳ Generando…'; }
+  try{
+    await generarYDescargarInformeParaCliente(inf.clienteId, inf.conDatosContacto==='Sí');
+    crmMostrarToast('✓ PDF descargado');
+  }catch(e){
+    crmMostrarToast('❌ ' + (e.message || 'No se pudo regenerar el informe.'));
+  }
+  if(btn){ btn.disabled=false; btn.innerHTML=txtOriginal; }
+}
+
+// "Generar Análisis Resumido" del Historial: usa exactamente los clientes
+// que aparecen en la lista actualmente mostrada (uno por informe guardado,
+// sin duplicar cliente).
+async function generarAnalisisResumidoDesdeHistorial(){
+  if(!historialInformesActual.length){ crmMostrarToast('No hay informes en el historial para resumir.'); return; }
+  const vistos = new Set();
+  const clientesUnicos = [];
+  historialInformesActual.forEach(inf => {
+    const id = (inf.clienteId||'').trim();
+    if(!id || vistos.has(id)) return;
+    vistos.add(id);
+    clientesUnicos.push({ id, nombre: inf.clienteNombre||'' });
+  });
+  await generarAnalisisResumidoGerencial(clientesUnicos, 'Historial de Reportes', document.getElementById('btnAnalisisResumidoHistorial'));
+}
+
+async function obtenerClienteLigero(url, id){
+  try{
+    const res = await fetch(url + '?action=obtenerCliente&id=' + encodeURIComponent(id));
+    const data = await res.json();
+    return (data.success && data.cliente) ? data.cliente : null;
+  }catch(e){ return null; }
+}
+
+// Orquesta la generación del Análisis Resumido Gerencial: normaliza la lista
+// de clientes recibida (desde "Reportes por Periodo", que ya trae los datos
+// completos, o desde el Historial de Reportes, que solo trae id/nombre y
+// necesita descargarlos), arma las estadísticas y dispara el PDF.
+async function generarAnalisisResumidoGerencial(clientesBase, periodoLabel, btnUI, titulo){
+  titulo = titulo || 'Análisis Resumido Gerencial';
+  if(!window.jspdf){ crmMostrarToast('No se pudo generar el análisis.'); return; }
+  const txtOriginal = btnUI ? btnUI.innerHTML : '';
+  if(btnUI){ btnUI.disabled=true; btnUI.innerHTML='⏳ Generando análisis…'; }
+  crmMostrarToast(`⏳ Generando ${titulo}…`);
+  try{
+    const url = localStorage.getItem('nexus_sheets_url')||'';
+    const yaCompleto = c => c.score!==undefined && c.objecion!==undefined && c.estadoCredito!==undefined && c.estadoFinalOperacion!==undefined;
+    const normalizarFechaCorta = raw => {
+      if(!raw) return '';
+      const d = new Date(raw);
+      return isNaN(d.getTime()) ? String(raw).slice(0,10) : d.toISOString().slice(0,10);
+    };
+    const datos = [];
+    for(const c of clientesBase){
+      if(yaCompleto(c)){ datos.push(c); continue; }
+      let info = null;
+      if(url && c.id) info = await obtenerClienteLigero(url, c.id);
+      datos.push({
+        id: c.id||'', nombre: c.nombre || (info && info.Nombre) || 'Sin nombre',
+        score: info ? (info['Score CRM']||'') : '',
+        objecion: info ? (info['Objeción Principal']||'') : '',
+        estadoCredito: info ? (info['EstadoCredito']||'') : '',
+        estadoFinalOperacion: info ? (info['Estado Final de Operación']||'') : '',
+        fechaContacto: info ? normalizarFechaCorta(info['Fecha Primer Contacto']) : ''
+      });
+    }
+    await construirPDFAnalisisResumidoGerencial(datos, periodoLabel, titulo);
+    crmMostrarToast(`✓ ${titulo} descargado`);
+  }catch(e){
+    crmMostrarToast('❌ No se pudo generar el análisis resumido.');
+  }
+  if(btnUI){ btnUI.disabled=false; btnUI.innerHTML=txtOriginal; }
+}
+
+// Construye el PDF del Análisis Resumido Gerencial: panorama general,
+// clasificación por probabilidad de cierre, resumen de trámites de crédito,
+// listado de objeciones y áreas de oportunidad / recomendaciones de acción
+// (generadas con reglas a partir de las mismas estadísticas — sin depender
+// de una llamada a IA, para que nunca falle por conexión o cuota).
+// Renderiza un chart de Chart.js en un canvas oculto (nunca insertado al DOM)
+// y devuelve su PNG en base64, listo para doc.addImage() en un PDF armado con
+// jsPDF. Se usa tanto en el Análisis Resumido Gerencial como en la Evaluación
+// de Desempeño. animation:false para que el canvas ya esté pintado al
+// terminar el constructor, sin tener que esperar frames.
+function crearImagenChart(config, wpx, hpx){
+  if(typeof Chart==='undefined') return null;
+  const canvas = document.createElement('canvas');
+  canvas.width = wpx; canvas.height = hpx;
+  const ctx = canvas.getContext('2d');
+  config.options = Object.assign({responsive:false, animation:false, maintainAspectRatio:false}, config.options||{});
+  let dataUrl = null;
+  try{
+    const chart = new Chart(ctx, config);
+    dataUrl = canvas.toDataURL('image/png');
+    chart.destroy();
+  }catch(e){ dataUrl = null; }
+  return dataUrl;
+}
+
+// Agrupa una lista de {fechaContacto, estadoFinalOperacion} por fecha
+// (yyyy-mm-dd) para poder graficar una tendencia cronológica del periodo.
+function agruparPorFechaParaTendencia(datos){
+  const mapa = {};
+  datos.forEach(c => {
+    const f = (c.fechaContacto||'').trim();
+    if(!f) return;
+    if(!mapa[f]) mapa[f] = {total:0, vendidos:0};
+    mapa[f].total++;
+    if((c.estadoFinalOperacion||'').toLowerCase().includes('vend')) mapa[f].vendidos++;
+  });
+  const fechas = Object.keys(mapa).sort();
+  return {
+    fechas,
+    etiquetas: fechas.map(f => { const d=new Date(f+'T00:00:00'); return isNaN(d.getTime()) ? f : d.toLocaleDateString('es-MX',{day:'2-digit',month:'short'}); }),
+    totales: fechas.map(f => mapa[f].total),
+    vendidos: fechas.map(f => mapa[f].vendidos)
+  };
+}
+
+async function construirPDFAnalisisResumidoGerencial(datos, periodoLabel, titulo){
+  titulo = titulo || 'Análisis Resumido Gerencial';
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const W=210, M=16, CW=W-M*2;
+  let y=0;
+  const ACCENT='#00A884', TEXT='#1A1A1A', MUTED='#6B7280', LINE='#DDDDDD';
+  const hex=(h)=>{const r=parseInt(h.slice(1,3),16),gg=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return[r,gg,b];};
+  const setColor=(h)=>{const[r,gg,b]=hex(h);doc.setTextColor(r,gg,b);};
+  const setDraw=(h)=>{const[r,gg,b]=hex(h);doc.setDrawColor(r,gg,b);};
+
+  function dibujarEncabezadoPagina(){
+    doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setColor(MUTED);
+    doc.text((typeof empresaNombre!=='undefined' && empresaNombre ? empresaNombre : 'NEXUS CRM').toUpperCase(), M, 12);
+    doc.text(titulo.toUpperCase(), W-M, 12, {align:'right'});
+    setDraw(LINE); doc.setLineWidth(0.3); doc.line(M,15,W-M,15);
+  }
+  const addPage=()=>{ doc.addPage(); y=22; dibujarEncabezadoPagina(); };
+  const checkY=(need=10)=>{ if(y+need>270) addPage(); };
+  const wrapText=(text,x,maxW,lineH=5.2,fontSize=9.5,fontStyle='normal')=>{
+    doc.setFont('helvetica',fontStyle); doc.setFontSize(fontSize); setColor(TEXT);
+    const lines = doc.splitTextToSize(text, maxW);
+    lines.forEach(line=>{ checkY(lineH+2); doc.text(line, x, y); y+=lineH; });
+  };
+  const sectionTitle=(txt)=>{
+    checkY(16);
+    doc.setFont('helvetica','bold'); doc.setFontSize(12.5); setColor(ACCENT);
+    doc.text(txt, M, y); y+=2;
+    setDraw(ACCENT); doc.setLineWidth(0.6); doc.line(M,y,M+CW,y); y+=7;
+  };
+  const fieldLine=(label,value)=>{
+    checkY(7);
+    doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setColor(MUTED);
+    doc.text(label+':', M, y);
+    const labelW = doc.getTextWidth(label+': ')+2;
+    doc.setFont('helvetica','normal'); setColor(TEXT);
+    const lines = doc.splitTextToSize(String(value), CW-labelW);
+    doc.text(lines[0]||'', M+labelW, y);
+    y+=6;
+    for(let i=1;i<lines.length;i++){ checkY(6); doc.text(lines[i], M+labelW, y); y+=6; }
+  };
+  const bullet=(txt)=>{
+    checkY(8);
+    doc.setFont('helvetica','normal'); doc.setFontSize(9.5); setColor(TEXT);
+    const lines = doc.splitTextToSize(txt, CW-6);
+    doc.setFont('helvetica','bold'); setColor(ACCENT); doc.text('•', M, y);
+    doc.setFont('helvetica','normal'); setColor(TEXT);
+    doc.text(lines[0]||'', M+5, y); y+=5.2;
+    for(let i=1;i<lines.length;i++){ checkY(6); doc.text(lines[i], M+5, y); y+=5.2; }
+    y+=1.5;
+  };
+  const addChartImage=(dataUrl, hmm=72)=>{
+    if(!dataUrl) return;
+    checkY(hmm+6);
+    doc.addImage(dataUrl, 'PNG', M, y, CW, hmm);
+    y += hmm + 8;
+  };
+
+  // ── Estadísticas ──
+  const total = datos.length;
+  const buckets = { 'Muy Caliente':0, 'Caliente':0, 'Tibio':0, 'Frío':0 };
+  datos.forEach(c => {
+    const prob = parseFloat(c.score)||0;
+    const label = prob>=80 ? 'Muy Caliente' : prob>=55 ? 'Caliente' : prob>=30 ? 'Tibio' : 'Frío';
+    buckets[label]++;
+  });
+  const creditoMap = {proceso:'En proceso', aprobado:'Aprobado', rechazado:'Rechazado'};
+  const credito = { 'En proceso':0, 'Aprobado':0, 'Rechazado':0, 'No registrado':0 };
+  datos.forEach(c => { credito[creditoMap[c.estadoCredito] || 'No registrado']++; });
+  const objeciones = datos.filter(c => (c.objecion||'').trim() && c.objecion!=='ninguna').map(c => ({nombre:c.nombre, objecion:c.objecion.trim()}));
+  const vendidos = datos.filter(c => (c.estadoFinalOperacion||'').toLowerCase().includes('vend')).length;
+  const perdidos = datos.filter(c => (c.estadoFinalOperacion||'').toLowerCase().includes('perdid')).length;
+  const enProceso = total - vendidos - perdidos;
+
+  // ── Portada / panorama general ──
+  y=20;
+  doc.setFont('helvetica','bold'); doc.setFontSize(19); setColor(TEXT);
+  doc.text(titulo, M, y); y+=8;
+  doc.setFont('helvetica','normal'); doc.setFontSize(10.5); setColor(MUTED);
+  doc.text('Periodo: ' + (periodoLabel||'—'), M, y); y+=5.5;
+  doc.text('Generado el ' + new Date().toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'}), M, y); y+=10;
+  setDraw(LINE); doc.setLineWidth(0.3); doc.line(M,y,M+CW,y); y+=10;
+
+  sectionTitle('Panorama general de clientes');
+  fieldLine('Clientes en el periodo', total);
+  fieldLine('Con venta cerrada', vendidos);
+  fieldLine('Operación perdida', perdidos);
+  fieldLine('En proceso de seguimiento', enProceso);
+  y+=4;
+  if(total>0){
+    addChartImage(crearImagenChart({
+      type:'pie',
+      data:{ labels:['Con venta cerrada','Operación perdida','En proceso'],
+        datasets:[{ data:[vendidos, perdidos, enProceso], backgroundColor:['#00F5C4','#EF4444','#4F8EF7'] }] },
+      options:{ plugins:{ legend:{ position:'right', labels:{ color:'#1A1A1A', font:{size:12} } } } }
+    }, 760, 380), 68);
+  }
+
+  sectionTitle('Clasificación por probabilidad de cierre');
+  fieldLine('💥 Muy Caliente (80–100%)', buckets['Muy Caliente']);
+  fieldLine('🔥 Caliente (55–79%)', buckets['Caliente']);
+  fieldLine('🌤️ Tibio (30–54%)', buckets['Tibio']);
+  fieldLine('❄️ Frío (0–29%)', buckets['Frío']);
+  y+=4;
+  if(total>0){
+    addChartImage(crearImagenChart({
+      type:'bar',
+      data:{ labels:['Muy Caliente','Caliente','Tibio','Frío'],
+        datasets:[{ label:'Clientes', data:[buckets['Muy Caliente'],buckets['Caliente'],buckets['Tibio'],buckets['Frío']],
+          backgroundColor:['#00F5C4','#F97316','#F59E0B','#4F8EF7'], borderRadius:5 }] },
+      options:{ plugins:{ legend:{ display:false } },
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0, color:'#374151' }, grid:{ color:'#E5E7EB' } },
+                 x:{ ticks:{ color:'#374151', font:{size:11} }, grid:{ display:false } } } }
+    }, 760, 380), 68);
+  }
+
+  sectionTitle('Resumen de trámites de crédito');
+  fieldLine('🕓 En proceso', credito['En proceso']);
+  fieldLine('✅ Aprobado', credito['Aprobado']);
+  fieldLine('❌ Rechazado', credito['Rechazado']);
+  fieldLine('— No registrado', credito['No registrado']);
+  y+=4;
+  if(total>0){
+    addChartImage(crearImagenChart({
+      type:'bar',
+      data:{ labels:['En proceso','Aprobado','Rechazado','No registrado'],
+        datasets:[{ label:'Clientes', data:[credito['En proceso'],credito['Aprobado'],credito['Rechazado'],credito['No registrado']],
+          backgroundColor:['#F59E0B','#00F5C4','#EF4444','#8892A4'], borderRadius:5 }] },
+      options:{ plugins:{ legend:{ display:false } },
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0, color:'#374151' }, grid:{ color:'#E5E7EB' } },
+                 x:{ ticks:{ color:'#374151', font:{size:11} }, grid:{ display:false } } } }
+    }, 760, 380), 68);
+  }
+
+  const tendencia = agruparPorFechaParaTendencia(datos);
+  if(tendencia.fechas.length > 1){
+    sectionTitle('Tendencia del periodo');
+    addChartImage(crearImagenChart({
+      type:'line',
+      data:{ labels: tendencia.etiquetas,
+        datasets:[
+          { label:'Clientes contactados', data:tendencia.totales, borderColor:'#4F8EF7', backgroundColor:'rgba(79,142,247,0.12)', tension:0.3, fill:true, pointRadius:3 },
+          { label:'Ventas cerradas', data:tendencia.vendidos, borderColor:'#00F5C4', backgroundColor:'rgba(0,245,196,0.12)', tension:0.3, fill:true, pointRadius:3 }
+        ] },
+      options:{ plugins:{ legend:{ position:'top', labels:{ color:'#374151', font:{size:11}, boxWidth:10 } } },
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0, color:'#374151' }, grid:{ color:'#E5E7EB' } },
+                 x:{ ticks:{ color:'#374151', font:{size:10} }, grid:{ display:false } } } }
+    }, 760, 380), 68);
+  }
+
+  sectionTitle('Listado de objeciones');
+  if(!objeciones.length){
+    wrapText('No se registraron objeciones en los clientes de este periodo.', M, CW);
+  } else {
+    objeciones.forEach(o => bullet(`${o.nombre}: ${o.objecion}`));
+  }
+  y+=2;
+
+  // ── Áreas de oportunidad y recomendaciones (por reglas, no requieren IA) ──
+  sectionTitle('Áreas de oportunidad y recomendaciones de acción');
+  const recomendaciones = [];
+  if(buckets['Frío'] > 0) recomendaciones.push(`Hay ${buckets['Frío']} cliente(s) en estado Frío: priorizar una gestión de reactivación (llamada o WhatsApp) antes de que se enfríen por completo.`);
+  if(credito['Rechazado'] > 0) recomendaciones.push(`${credito['Rechazado']} cliente(s) tienen el trámite de crédito Rechazado: evaluar una segunda institución bancaria o ajustar el enganche propuesto.`);
+  if(credito['En proceso'] > 0) recomendaciones.push(`${credito['En proceso']} cliente(s) siguen con el crédito En proceso: dar seguimiento activo a las instituciones consultadas para acelerar la resolución.`);
+  if(objeciones.length > 0) recomendaciones.push(`Se detectaron ${objeciones.length} objeción(es) sin resolver: reforzar el guion de manejo de objeciones específicamente en esos casos.`);
+  if(total > 0 && (perdidos/total) > 0.3) recomendaciones.push('La proporción de operaciones perdidas es alta (>30%): revisar en equipo las causas más frecuentes de pérdida del periodo.');
+  if(buckets['Muy Caliente'] > 0) recomendaciones.push(`${buckets['Muy Caliente']} cliente(s) están Muy Caliente: cerrar la operación es la prioridad inmediata del equipo.`);
+  if(!recomendaciones.length) recomendaciones.push('No se detectaron focos rojos relevantes en este periodo; mantener el ritmo de seguimiento actual.');
+  recomendaciones.forEach(bullet);
+
+  const nombreArchivo = titulo.replace(/[^a-z0-9]+/gi,'_') + '_' + (periodoLabel||'periodo').replace(/[^a-z0-9]+/gi,'_');
+  doc.save(`${nombreArchivo}.pdf`);
+}
+
+/* ── Botón maestro "Reportes por Periodo" ── */
+function abrirReportesPeriodo(){
+  document.getElementById('modalReportesPeriodo').classList.remove('hidden');
+  document.getElementById('rpProgreso').classList.add('hidden');
+  const elAnio = document.getElementById('rpAnio');
+  if(elAnio && !elAnio.value) elAnio.value = new Date().getFullYear();
+  const elMes = document.getElementById('rpMes');
+  if(elMes) elMes.value = String(new Date().getMonth()+1);
+  actualizarCamposReportesPeriodo();
+}
+function cerrarReportesPeriodo(){ document.getElementById('modalReportesPeriodo').classList.add('hidden'); }
+function actualizarCamposReportesPeriodo(){
+  const modo = document.getElementById('rpModo')?.value || 'semana';
+  document.getElementById('campoRpMes').style.display = (modo==='semana' || modo==='mes') ? 'block' : 'none';
+  document.getElementById('campoRpSemana').style.display = (modo==='semana') ? 'block' : 'none';
+}
+
+async function confirmarReportesPeriodo(){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url){ crmMostrarToast('Configura la URL de Google Sheets (Configuración) para usar esta función.'); return; }
+  const modo = document.getElementById('rpModo')?.value || 'semana';
+  const anio = parseInt(document.getElementById('rpAnio')?.value, 10);
+  const mes = parseInt(document.getElementById('rpMes')?.value, 10) || 0;
+  const semana = parseInt(document.getElementById('rpSemana')?.value, 10) || 0;
+  if(!anio){ crmMostrarToast('Indica el año.'); return; }
+
+  const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const periodoLabel = modo==='anio' ? `Año ${anio}` : modo==='mes' ? `${MESES[mes]} ${anio}` : `Semana ${semana} de ${MESES[mes]} ${anio}`;
+
+  const btn = document.getElementById('btnConfirmarReportesPeriodo');
+  const txtOriginal = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled = true; btn.innerHTML = '⏳ Buscando clientes…'; }
+  const progreso = document.getElementById('rpProgreso');
+  const progresoTexto = document.getElementById('rpProgresoTexto');
+  progreso.classList.remove('hidden');
+  progresoTexto.textContent = 'Buscando clientes del periodo…';
+
+  try{
+    const res = await fetch(url + '?action=listarClientesPeriodo&modo=' + encodeURIComponent(modo) +
+      '&anio=' + encodeURIComponent(anio) + '&mes=' + encodeURIComponent(mes) + '&semana=' + encodeURIComponent(semana));
+    const data = await res.json();
+    const resultados = (data.success && Array.isArray(data.resultados)) ? data.resultados : [];
+    if(!resultados.length){
+      crmMostrarToast('No se encontraron clientes con Fecha de Primer Contacto en ese periodo.');
+      progreso.classList.add('hidden');
+      return;
+    }
+
+    let ok = 0, fallidos = 0;
+    for(let i=0;i<resultados.length;i++){
+      const c = resultados[i];
+      progresoTexto.textContent = `Generando informe ${i+1} de ${resultados.length}: ${c.nombre||'cliente'}…`;
+      try{
+        await generarYDescargarInformeParaCliente(c.id, true);
+        ok++;
+      }catch(e){ fallidos++; }
+      await new Promise(r=>setTimeout(r,120)); // deja "respirar" al navegador entre descargas
+    }
+
+    progresoTexto.textContent = 'Generando Análisis Resumido Gerencial del periodo…';
+    await generarAnalisisResumidoGerencial(resultados, periodoLabel, null);
+
+    progresoTexto.textContent = `Listo: ${ok} informe(s) descargado(s)${fallidos?`, ${fallidos} con error`:''}, más el Análisis Resumido Gerencial.`;
+    crmMostrarToast(`✓ Reportes del periodo generados (${ok}/${resultados.length})`);
+  }catch(e){
+    crmMostrarToast('❌ No se pudo completar la generación de reportes del periodo.');
+    progreso.classList.add('hidden');
+  }
+  if(btn){ btn.disabled = false; btn.innerHTML = txtOriginal; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   EVALUACIÓN DE DESEMPEÑO — "¿Cómo voy?"
+   Reutiliza el mismo endpoint que "Reportes por Periodo" (listarClientesPeriodo)
+   para no duplicar lógica en el backend: solo cambia qué se hace con los datos.
+   ══════════════════════════════════════════════════════════════════════ */
+let evChartPieInst=null, evChartBarInst=null, evChartLineInst=null;
+let evDatosActuales = [], evPeriodoLabelActual = '';
+
+function abrirEvaluacionDesempeno(){
+  document.getElementById('modalEvaluacion').classList.remove('hidden');
+  document.getElementById('evSeleccion').classList.remove('hidden');
+  document.getElementById('evResultado').classList.add('hidden');
+  const elAnio = document.getElementById('evAnio');
+  if(elAnio && !elAnio.value) elAnio.value = new Date().getFullYear();
+  const elMes = document.getElementById('evMes');
+  if(elMes) elMes.value = String(new Date().getMonth()+1);
+  actualizarCamposEvaluacion();
+}
+function cerrarEvaluacionDesempeno(){ document.getElementById('modalEvaluacion').classList.add('hidden'); }
+function volverSeleccionEvaluacion(){
+  document.getElementById('evSeleccion').classList.remove('hidden');
+  document.getElementById('evResultado').classList.add('hidden');
+}
+function actualizarCamposEvaluacion(){
+  const modo = document.getElementById('evModo')?.value || 'semana';
+  document.getElementById('campoEvMes').style.display = (modo==='semana' || modo==='mes') ? 'block' : 'none';
+  document.getElementById('campoEvSemana').style.display = (modo==='semana') ? 'block' : 'none';
+}
+
+async function confirmarEvaluacionDesempeno(){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url){ crmMostrarToast('Configura la URL de Google Sheets (Configuración) para ver tu evaluación.'); return; }
+  const modo = document.getElementById('evModo')?.value || 'semana';
+  const anio = parseInt(document.getElementById('evAnio')?.value, 10);
+  const mes = parseInt(document.getElementById('evMes')?.value, 10) || 0;
+  const semana = parseInt(document.getElementById('evSemana')?.value, 10) || 0;
+  if(!anio){ crmMostrarToast('Indica el año.'); return; }
+
+  const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const periodoLabel = modo==='anio' ? `Año ${anio}` : modo==='mes' ? `${MESES[mes]} ${anio}` : `Semana ${semana} de ${MESES[mes]} ${anio}`;
+
+  const btn = document.getElementById('btnVerEvaluacion');
+  const txtOriginal = btn ? btn.innerHTML : '';
+  if(btn){ btn.disabled = true; btn.innerHTML = '⏳ Calculando…'; }
+  try{
+    const res = await fetch(url + '?action=listarClientesPeriodo&modo=' + encodeURIComponent(modo) +
+      '&anio=' + encodeURIComponent(anio) + '&mes=' + encodeURIComponent(mes) + '&semana=' + encodeURIComponent(semana));
+    const data = await res.json();
+    const resultados = (data.success && Array.isArray(data.resultados)) ? data.resultados : [];
+    evDatosActuales = resultados;
+    evPeriodoLabelActual = periodoLabel;
+    renderEvaluacionKpisYCharts(resultados, periodoLabel);
+    document.getElementById('evSeleccion').classList.add('hidden');
+    document.getElementById('evResultado').classList.remove('hidden');
+    if(!resultados.length) crmMostrarToast('No se encontraron clientes con Fecha de Primer Contacto en ese periodo.');
+  }catch(e){
+    crmMostrarToast('❌ No se pudo calcular tu evaluación.');
+  }
+  if(btn){ btn.disabled = false; btn.innerHTML = txtOriginal; }
+}
+
+function renderEvaluacionKpisYCharts(datos, periodoLabel){
+  document.getElementById('evPeriodoLabel').textContent = periodoLabel;
+  const total = datos.length;
+  const vendidos = datos.filter(c => (c.estadoFinalOperacion||'').toLowerCase().includes('vend')).length;
+  const perdidos = datos.filter(c => (c.estadoFinalOperacion||'').toLowerCase().includes('perdid')).length;
+  const enProceso = total - vendidos - perdidos;
+  const tasaCierre = total>0 ? Math.round((vendidos/total)*100) : 0;
+
+  const buckets = { 'Muy Caliente':0, 'Caliente':0, 'Tibio':0, 'Frío':0 };
+  datos.forEach(c => {
+    const prob = parseFloat(c.score)||0;
+    const label = prob>=80 ? 'Muy Caliente' : prob>=55 ? 'Caliente' : prob>=30 ? 'Tibio' : 'Frío';
+    buckets[label]++;
+  });
+
+  const kpis = [
+    { label:'Clientes contactados', val: total, color:'#4F8EF7' },
+    { label:'Ventas cerradas', val: vendidos, color:'#00F5C4' },
+    { label:'Se cayeron', val: perdidos, color:'#EF4444' },
+    { label:'En proceso', val: enProceso, color:'#F59E0B' },
+    { label:'Tasa de cierre', val: tasaCierre+'%', color:'#A855F7' }
+  ];
+  document.getElementById('evKpis').innerHTML = kpis.map(k => `
+    <div class="card-inner" style="text-align:center;padding:14px">
+      <div style="font-size:22px;font-weight:800;color:${k.color}">${k.val}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.04em">${k.label}</div>
+    </div>`).join('');
+
+  if(typeof Chart==='undefined') return;
+
+  const pieCtx = document.getElementById('evChartPie').getContext('2d');
+  if(evChartPieInst) evChartPieInst.destroy();
+  evChartPieInst = new Chart(pieCtx, {
+    type:'pie',
+    data:{ labels:['Ventas cerradas','Se cayeron','En proceso'], datasets:[{ data:[vendidos,perdidos,enProceso], backgroundColor:['#00F5C4','#EF4444','#4F8EF7'] }] },
+    options:{ maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ color:'#8892A4', font:{size:11}, boxWidth:10 } } } }
+  });
+
+  const barCtx = document.getElementById('evChartBar').getContext('2d');
+  if(evChartBarInst) evChartBarInst.destroy();
+  evChartBarInst = new Chart(barCtx, {
+    type:'bar',
+    data:{ labels:['Muy Caliente','Caliente','Tibio','Frío'], datasets:[{ label:'Clientes', data:[buckets['Muy Caliente'],buckets['Caliente'],buckets['Tibio'],buckets['Frío']], backgroundColor:['#00F5C4','#F97316','#F59E0B','#4F8EF7'], borderRadius:6 }] },
+    options:{ maintainAspectRatio:false, plugins:{ legend:{ display:false } },
+      scales:{ y:{ beginAtZero:true, ticks:{ precision:0, color:'#8892A4' }, grid:{ color:'#2A3345' } }, x:{ ticks:{ color:'#8892A4', font:{size:11} }, grid:{ display:false } } } }
+  });
+
+  const tendencia = agruparPorFechaParaTendencia(datos);
+  const lineCard = document.getElementById('evTendenciaCard');
+  if(tendencia.fechas.length > 1){
+    lineCard.classList.remove('hidden');
+    const lineCtx = document.getElementById('evChartLine').getContext('2d');
+    if(evChartLineInst) evChartLineInst.destroy();
+    evChartLineInst = new Chart(lineCtx, {
+      type:'line',
+      data:{ labels: tendencia.etiquetas, datasets:[
+        { label:'Contactados', data:tendencia.totales, borderColor:'#4F8EF7', backgroundColor:'rgba(79,142,247,0.15)', tension:0.3, fill:true, pointRadius:3 },
+        { label:'Ventas', data:tendencia.vendidos, borderColor:'#00F5C4', backgroundColor:'rgba(0,245,196,0.15)', tension:0.3, fill:true, pointRadius:3 }
+      ] },
+      options:{ maintainAspectRatio:false, plugins:{ legend:{ position:'top', labels:{ color:'#8892A4', font:{size:11}, boxWidth:10 } } },
+        scales:{ y:{ beginAtZero:true, ticks:{ precision:0, color:'#8892A4' }, grid:{ color:'#2A3345' } }, x:{ ticks:{ color:'#8892A4', font:{size:10} }, grid:{ display:false } } } }
+    });
+  } else {
+    lineCard.classList.add('hidden');
+  }
+}
+
+async function descargarEvaluacionPDF(){
+  if(!evDatosActuales.length){ crmMostrarToast('No hay datos para descargar.'); return; }
+  await generarAnalisisResumidoGerencial(evDatosActuales, evPeriodoLabelActual, document.getElementById('btnDescargarEvaluacionPDF'), 'Evaluación de Desempeño');
+}
+
 function temperaturaPorProbabilidad(prob){
   if(prob>=80) return {label:'Muy Caliente 💥', color:'#00F5C4'};
   if(prob>=55) return {label:'Caliente 🔥', color:'#F97316'};
@@ -6419,6 +7281,25 @@ function generarInformeDetallado(conContacto){
       </div>
     </div>` : '';
 
+  // ── Trámite de crédito (instituciones bancarias consultadas) ──
+  const icEstadoCreditoMap = {proceso:'🕓 En proceso', aprobado:'✅ Aprobado', rechazado:'❌ Rechazado'};
+  const icEstadoCreditoTxt = icEstadoCreditoMap[g_('icEstadoCredito')?.value] || 'No registrado';
+  const icBancoLabel = {financiera_casa:'Financiera de Casa', bbva:'BBVA', banorte:'Banorte', scotiabank:'Scotiabank', hsbc:'HSBC', banregio:'Banregio'};
+  const icBancosArr = [1,2,3,4].map(n => {
+    const v = g_('icBanco'+n)?.value || '';
+    if(!v) return null;
+    return v==='otro' ? ((g_('icBanco'+n+'Otro')?.value||'').trim() || 'Otro') : (icBancoLabel[v] || v);
+  }).filter(Boolean);
+  const icBancosTxt = icBancosArr.length ? icBancosArr.join(', ') : 'Ninguna registrada';
+  const tramiteCreditoHTML = `
+    <div class="card-inner" style="margin-bottom:14px">
+      <div class="section-title" style="margin-top:0">Trámite de crédito</div>
+      <div class="grid-2" style="gap:10px">
+        <div><label style="margin-bottom:2px">Estado del trámite de crédito</label><div style="font-size:14px;color:var(--text)">${icEstadoCreditoTxt}</div></div>
+        <div><label style="margin-bottom:2px">Instituciones bancarias consultadas</label><div style="font-size:14px;color:var(--text)">${icBancosTxt}</div></div>
+      </div>
+    </div>`;
+
   const condicionesHTML = `
     <div class="card-inner" style="margin-bottom:14px">
       <div class="section-title">Condiciones comerciales</div>
@@ -6482,6 +7363,7 @@ function generarInformeDetallado(conContacto){
 
       ${condicionesHTML}
       ${vehiculoCambioHTML}
+      ${tramiteCreditoHTML}
 
       <div class="card-inner" style="margin-bottom:14px">
         <div class="section-title">Gestiones por tipo de contacto</div>
@@ -6506,36 +7388,64 @@ function generarInformeDetallado(conContacto){
   document.getElementById('informeReporteContenido').innerHTML = html;
   document.getElementById('informeSeleccion').classList.add('hidden');
   document.getElementById('informeReporte').classList.remove('hidden');
+  registrarInformeEnHistorial(nombre, conContacto, estadoFinalTxt);
 }
 
-async function descargarInformePDF(){
+// Registro en segundo plano (no bloqueante) del informe recién generado en
+// el "Historial de Reportes" del backend. Si no hay Google Sheets configurado
+// o falla la red, simplemente no queda en el historial — no interrumpe al
+// vendedor ni el PDF que ya se generó.
+function registrarInformeEnHistorial(nombreCliente, conContacto, estadoProceso){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url) return;
+  fetch(url, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain'},
+    body: JSON.stringify({
+      tipo:'registrar_informe',
+      clienteId: clienteId||'',
+      clienteNombre: nombreCliente||'',
+      conDatosContacto: !!conContacto,
+      estadoProceso: estadoProceso||''
+    })
+  }).catch(()=>{});
+}
+
+// Núcleo reutilizable: convierte #informeParaExportar (ya renderizado por
+// generarInformeDetallado) en PDF y lo descarga. Lo usan tanto el botón
+// interactivo (descargarInformePDF) como el flujo silencioso de "Reportes
+// por Periodo" / "Historial de Reportes", que no tienen el botón en pantalla.
+async function generarPDFdesdeInformeActual(){
   const el = document.getElementById('informeParaExportar');
-  if(!el || typeof html2canvas==='undefined' || !window.jspdf){ crmMostrarToast('No se pudo generar el PDF.'); return; }
+  if(!el || typeof html2canvas==='undefined' || !window.jspdf) throw new Error('No se pudo generar el PDF.');
+  const theme = document.documentElement.getAttribute('data-theme')||'dark';
+  const bg = theme==='light' ? '#FFFFFF' : '#0D1117';
+  const canvas = await html2canvas(el, {scale:2, backgroundColor:bg, useCORS:true});
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const pageW=210, pageH=297;
+  const imgW=pageW;
+  const imgH=canvas.height*imgW/canvas.width;
+  let heightLeft=imgH, position=0;
+  const imgData=canvas.toDataURL('image/png');
+  pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
+  heightLeft-=pageH;
+  while(heightLeft>0){
+    position = heightLeft - imgH;
+    pdf.addPage();
+    pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
+    heightLeft-=pageH;
+  }
+  const nombreArchivo=(document.getElementById('crmNombre').value.trim()||'cliente').replace(/[^a-z0-9]+/gi,'_');
+  pdf.save(`Informe_${nombreArchivo}.pdf`);
+}
+async function descargarInformePDF(){
   const btn = document.getElementById('btnDescargarInformePDF');
   const txtOriginal = btn ? btn.textContent : '';
   if(btn){ btn.disabled=true; btn.textContent='⏳ Generando…'; }
   crmMostrarToast('⏳ Generando PDF...');
   try{
-    const theme = document.documentElement.getAttribute('data-theme')||'dark';
-    const bg = theme==='light' ? '#FFFFFF' : '#0D1117';
-    const canvas = await html2canvas(el, {scale:2, backgroundColor:bg, useCORS:true});
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-    const pageW=210, pageH=297;
-    const imgW=pageW;
-    const imgH=canvas.height*imgW/canvas.width;
-    let heightLeft=imgH, position=0;
-    const imgData=canvas.toDataURL('image/png');
-    pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
-    heightLeft-=pageH;
-    while(heightLeft>0){
-      position = heightLeft - imgH;
-      pdf.addPage();
-      pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
-      heightLeft-=pageH;
-    }
-    const nombreArchivo=(document.getElementById('crmNombre').value.trim()||'cliente').replace(/[^a-z0-9]+/gi,'_');
-    pdf.save(`Informe_${nombreArchivo}.pdf`);
+    await generarPDFdesdeInformeActual();
     crmMostrarToast('✓ PDF descargado');
   }catch(e){
     crmMostrarToast('No se pudo generar el PDF.');
@@ -6739,6 +7649,14 @@ function buildContexto(){
   const vcPrecioTomaTxt = document.getElementById('vcPrecioToma')?.value ? `$${Number(document.getElementById('vcPrecioToma').value).toLocaleString('es-MX')} MXN` : 'No definido aún';
   const vcSituacionPropuestaTxt = document.getElementById('vcPropuestaAceptada')?.checked ? 'Aceptó la propuesta' : document.getElementById('vcPropuestaNoAceptada')?.checked ? 'No aceptó la propuesta' : 'Pendiente de definir';
   const vehiculoCambioTxt = vcVal==='si' ? `Sí — Estado de la unidad a cambio: ${vcEstadoValoracionTxt}${vcFechaHoraTxt}, Marca: ${document.getElementById('vcMarca')?.value||'—'}, Año: ${document.getElementById('vcAnio')?.value||'—'}, Modelo: ${document.getElementById('vcModelo')?.value||'—'}, Color: ${document.getElementById('vcColor')?.value||'—'}, Kilometraje: ${document.getElementById('vcKilometraje')?.value||'—'}, Dueños anteriores: ${document.getElementById('vcDuenos')?.value||'—'}, Facturas: ${document.getElementById('vcFacturas')?.value||'—'}, Uso anterior: ${vcUsoMap[document.getElementById('vcUsoAnterior')?.value]||'No especificado'}, Estado físico: ${vcEstadoMap[document.getElementById('vcEstadoFisico')?.value]||'No especificado'}, Estado mecánico: ${vcEstadoMap[document.getElementById('vcEstadoMecanico')?.value]||'No especificado'}, Precio de toma acordado: ${vcPrecioTomaTxt}, Situación de la propuesta: ${vcSituacionPropuestaTxt}${(document.getElementById('vcObservaciones')?.value||'').trim() ? `, Observaciones: ${document.getElementById('vcObservaciones').value.trim()}` : ''}` : vcVal==='no' ? 'No' : 'No registrado';
+  const icEstadoCreditoMap2 = {proceso:'En proceso', aprobado:'Aprobado', rechazado:'Rechazado'};
+  const icEstadoCreditoTxt2 = icEstadoCreditoMap2[document.getElementById('icEstadoCredito')?.value] || 'No registrado';
+  const icBancoLabel2 = {financiera_casa:'Financiera de Casa', bbva:'BBVA', banorte:'Banorte', scotiabank:'Scotiabank', hsbc:'HSBC', banregio:'Banregio'};
+  const icBancosTxt2 = [1,2,3,4].map(n => {
+    const v = document.getElementById('icBanco'+n)?.value || '';
+    if(!v) return null;
+    return v==='otro' ? ((document.getElementById('icBanco'+n+'Otro')?.value||'').trim() || 'Otro') : (icBancoLabel2[v] || v);
+  }).filter(Boolean).join(', ') || 'Ninguna registrada';
   return `Nombre: ${document.getElementById('crmNombre').value||'—'}
 Tipo de operación: ${tipoOpLabel}
 Tipo de unidad a adquirir: ${tipoUnidadTxt}
@@ -6749,6 +7667,7 @@ ${document.getElementById('lblVehiculo')?.textContent||'Vehículo'}: ${document.
 Precio: $${document.getElementById('precio').value||'—'} MXN
 Fuente: ${document.getElementById('fuenteLead').value||'—'}
 Vehículo recibido a cuenta/cambio: ${vehiculoCambioTxt}
+Estado del trámite de crédito: ${icEstadoCreditoTxt2} — Instituciones bancarias consultadas: ${icBancosTxt2}
 ${tipoOpEsAuto ? `Prueba de manejo: ${document.getElementById('pruebaManejo').value||'No realizada'}
 Reacción del cliente en la prueba de manejo: ${(document.getElementById('crmComentariosPrueba')?.value||'').trim()||'No registrada'}` : ''}
 Comentarios de primera visita (borrador actual, aún sin guardar): ${(document.getElementById('comentariosPrimeraVisita')?.value||'').trim()||'Ninguno'} — Sentimiento: ${document.getElementById('calidadPrimeraVisita')?.value||'—'}
@@ -7105,13 +8024,14 @@ function confirmarRegistrarComoNuevo(){
 
 /* ─── CAMPOS QUE SE RESTAURAN AL CARGAR UNA FICHA EXISTENTE ─── */
 const CAMPOS_CLIENTE_FORM = ['crmNombre','crmTipoOp','telefono','correo','ciudad','vehiculo','crmTipoUnidad','ocupacion','precio','fuenteLead',
-  'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','enganche','engancheModo','plazo','seguro',
+  'pruebaManejo','tipoOperacion','estadoOperacion','estadoFinalOperacion','enganche','engancheModo','plazo','seguro','seguroContadoCosto',
   'tasaInteres','comisionAperturaPct','ivaMensualidadPct','seguroFinLleva','seguroFinCostoAnual','seguroFinIvaPct','seguroFinFormaPago',
   'asistieron','manejaron','crmComentariosPrueba','disponibilidad','tiempoLlegada',
   'descuento','montoDescuento','anticipo','documentacion','estatusCredito','decision','crmUrgencia',
   'crmFechaContacto','crmFechaUltima','crmLlamadas','crmWhatsapp','crmCorreos',
   'crmRespuestaVelocidad','crmPreguntasCliente','crmReaccionPrueba','crmNotaVendedor','crmSegundaPrueba',
   'crmCotizacion','crmCompetencia','crmObjecion','crmNotasPersonales','crmCompromisos',
+  'icEstadoCredito','icBanco1','icBanco1Otro','icBanco2','icBanco2Otro','icBanco3','icBanco3Otro','icBanco4','icBanco4Otro',
   'crmVehiculoCambio','vcEstadoValoracion','vcFechaValoracion','vcHoraValoracion','vcPrecioToma',
   'vcMarca','vcAnio','vcModelo','vcColor','vcKilometraje','vcDuenos','vcFacturas',
   'vcUsoAnterior','vcUsoAnteriorOtro','vcEstadoFisico','vcEstadoMecanico','vcObservaciones'];
@@ -7121,7 +8041,7 @@ const MAPA_CAMPOS_BACKEND = {
   fuenteLead:'FuenteLead', vehiculo:'Vehiculo', crmTipoUnidad:'TipoUnidad', precio:'Precio', pruebaManejo:'PruebaManejo',
   asistieron:'Asistieron', manejaron:'Manejaron', crmComentariosPrueba:'ComentariosPrueba',
   tipoOperacion:'TipoOperacion', enganche:'Enganche', engancheModo:'EngancheModo',
-  plazo:'Plazo', tasaInteres:'TasaInteres', seguro:'Seguro',
+  plazo:'Plazo', tasaInteres:'TasaInteres', seguro:'Seguro', seguroContadoCosto:'SeguroContadoCosto',
   comisionAperturaPct:'ComisionAperturaPct', ivaMensualidadPct:'IvaMensualidadPct',
   seguroFinLleva:'SeguroFinLleva', seguroFinCostoAnual:'SeguroFinCostoAnual',
   seguroFinIvaPct:'SeguroFinIvaPct', seguroFinFormaPago:'SeguroFinFormaPago',
@@ -7137,6 +8057,12 @@ const MAPA_CAMPOS_BACKEND = {
   crmNotaVendedor:'NotaVendedor', crmSegundaPrueba:'SegundaPrueba', crmCotizacion:'Cotizacion',
   crmCompetencia:'Competencia', crmObjecion:'Objecion', crmNotasPersonales:'NotasPersonales',
   crmCompromisos:'Compromisos',
+  // Trámite de crédito
+  icEstadoCredito:'EstadoCredito',
+  icBanco1:'Banco1', icBanco1Otro:'Banco1Otro',
+  icBanco2:'Banco2', icBanco2Otro:'Banco2Otro',
+  icBanco3:'Banco3', icBanco3Otro:'Banco3Otro',
+  icBanco4:'Banco4', icBanco4Otro:'Banco4Otro',
   // Vehículo a cuenta / cambio
   crmVehiculoCambio:'VehiculoCambio', vcEstadoValoracion:'VCEstadoValoracion', vcFechaValoracion:'VCFechaValoracion',
   vcHoraValoracion:'VCHoraValoracion', vcPrecioToma:'VCPrecioToma',
@@ -7357,7 +8283,7 @@ async function buscarClienteGlobal(){
    toques repetidos disparaban varias descargas a la vez que competían
    entre sí — eso era lo que hacía que "casi nunca llamara a la primera". */
 let cargandoClienteEnCurso = false;
-async function cargarClienteCompleto(id, btnOrigen){
+async function cargarClienteCompleto(id, btnOrigen, silencioso){
   const url = localStorage.getItem('nexus_sheets_url')||'';
   if(!url || !id) return;
   if(cargandoClienteEnCurso) return; // evita doble toque mientras ya está cargando
@@ -7371,7 +8297,7 @@ async function cargarClienteCompleto(id, btnOrigen){
   try{
     const res  = await fetch(url + '?action=obtenerCliente&id=' + encodeURIComponent(id));
     const data = await res.json();
-    if(!data.success){ crmMostrarToast('❌ ' + (data.error||'No se pudo descargar la ficha.')); return; }
+    if(!data.success){ if(!silencioso) crmMostrarToast('❌ ' + (data.error||'No se pudo descargar la ficha.')); return false; }
 
     clienteId = formatearIdCliente(data.cliente.ID || id);
     localStorage.setItem('crm_cliente_id', clienteId);
@@ -7412,7 +8338,7 @@ async function cargarClienteCompleto(id, btnOrigen){
     document.getElementById('resultadosBuscarCliente').classList.add('hidden');
     document.getElementById('buscarClienteInput').value = '';
 
-    togglePrueba(); toggleOperacion(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleVehiculoCambio(); toggleSeguroFin();
+    togglePrueba(); toggleOperacion(); toggleSeguroContado(); toggleDisponibilidad(); toggleDescuento(); toggleOtroRegalo(); toggleVehiculoCambio(); toggleSeguroFin(); inicializarIcBancosOtro();
     // toggleVehiculoCambio() ya reconstruyó las opciones de Estado físico-estético /
     // Estado mecánico según "Estado de la unidad a cambio"; se vuelven a aplicar sus
     // valores guardados porque al restaurarlos antes (arriba) esas opciones aún no existían.
@@ -7430,9 +8356,11 @@ async function cargarClienteCompleto(id, btnOrigen){
     renderHistorial(); recalcScore(); inicializarAccionRecomendada();
     sincronizarVentasDesdeCRM();
     localStorage.setItem('crm_ultima_actividad', Date.now().toString());
-    crmMostrarToast('✓ Ficha de ' + (data.cliente.Nombre||'cliente') + ' cargada y desbloqueada.');
+    if(!silencioso) crmMostrarToast('✓ Ficha de ' + (data.cliente.Nombre||'cliente') + ' cargada y desbloqueada.');
+    return true;
   }catch(e){
-    crmMostrarToast('❌ Error de conexión al descargar la ficha.');
+    if(!silencioso) crmMostrarToast('❌ Error de conexión al descargar la ficha.');
+    return false;
   }finally{
     cargandoClienteEnCurso = false;
     listaBotones.forEach(b => b.disabled = false);
@@ -7734,6 +8662,7 @@ async function sincronizarSheets(){
     seguroFinIvaPct:     document.getElementById('seguroFinIvaPct')?.value||'',
     seguroFinFormaPago:  document.getElementById('seguroFinFormaPago')?.value||'',
     seguro:          document.getElementById('seguro').value||'',
+    seguroContadoCosto: document.getElementById('seguroContadoCosto')?.value||'',
     mensualidad:     mensualidadEl ? mensualidadEl.textContent : '',
     estadoOperacion: document.getElementById('estadoOperacion').value||'',
     estadoFinalOperacion: document.getElementById('estadoFinalOperacion')?.value||'',
@@ -7763,6 +8692,15 @@ async function sincronizarSheets(){
     objecion:           document.getElementById('crmObjecion')?.value||'',
     notasPersonales:    document.getElementById('crmNotasPersonales')?.value||'',
     compromisos:        document.getElementById('crmCompromisos')?.value||'',
+    estadoCredito:      document.getElementById('icEstadoCredito')?.value||'',
+    banco1:             document.getElementById('icBanco1')?.value||'',
+    banco1Otro:         document.getElementById('icBanco1Otro')?.value||'',
+    banco2:             document.getElementById('icBanco2')?.value||'',
+    banco2Otro:         document.getElementById('icBanco2Otro')?.value||'',
+    banco3:             document.getElementById('icBanco3')?.value||'',
+    banco3Otro:         document.getElementById('icBanco3Otro')?.value||'',
+    banco4:             document.getElementById('icBanco4')?.value||'',
+    banco4Otro:         document.getElementById('icBanco4Otro')?.value||'',
     vehiculoCambio:     document.getElementById('crmVehiculoCambio')?.value||'',
     vcEstadoValoracion: document.getElementById('vcEstadoValoracion')?.value||'',
     vcFechaValoracion:  document.getElementById('vcFechaValoracion')?.value||'',
@@ -9078,6 +10016,7 @@ function fbApplyRemoteData(d){
     }
     if(d.empresa){
       empresaNombre = typeof d.empresa.nombre==='string' ? d.empresa.nombre : '';
+      empresaRazonSocial = typeof d.empresa.razonSocial==='string' ? d.empresa.razonSocial : '';
       empresaTelefono = typeof d.empresa.telefono==='string' ? d.empresa.telefono : '';
       empresaWhatsapp = typeof d.empresa.whatsapp==='string' ? d.empresa.whatsapp : '';
       empresaCorreo = typeof d.empresa.correo==='string' ? d.empresa.correo : '';
@@ -9135,6 +10074,7 @@ function fbRefreshProfileInputs(){
 }
 function fbRefreshEmpresaInputs(){
   const nInp=document.getElementById('empresaNombre'); if(nInp && document.activeElement!==nInp) nInp.value = empresaNombre;
+  const rsInp=document.getElementById('empresaRazonSocial'); if(rsInp && document.activeElement!==rsInp) rsInp.value = empresaRazonSocial;
   const tInp=document.getElementById('empresaTelefono'); if(tInp && document.activeElement!==tInp) tInp.value = empresaTelefono;
   const wInp=document.getElementById('empresaWhatsapp'); if(wInp && document.activeElement!==wInp) wInp.value = empresaWhatsapp;
   const cInp=document.getElementById('empresaCorreo'); if(cInp && document.activeElement!==cInp) cInp.value = empresaCorreo;
@@ -10179,6 +11119,7 @@ let userProfileGender = 'masculino'; // 'masculino' | 'femenino'
 let userProfilePhone = '';
 let userProfileEmail = '';
 let empresaNombre = '';
+let empresaRazonSocial = '';
 let empresaTelefono = '';
 let empresaWhatsapp = '';
 let empresaCorreo = '';
@@ -16767,8 +17708,9 @@ document.addEventListener('DOMContentLoaded',async()=>{
     document.querySelectorAll('.gender-btn').forEach(b=>b.classList.toggle('active', b.dataset.gender==='masculino'));
 
     // 4b) Datos de la empresa
-    empresaNombre=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
+    empresaNombre=''; empresaRazonSocial=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
     const empN=document.getElementById('empresaNombre'); if(empN) empN.value='';
+    const empRS=document.getElementById('empresaRazonSocial'); if(empRS) empRS.value='';
     const empT=document.getElementById('empresaTelefono'); if(empT) empT.value='';
     const empW=document.getElementById('empresaWhatsapp'); if(empW) empW.value='';
     const empC=document.getElementById('empresaCorreo'); if(empC) empC.value='';
@@ -16832,6 +17774,8 @@ function initProfileUI(){
   });
   const empNombreInput = document.getElementById('empresaNombre');
   if(empNombreInput){ empNombreInput.addEventListener('input', e => { empresaNombre = e.target.value; }); }
+  const empRazonSocialInput = document.getElementById('empresaRazonSocial');
+  if(empRazonSocialInput){ empRazonSocialInput.addEventListener('input', e => { empresaRazonSocial = e.target.value; }); }
   const empTelInput = document.getElementById('empresaTelefono');
   if(empTelInput){ empTelInput.addEventListener('input', e => { empresaTelefono = e.target.value; }); }
   const empWaInput = document.getElementById('empresaWhatsapp');
@@ -16924,7 +17868,7 @@ async function persistEmpresa(mensajeExito){
   const msg = document.getElementById('empresaSaveMsg');
   try{
     if(fbUserDocRef){
-      await fbUserDocRef.set({empresa:{nombre:empresaNombre, telefono:empresaTelefono, whatsapp:empresaWhatsapp, correo:empresaCorreo, logo:empresaLogoDataUrl}}, {merge:true});
+      await fbUserDocRef.set({empresa:{nombre:empresaNombre, razonSocial:empresaRazonSocial, telefono:empresaTelefono, whatsapp:empresaWhatsapp, correo:empresaCorreo, logo:empresaLogoDataUrl}}, {merge:true});
       if(msg) msg.textContent = mensajeExito+' Se sincroniza en todos tus dispositivos.';
     } else if(msg) {
       msg.textContent = mensajeExito+' (guardado localmente; inicia sesión para sincronizar en la nube).';
@@ -16940,6 +17884,7 @@ async function persistEmpresa(mensajeExito){
 async function guardarDatosEmpresa(){
   const btn = document.getElementById('btnGuardarEmpresa');
   empresaNombre = (document.getElementById('empresaNombre')?.value||'').trim();
+  empresaRazonSocial = (document.getElementById('empresaRazonSocial')?.value||'').trim();
   empresaTelefono = (document.getElementById('empresaTelefono')?.value||'').trim();
   empresaWhatsapp = (document.getElementById('empresaWhatsapp')?.value||'').trim();
   empresaCorreo = (document.getElementById('empresaCorreo')?.value||'').trim();
@@ -16948,8 +17893,9 @@ async function guardarDatosEmpresa(){
   if(btn){ btn.disabled=false; btn.textContent='💾 Guardar cambios'; }
 }
 async function limpiarDatosEmpresa(){
-  empresaNombre=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
+  empresaNombre=''; empresaRazonSocial=''; empresaTelefono=''; empresaWhatsapp=''; empresaCorreo=''; empresaLogoDataUrl='';
   const nInp=document.getElementById('empresaNombre'); if(nInp) nInp.value='';
+  const rsInp=document.getElementById('empresaRazonSocial'); if(rsInp) rsInp.value='';
   const tInp=document.getElementById('empresaTelefono'); if(tInp) tInp.value='';
   const wInp=document.getElementById('empresaWhatsapp'); if(wInp) wInp.value='';
   const cInp=document.getElementById('empresaCorreo'); if(cInp) cInp.value='';
