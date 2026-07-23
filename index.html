@@ -3539,6 +3539,19 @@ function confirmarNuevaFicha(){
     <button class="btn-primary full" onclick="abrirInformeDetallado()">📄 Informe Detallado</button>
   </div>
 
+  <!-- ══ RESUMEN DETALLADO — "¿en qué voy con este cliente?", para retomarlo rápido ══ -->
+  <div class="card bloque-bloqueado bloqueado" id="cardResumenDetallado">
+    <div class="bloque-overlay">
+      <div class="overlay-icon">🔒</div>
+      <p class="overlay-texto">Completa los <strong>Datos del Cliente</strong> y pulsa <strong>Guardar datos</strong> para habilitar esta sección.</p>
+    </div>
+    <div class="card-header">
+      <div class="card-icon">🧭</div><div class="card-title">Resumen Detallado</div>
+    </div>
+    <p class="text-muted" style="font-size:12.5px;line-height:1.55;margin-bottom:14px">Ponte al día con este cliente en segundos: quién es, qué quiere, qué se ha platicado, dónde quedó la conversación, peticiones pendientes, cómo retomarlo y áreas de oportunidad. Ideal para clientes que llevas tiempo sin ver o si te preguntan "¿en qué vas?". Se ve primero en pantalla, y de ahí puedes descargarlo en PDF.</p>
+    <button class="btn-primary full" onclick="abrirResumenDetallado()">🧭 Resumen Detallado</button>
+  </div>
+
   <!-- ══ EVALUACIÓN DE DESEMPEÑO — no depende de tener un cliente cargado ══ -->
   <div class="card" id="cardEvaluacionDesempeno">
     <div class="card-header">
@@ -3901,6 +3914,34 @@ function confirmarNuevaFicha(){
   </div>
 </div>
 
+<!-- ══ MODAL RESUMEN DETALLADO — vista rápida para retomar al cliente ══ -->
+<div id="modalResumenDetallado" class="hidden" style="position:fixed;inset:0;z-index:1052;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
+  <div class="wrap" style="padding-top:20px;padding-bottom:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <button class="btn-back" onclick="cerrarResumenDetallado()">←</button>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;color:var(--text)">🧭 Resumen Detallado</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">¿En qué voy con este cliente?</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap" id="resumenDetalladoAcciones">
+      <button class="btn-ia sm" style="flex:1" onclick="generarResumenDetallado()">🔄 Regenerar</button>
+      <button class="btn-sm" style="flex:1" id="btnDescargarResumenDetalladoPDF" onclick="descargarResumenDetalladoPDF()" disabled>⬇️ Descargar PDF</button>
+    </div>
+
+    <div id="resumenDetalladoParaExportar" style="background:var(--panel);padding:20px;border-radius:12px">
+      <div style="margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)">
+        <div style="font-size:15px;font-weight:700;color:var(--text)" id="resumenDetalladoNombreCliente">Cliente</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em">Nexus CRM · Resumen Detallado — generado el <span id="resumenDetalladoFecha"></span></div>
+      </div>
+      <div id="resumenDetalladoContenido">
+        <div class="ai-loading"><div class="spinner"></div> Generando resumen con IA…</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL HISTORIAL DE REPORTES ══ -->
 <div id="modalHistorialInformes" class="hidden" style="position:fixed;inset:0;z-index:1060;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
   <div class="wrap" style="padding-top:20px;padding-bottom:80px">
@@ -3914,6 +3955,34 @@ function confirmarNuevaFicha(){
     <button class="btn-ia full" id="btnAnalisisResumidoHistorial" style="margin-bottom:16px" onclick="generarAnalisisResumidoDesdeHistorial()">📊 Generar Análisis Resumido</button>
     <div id="listaHistorialInformes">
       <p class="text-muted" style="text-align:center;padding:30px 0">Cargando historial…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL PAPELERA DE INFORMES ELIMINADOS ══ -->
+<div id="modalPapeleraInformes" class="hidden" style="position:fixed;inset:0;z-index:1070;background:var(--bg);overflow-y:auto;animation:crmFadeUp 0.25s ease both">
+  <div class="wrap" style="padding-top:20px;padding-bottom:80px">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--line)">
+      <button class="btn-back" onclick="cerrarPapeleraInformes()">←</button>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:700;color:var(--text)">🗑️ Informes Eliminados</div>
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em">Quitados de "Historial de Reportes"</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:12px">
+      <input class="inp" type="text" id="papeleraInformesBuscar" placeholder="Buscar por nombre, estado, fecha…" oninput="renderPapeleraInformes()">
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="btn-sm" style="flex:1" id="btnRecuperarTodosInformes" onclick="restaurarTodosInformesPapelera()">↺ Recuperar todos</button>
+      <button class="btn-sm" style="flex:1;color:var(--elec-red,#EF4444)" id="btnEliminarDefinitivoToggle" onclick="togglePanelEliminarDefinitivo()">🗑️ Eliminar definitivamente…</button>
+    </div>
+
+    <div id="papeleraEliminarPanel"></div>
+
+    <div id="listaPapeleraInformes">
+      <p class="text-muted" style="text-align:center;padding:30px 0">Cargando…</p>
     </div>
   </div>
 </div>
@@ -3994,6 +4063,14 @@ function confirmarNuevaFicha(){
           <option value="anio">Por Año</option>
         </select>
       </div>
+      <div class="campo" id="campoEvAnioTipo">
+        <label>¿Cómo quieres verlo?</label>
+        <select class="inp" id="evAnioTipo" onchange="actualizarCamposEvaluacion()">
+          <option value="completo">Año completo (1 ene – 31 dic)</option>
+          <option value="acumulado">Acumulado desde ese año a la fecha</option>
+          <option value="ytd">Lo que va del año actual</option>
+        </select>
+      </div>
       <div class="grid-2">
         <div class="campo" id="campoEvMes">
           <label>Mes</label>
@@ -4004,7 +4081,7 @@ function confirmarNuevaFicha(){
             <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
           </select>
         </div>
-        <div class="campo"><label>Año</label>
+        <div class="campo" id="campoEvAnio"><label>Año</label>
           <input class="inp" type="number" id="evAnio" min="2000" max="2100" placeholder="Ej. 2026">
         </div>
       </div>
@@ -4130,7 +4207,7 @@ let clienteData = JSON.parse(localStorage.getItem('crm_cliente')   || '{}');
 let clienteId         = localStorage.getItem('crm_cliente_id') || '';
 let fichaDesbloqueada = !!clienteId; // solo "Datos del cliente" está habilitado hasta guardar/confirmar
 const SECCIONES_BLOQUEO_GENERAL = [
-  'cardProcesoVenta','cardInfoAdicional','cardPrimeraVisita','cardInformacionComercial','cardAnalisisIA','cardHistorialGestiones','cardInformeDetallado'
+  'cardProcesoVenta','cardInfoAdicional','cardPrimeraVisita','cardInformacionComercial','cardAnalisisIA','cardHistorialGestiones','cardInformeDetallado','cardResumenDetallado'
 ];
 // "cardRegistrarContacto" (sección "Seguimiento") queda fuera de este arreglo a propósito:
 // no se desbloquea junto con "Guardar datos", sino solo después de que la "Siguiente
@@ -6509,6 +6586,7 @@ async function generarYDescargarInformeParaCliente(clienteIdObjetivo, conContact
 }
 
 let historialInformesActual = [];
+let historialInformesTodosActual = [];
 async function abrirHistorialInformes(){
   document.getElementById('modalHistorialInformes').classList.remove('hidden');
   const cont = document.getElementById('listaHistorialInformes');
@@ -6519,8 +6597,9 @@ async function abrirHistorialInformes(){
     const res = await fetch(url + '?action=listarInformes');
     const data = await res.json();
     const todos = (data.success && Array.isArray(data.informes)) ? data.informes : [];
-    const ocultos = new Set(obtenerInformesOcultos());
-    historialInformesActual = todos.filter(inf => !ocultos.has(inf.id));
+    historialInformesTodosActual = todos;
+    const ocultosIds = new Set(obtenerInformesOcultos().map(o => o.id));
+    historialInformesActual = todos.filter(inf => !ocultosIds.has(inf.id));
     renderListaHistorialInformes(todos.length - historialInformesActual.length);
   }catch(e){
     cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">❌ Error al cargar el historial. Verifica tu conexión.</p>';
@@ -6530,9 +6609,20 @@ async function abrirHistorialInformes(){
 // El "eliminar" de un informe es solo una preferencia local (este navegador):
 // oculta el informe de esta lista y del Análisis Resumido, pero el registro
 // permanece guardado en la hoja "Informes" del script — el historial completo
-// nunca se borra ni se pierde, y sigue funcionando igual que antes.
+// nunca se borra ni se pierde. Cada entrada oculta guarda también la fecha en
+// que se quitó, para poder agruparlas por día/semana/mes/año en la papelera.
+// obtenerInformesOcultos() siempre devuelve objetos {id, fechaEliminado};
+// migra automáticamente el formato antiguo (array de strings) si lo encuentra.
 function obtenerInformesOcultos(){
-  try{ return JSON.parse(localStorage.getItem('nexus_informes_ocultos')||'[]'); }catch(e){ return []; }
+  let arr = [];
+  try{ arr = JSON.parse(localStorage.getItem('nexus_informes_ocultos')||'[]'); }catch(e){ arr = []; }
+  let migrado = false;
+  arr = arr.map(o => {
+    if(typeof o === 'string'){ migrado = true; return { id:o, fechaEliminado: new Date().toISOString() }; }
+    return o;
+  });
+  if(migrado) guardarInformesOcultos(arr);
+  return arr;
 }
 function guardarInformesOcultos(arr){
   try{ localStorage.setItem('nexus_informes_ocultos', JSON.stringify(arr)); }catch(e){}
@@ -6542,7 +6632,7 @@ function renderListaHistorialInformes(ocultosCount){
   ocultosCount = ocultosCount || 0;
   const cont = document.getElementById('listaHistorialInformes');
   const avisoOcultos = ocultosCount > 0
-    ? `<button class="btn-sm full" style="margin-bottom:10px" onclick="restaurarInformesOcultos()">↺ Mostrar ${ocultosCount} informe(s) quitado(s) de esta lista</button>`
+    ? `<button class="btn-sm full" style="margin-bottom:10px" onclick="abrirPapeleraInformes()">🗑️ Ver ${ocultosCount} informe(s) eliminado(s)</button>`
     : '';
   if(!historialInformesActual.length){
     cont.innerHTML = avisoOcultos + '<p class="text-muted" style="text-align:center;padding:30px 0">' + (ocultosCount>0 ? 'No hay informes visibles en esta lista.' : 'Aún no hay informes guardados. Se registran automáticamente cada vez que generas un Informe Detallado, o puedes guardarlos manualmente desde el botón "Guardar en Historial" dentro de cada informe.') + '</p>';
@@ -6557,7 +6647,7 @@ function renderListaHistorialInformes(ocultosCount){
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap">
           <button class="btn-ia sm" onclick="descargarInformeDesdeHistorial(${i}, this)">⬇️ Descargar Informe en PDF</button>
-          <button class="btn-sm" style="color:var(--elec-red,#EF4444)" onclick="eliminarInformeDelHistorial(${i}, this)" title="Quitar de esta lista (sigue guardado en el historial completo del script)">🗑️ Quitar</button>
+          <button class="btn-sm" style="color:var(--elec-red,#EF4444)" onclick="eliminarInformeDelHistorial(${i}, this)" title="Quitar de esta lista (podrás recuperarlo desde Informes Eliminados)">🗑️ Quitar</button>
         </div>
       </div>
     </div>`).join('');
@@ -6566,10 +6656,10 @@ function renderListaHistorialInformes(ocultosCount){
 function eliminarInformeDelHistorial(i, btn){
   const inf = historialInformesActual[i];
   if(!inf){ crmMostrarToast('No se pudo identificar el informe.'); return; }
-  if(!confirm(`¿Quitar el informe de "${inf.clienteNombre||'este cliente'}" de esta lista? Seguirá guardado en el historial completo del script y podrás recuperarlo con "Mostrar informes quitados"; solo dejará de contarse en el Análisis Resumido mientras esté quitado.`)) return;
+  if(!confirm(`¿Quitar el informe de "${inf.clienteNombre||'este cliente'}" de esta lista? Seguirá guardado en el historial completo del script y podrás recuperarlo desde "Informes Eliminados"; solo dejará de contarse en el Análisis Resumido mientras esté quitado.`)) return;
   if(inf.id){
     const ocultos = obtenerInformesOcultos();
-    if(!ocultos.includes(inf.id)){ ocultos.push(inf.id); guardarInformesOcultos(ocultos); }
+    if(!ocultos.some(o => o.id === inf.id)){ ocultos.push({ id: inf.id, fechaEliminado: new Date().toISOString() }); guardarInformesOcultos(ocultos); }
   }
   historialInformesActual.splice(i,1);
   const ocultosCount = obtenerInformesOcultos().length;
@@ -6577,12 +6667,319 @@ function eliminarInformeDelHistorial(i, btn){
   crmMostrarToast('✓ Informe quitado de esta lista');
 }
 
-function restaurarInformesOcultos(){
-  guardarInformesOcultos([]);
+function cerrarHistorialInformes(){ document.getElementById('modalHistorialInformes').classList.add('hidden'); }
+
+// ══════════ PAPELERA DE INFORMES ELIMINADOS ══════════
+// Muestra únicamente los informes ocultos (quitados de "Historial de
+// Reportes"), agrupados por cuándo se quitaron (Hoy / Esta semana / Este
+// mes / Este año / Anteriores) para poder ubicarlos fácilmente cuando hay
+// muchos. Incluye búsqueda asociativa (no requiere coincidencia exacta:
+// basta con que alguna palabra buscada se relacione con el nombre, estado,
+// fecha o ID del informe) y recuperación individual, por grupo o total.
+let papeleraInformesActual = [];
+
+function abrirPapeleraInformes(){
+  document.getElementById('modalPapeleraInformes').classList.remove('hidden');
+  const buscar = document.getElementById('papeleraInformesBuscar');
+  if(buscar) buscar.value = '';
+  const ocultos = obtenerInformesOcultos();
+  const mapaTodos = new Map(historialInformesTodosActual.map(inf => [inf.id, inf]));
+  papeleraInformesActual = ocultos
+    .map(o => {
+      const inf = mapaTodos.get(o.id);
+      if(!inf) return null;
+      return Object.assign({}, inf, { fechaEliminado: o.fechaEliminado });
+    })
+    .filter(Boolean)
+    .sort((a,b) => new Date(b.fechaEliminado||0) - new Date(a.fechaEliminado||0));
+  papeleraEliminarVista = null;
+  const panel = document.getElementById('papeleraEliminarPanel');
+  if(panel) panel.innerHTML = '';
+  renderPapeleraInformes();
+}
+
+function cerrarPapeleraInformes(){
+  document.getElementById('modalPapeleraInformes').classList.add('hidden');
+  // Al cerrar, refresca la lista principal por si se recuperó algo.
   abrirHistorialInformes();
 }
 
-function cerrarHistorialInformes(){ document.getElementById('modalHistorialInformes').classList.add('hidden'); }
+// Búsqueda por asociación: separa el texto buscado en palabras y considera
+// que un informe "coincide" si CUALQUIERA de esas palabras aparece dentro
+// de su nombre, estado, fecha o ID — no exige el dato completo ni exacto.
+// Se ordenan primero los que coinciden con más palabras (más relevantes).
+function puntajeBusquedaInforme(inf, palabras){
+  const texto = [inf.clienteNombre, inf.estadoProceso, inf.fechaGuardado, inf.clienteId, inf.id]
+    .filter(Boolean).join(' ').toLowerCase();
+  let puntaje = 0;
+  palabras.forEach(p => { if(texto.includes(p)) puntaje++; });
+  return puntaje;
+}
+
+function agruparInformesPorPeriodo(lista){
+  const ahora = new Date();
+  const inicioHoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+  const inicioSemana = new Date(inicioHoy); inicioSemana.setDate(inicioHoy.getDate() - inicioHoy.getDay());
+  const inicioMes = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+  const inicioAnio = new Date(ahora.getFullYear(), 0, 1);
+  const grupos = { hoy: [], semana: [], mes: [], anio: [], anteriores: [] };
+  lista.forEach(inf => {
+    const f = inf.fechaEliminado ? new Date(inf.fechaEliminado) : null;
+    if(!f || isNaN(f)){ grupos.anteriores.push(inf); return; }
+    if(f >= inicioHoy) grupos.hoy.push(inf);
+    else if(f >= inicioSemana) grupos.semana.push(inf);
+    else if(f >= inicioMes) grupos.mes.push(inf);
+    else if(f >= inicioAnio) grupos.anio.push(inf);
+    else grupos.anteriores.push(inf);
+  });
+  return [
+    { key:'hoy', label:'Hoy', items: grupos.hoy },
+    { key:'semana', label:'Esta semana', items: grupos.semana },
+    { key:'mes', label:'Este mes', items: grupos.mes },
+    { key:'anio', label:'Este año', items: grupos.anio },
+    { key:'anteriores', label:'Anteriores', items: grupos.anteriores },
+  ].filter(g => g.items.length);
+}
+
+function renderPapeleraInformes(){
+  const cont = document.getElementById('listaPapeleraInformes');
+  const btnTodos = document.getElementById('btnRecuperarTodosInformes');
+  if(!papeleraInformesActual.length){
+    if(btnTodos) btnTodos.style.display = 'none';
+    cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">No hay informes eliminados. Todo lo que quites del Historial de Reportes aparecerá aquí.</p>';
+    return;
+  }
+  if(btnTodos) btnTodos.style.display = '';
+
+  const qRaw = (document.getElementById('papeleraInformesBuscar')?.value || '').trim().toLowerCase();
+  let lista = papeleraInformesActual;
+  if(qRaw){
+    const palabras = qRaw.split(/\s+/).filter(Boolean);
+    lista = papeleraInformesActual
+      .map(inf => ({ inf, puntaje: puntajeBusquedaInforme(inf, palabras) }))
+      .filter(x => x.puntaje > 0)
+      .sort((a,b) => b.puntaje - a.puntaje)
+      .map(x => x.inf);
+    if(!lista.length){
+      cont.innerHTML = '<p class="text-muted" style="text-align:center;padding:30px 0">Ningún informe eliminado se relaciona con "'+ qRaw.replace(/</g,'&lt;') +'".</p>';
+      return;
+    }
+  }
+
+  const grupos = agruparInformesPorPeriodo(lista);
+  cont.innerHTML = grupos.map(g => `
+    <div style="margin-bottom:18px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">${g.label} · ${g.items.length}</div>
+        <button class="btn-sm" onclick="restaurarGrupoInformesPapelera('${g.key}', this)">↺ Recuperar ${g.label.toLowerCase()}</button>
+      </div>
+      ${g.items.map(inf => `
+        <div class="card-inner" style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+            <div>
+              <div style="font-weight:700;color:var(--text)">${inf.clienteNombre||'Sin nombre'}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px">${inf.fechaGuardado||'—'} · ${inf.estadoProceso||'Sin estado'}</div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <button class="btn-sm" onclick="restaurarInformeIndividual('${inf.id}', this)">↺ Recuperar</button>
+              <button class="btn-sm" style="color:var(--elec-red,#EF4444)" onclick="eliminarInformesDefinitivamente(['${inf.id}'], '${(inf.clienteNombre||'este informe').replace(/'/g,"\\'")}')">🗑️ Eliminar definitivamente</button>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function quitarDeOcultos(ids){
+  const set = new Set(ids);
+  const restantes = obtenerInformesOcultos().filter(o => !set.has(o.id));
+  guardarInformesOcultos(restantes);
+}
+
+function restaurarInformeIndividual(id, btn){
+  quitarDeOcultos([id]);
+  papeleraInformesActual = papeleraInformesActual.filter(inf => inf.id !== id);
+  renderPapeleraInformes();
+  renderPapeleraEliminarPanel();
+  crmMostrarToast('✓ Informe recuperado');
+}
+
+function restaurarGrupoInformesPapelera(key, btn){
+  const grupos = agruparInformesPorPeriodo(papeleraInformesActual);
+  const grupo = grupos.find(g => g.key === key);
+  if(!grupo || !grupo.items.length) return;
+  if(!confirm(`¿Recuperar ${grupo.items.length} informe(s) de "${grupo.label}"?`)) return;
+  const ids = grupo.items.map(inf => inf.id);
+  quitarDeOcultos(ids);
+  const idsSet = new Set(ids);
+  papeleraInformesActual = papeleraInformesActual.filter(inf => !idsSet.has(inf.id));
+  renderPapeleraInformes();
+  renderPapeleraEliminarPanel();
+  crmMostrarToast(`✓ ${ids.length} informe(s) recuperado(s)`);
+}
+
+function restaurarTodosInformesPapelera(){
+  if(!papeleraInformesActual.length) return;
+  if(!confirm(`¿Recuperar los ${papeleraInformesActual.length} informe(s) eliminado(s)?`)) return;
+  guardarInformesOcultos([]);
+  papeleraInformesActual = [];
+  papeleraEliminarVista = null;
+  renderPapeleraInformes();
+  renderPapeleraEliminarPanel();
+  crmMostrarToast('✓ Todos los informes recuperados');
+}
+
+// ══════════ ELIMINACIÓN DEFINITIVA (estilo papelera de reciclaje) ══════════
+// Solo actúa sobre informes que ya están en la papelera (papeleraInformesActual).
+// Borra tanto en el script (fila de la hoja "Informes", sin dejar rastro) como
+// en la app (localStorage + memoria). papeleraEliminarVista controla qué panel
+// se muestra: null (cerrado), 'menu' (las 5 opciones), o 'dia'|'semana'|'mes'|'anio'
+// (lista de grupos de esa categoría, ya filtrada a los que sí tienen informes).
+let papeleraEliminarVista = null;
+
+function togglePanelEliminarDefinitivo(){
+  papeleraEliminarVista = papeleraEliminarVista ? null : 'menu';
+  renderPapeleraEliminarPanel();
+}
+
+function renderPapeleraEliminarPanel(){
+  const cont = document.getElementById('papeleraEliminarPanel');
+  if(!cont) return;
+  if(!papeleraEliminarVista){ cont.innerHTML=''; return; }
+
+  if(!papeleraInformesActual.length){
+    cont.innerHTML = `<div class="card-inner" style="margin-bottom:16px"><p class="text-muted" style="text-align:center;padding:10px 0">No hay informes en la papelera para eliminar definitivamente.</p></div>`;
+    return;
+  }
+
+  if(papeleraEliminarVista === 'menu'){
+    cont.innerHTML = `
+      <div class="card-inner" style="margin-bottom:16px;display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px">¿Cómo quieres eliminar definitivamente?</div>
+        <button class="btn-sm full" onclick="seleccionarCategoriaEliminarDefinitivo('dia')">📅 Seleccionar por día</button>
+        <button class="btn-sm full" onclick="seleccionarCategoriaEliminarDefinitivo('semana')">📆 Seleccionar por semana</button>
+        <button class="btn-sm full" onclick="seleccionarCategoriaEliminarDefinitivo('mes')">🗓️ Seleccionar por mes</button>
+        <button class="btn-sm full" onclick="seleccionarCategoriaEliminarDefinitivo('anio')">📊 Seleccionar por año</button>
+        <button class="btn-sm full" style="color:var(--elec-red,#EF4444)" onclick="confirmarEliminarTodoDefinitivo()">🗑️ Borrar todo</button>
+      </div>`;
+    return;
+  }
+
+  const buckets = obtenerBucketsEliminarDefinitivo(papeleraEliminarVista);
+  const titulos = { dia:'día', semana:'semana', mes:'mes', anio:'año' };
+  cont.innerHTML = `
+    <div class="card-inner" style="margin-bottom:16px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em">Elige el ${titulos[papeleraEliminarVista]} a borrar</div>
+        <button class="btn-sm" onclick="papeleraEliminarVista='menu';renderPapeleraEliminarPanel()">← Volver</button>
+      </div>
+      ${buckets.length ? buckets.map(b => `
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--line)">
+          <div style="font-size:13px;color:var(--text)">${b.label} <span class="text-muted">· ${b.items.length}</span></div>
+          <button class="btn-sm" style="color:var(--elec-red,#EF4444)" onclick="eliminarInformesDefinitivamente(${JSON.stringify(b.items.map(i=>i.id))}, '${b.label.replace(/'/g,"\\'")}')">🗑️ Eliminar</button>
+        </div>`).join('') : '<p class="text-muted" style="padding:8px 0">No hay informes disponibles en esta categoría.</p>'}
+    </div>`;
+}
+
+function seleccionarCategoriaEliminarDefinitivo(categoria){
+  papeleraEliminarVista = categoria;
+  renderPapeleraEliminarPanel();
+}
+
+// Agrupa papeleraInformesActual (lo que hay en la papelera) según la fecha en
+// que se quitó (fechaEliminado). 'semana' solo cubre las últimas 4 semanas
+// completas contando hacia atrás desde hoy (bloques fijos de 7 días, sin
+// fechas futuras); para informes más antiguos que eso, usar 'mes' o 'anio'.
+function obtenerBucketsEliminarDefinitivo(categoria){
+  const ahora = new Date();
+  const conFecha = papeleraInformesActual
+    .map(inf => ({ inf, f: inf.fechaEliminado ? new Date(inf.fechaEliminado) : null }))
+    .filter(x => x.f && !isNaN(x.f));
+
+  if(categoria === 'dia'){
+    const mapa = new Map();
+    conFecha.forEach(({inf,f}) => {
+      const key = f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0')+'-'+String(f.getDate()).padStart(2,'0');
+      if(!mapa.has(key)) mapa.set(key, { key, label: f.toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'}), items: [], orden: f });
+      mapa.get(key).items.push(inf);
+    });
+    return [...mapa.values()].sort((a,b) => b.orden - a.orden);
+  }
+
+  if(categoria === 'semana'){
+    const inicioHoy = new Date(ahora.getFullYear(), ahora.getMonth(), ahora.getDate());
+    const buckets = [0,1,2,3].map(n => {
+      const fin = new Date(inicioHoy); fin.setDate(fin.getDate() - (7*n) + 1); // exclusivo (fin de rango + 1 día)
+      const inicio = new Date(inicioHoy); inicio.setDate(inicio.getDate() - (7*n) - 6);
+      const label = n===0 ? 'Esta semana (últimos 7 días)' : `Hace ${n+1} semanas (${inicio.toLocaleDateString('es-MX',{day:'numeric',month:'short'})} – ${new Date(fin.getTime()-1).toLocaleDateString('es-MX',{day:'numeric',month:'short'})})`;
+      return { key:'sem'+n, label, inicio, fin, items: [] };
+    });
+    conFecha.forEach(({inf,f}) => {
+      const b = buckets.find(bb => f >= bb.inicio && f < bb.fin);
+      if(b) b.items.push(inf);
+    });
+    return buckets.filter(b => b.items.length);
+  }
+
+  if(categoria === 'mes'){
+    const mapa = new Map();
+    conFecha.forEach(({inf,f}) => {
+      const key = f.getFullYear()+'-'+String(f.getMonth()+1).padStart(2,'0');
+      if(!mapa.has(key)) mapa.set(key, { key, label: f.toLocaleDateString('es-MX',{month:'long',year:'numeric'}), items: [], orden: f });
+      mapa.get(key).items.push(inf);
+    });
+    return [...mapa.values()].sort((a,b) => b.orden - a.orden);
+  }
+
+  if(categoria === 'anio'){
+    const mapa = new Map();
+    conFecha.forEach(({inf,f}) => {
+      const key = f.getFullYear()+'';
+      if(!mapa.has(key)) mapa.set(key, { key, label: key, items: [], orden: f.getFullYear() });
+      mapa.get(key).items.push(inf);
+    });
+    return [...mapa.values()].sort((a,b) => b.orden - a.orden);
+  }
+
+  return [];
+}
+
+async function eliminarInformesEnScript(ids){
+  const url = localStorage.getItem('nexus_sheets_url')||'';
+  if(!url) throw new Error('Configura la URL de Google Sheets (Configuración) para poder eliminar en el script.');
+  const res = await fetch(url, { method:'POST', headers:{'Content-Type':'text/plain'}, body: JSON.stringify({ tipo:'eliminar_informes', ids }) });
+  const data = await res.json();
+  if(!data.success) throw new Error(data.error || 'No se pudo eliminar en el script.');
+  return data;
+}
+
+// Elimina definitivamente los IDs indicados: primero en el script (hoja
+// "Informes", fila borrada por completo), y solo si eso funciona, limpia
+// también el rastro local (preferencia de "oculto" + listas en memoria).
+async function eliminarInformesDefinitivamente(ids, etiqueta){
+  if(!ids || !ids.length) return;
+  if(!confirm(`¿Eliminar definitivamente ${ids.length>1 ? ids.length+' informe(s) de "'+etiqueta+'"' : 'el informe de "'+etiqueta+'"'}? Esta acción NO se puede deshacer: se borrará también de Google Sheets.`)) return;
+  try{
+    crmMostrarToast('⏳ Eliminando definitivamente…');
+    await eliminarInformesEnScript(ids);
+    const idsSet = new Set(ids);
+    quitarDeOcultos(ids);
+    papeleraInformesActual = papeleraInformesActual.filter(inf => !idsSet.has(inf.id));
+    historialInformesTodosActual = historialInformesTodosActual.filter(inf => !idsSet.has(inf.id));
+    historialInformesActual = historialInformesActual.filter(inf => !idsSet.has(inf.id));
+    papeleraEliminarVista = papeleraInformesActual.length ? papeleraEliminarVista : null;
+    renderPapeleraEliminarPanel();
+    renderPapeleraInformes();
+    crmMostrarToast(`✓ ${ids.length} informe(s) eliminado(s) definitivamente`);
+  }catch(e){
+    crmMostrarToast('❌ ' + (e.message || 'No se pudo eliminar definitivamente.'));
+  }
+}
+
+function confirmarEliminarTodoDefinitivo(){
+  const ids = papeleraInformesActual.map(inf => inf.id);
+  if(!ids.length) return;
+  eliminarInformesDefinitivamente(ids, `todos los informes eliminados (${ids.length})`);
+}
 
 async function descargarInformeDesdeHistorial(i, btn){
   const inf = historialInformesActual[i];
@@ -6966,6 +7363,8 @@ function abrirEvaluacionDesempeno(){
   document.getElementById('evResultado').classList.add('hidden');
   const elAnio = document.getElementById('evAnio');
   if(elAnio && !elAnio.value) elAnio.value = new Date().getFullYear();
+  const elAnioTipo = document.getElementById('evAnioTipo');
+  if(elAnioTipo) elAnioTipo.value = 'completo';
   const elMes = document.getElementById('evMes');
   if(elMes) elMes.value = String(new Date().getMonth()+1);
   actualizarCamposEvaluacion();
@@ -6977,27 +7376,53 @@ function volverSeleccionEvaluacion(){
 }
 function actualizarCamposEvaluacion(){
   const modo = document.getElementById('evModo')?.value || 'semana';
+  const anioTipo = document.getElementById('evAnioTipo')?.value || 'completo';
   document.getElementById('campoEvMes').style.display = (modo==='semana' || modo==='mes') ? 'block' : 'none';
   document.getElementById('campoEvSemana').style.display = (modo==='semana') ? 'block' : 'none';
+  document.getElementById('campoEvAnioTipo').style.display = (modo==='anio') ? 'block' : 'none';
+  // El campo Año se pide siempre, EXCEPTO en "Lo que va del año actual": ahí
+  // el año se toma automático (el actual), no hace falta que lo elijan.
+  const ocultarAnio = (modo==='anio' && anioTipo==='ytd');
+  document.getElementById('campoEvAnio').style.display = ocultarAnio ? 'none' : 'block';
 }
 
 async function confirmarEvaluacionDesempeno(){
   const url = localStorage.getItem('nexus_sheets_url')||'';
   if(!url){ crmMostrarToast('Configura la URL de Google Sheets (Configuración) para ver tu evaluación.'); return; }
   const modo = document.getElementById('evModo')?.value || 'semana';
-  const anio = parseInt(document.getElementById('evAnio')?.value, 10);
+  const anioTipo = document.getElementById('evAnioTipo')?.value || 'completo';
   const mes = parseInt(document.getElementById('evMes')?.value, 10) || 0;
   const semana = parseInt(document.getElementById('evSemana')?.value, 10) || 0;
+
+  const hoy = new Date();
+  const hoyTxt = hoy.toLocaleDateString('es-MX',{day:'numeric',month:'short',year:'numeric'});
+  const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+  // "Lo que va del año actual" no pide año: siempre es el año en curso.
+  let anio = (modo==='anio' && anioTipo==='ytd') ? hoy.getFullYear() : parseInt(document.getElementById('evAnio')?.value, 10);
   if(!anio){ crmMostrarToast('Indica el año.'); return; }
 
-  const MESES = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const periodoLabel = modo==='anio' ? `Año ${anio}` : modo==='mes' ? `${MESES[mes]} ${anio}` : `Semana ${semana} de ${MESES[mes]} ${anio}`;
+  // modoBackend/periodoLabel: "Año completo" usa el modo 'anio' de siempre
+  // (sin tocar su comportamiento); "Acumulado desde año X" y "Lo que va del
+  // año actual" comparten el nuevo modo 'anio_acumulado' — la única
+  // diferencia entre ambas es si el año lo elige el usuario o se toma
+  // automático del año en curso.
+  let modoBackend = modo, periodoLabel = '';
+  if(modo==='anio'){
+    if(anioTipo==='acumulado'){ modoBackend='anio_acumulado'; periodoLabel = `Acumulado desde ${anio} a la fecha (${hoyTxt})`; }
+    else if(anioTipo==='ytd'){ modoBackend='anio_acumulado'; periodoLabel = `Lo que va de ${anio} (1 ene – ${hoyTxt})`; }
+    else { modoBackend='anio'; periodoLabel = `Año ${anio}`; }
+  } else if(modo==='mes'){
+    periodoLabel = `${MESES[mes]} ${anio}`;
+  } else {
+    periodoLabel = `Semana ${semana} de ${MESES[mes]} ${anio}`;
+  }
 
   const btn = document.getElementById('btnVerEvaluacion');
   const txtOriginal = btn ? btn.innerHTML : '';
   if(btn){ btn.disabled = true; btn.innerHTML = '⏳ Calculando…'; }
   try{
-    const res = await fetch(url + '?action=listarClientesPeriodo&modo=' + encodeURIComponent(modo) +
+    const res = await fetch(url + '?action=listarClientesPeriodo&modo=' + encodeURIComponent(modoBackend) +
       '&anio=' + encodeURIComponent(anio) + '&mes=' + encodeURIComponent(mes) + '&semana=' + encodeURIComponent(semana));
     const data = await res.json();
     const resultados = (data.success && Array.isArray(data.resultados)) ? data.resultados : [];
@@ -7475,7 +7900,11 @@ async function guardarInformeManual(btn){
   if(btn){ btn.disabled=true; btn.innerHTML='⏳ Guardando…'; }
   const data = await registrarInformeEnHistorial(informeActualDatos.nombre, informeActualDatos.conContacto, informeActualDatos.estadoProceso);
   if(btn){ btn.disabled=false; btn.innerHTML=txtOriginal; }
-  crmMostrarToast(data && data.success ? '✓ Informe guardado en el historial' : '❌ ' + (data && data.error ? data.error : 'No se pudo guardar el informe.'));
+  if(data && data.success){
+    crmMostrarToast(data.duplicado ? '✓ Ya estaba guardado (no se duplicó)' : '✓ Informe guardado en el historial');
+  } else {
+    crmMostrarToast('❌ ' + (data && data.error ? data.error : 'No se pudo guardar el informe.'));
+  }
 }
 
 // Núcleo reutilizable: convierte #informeParaExportar (ya renderizado por
@@ -7774,6 +8203,109 @@ function formatMD(txt){
     .replace(/^(Acción \d+[—\-–]?\s*.*)$/gm,'<div style="font-weight:700;color:var(--text);margin:10px 0 2px">$1</div>')
     .replace(/\n\n/g,'<br><br>')
     .replace(/\n/g,'<br>');
+}
+
+/* ─── RESUMEN DETALLADO — vista rápida para retomar al cliente ───
+   A diferencia de "Informe Detallado" (reporte formal con gráficos y datos
+   estructurados) y de "Analizar con IA" (diagnóstico extenso de venta), este
+   botón da un resumen breve y práctico pensado solo para que el vendedor se
+   ponga al día con un cliente en segundos: quién es, qué se ha platicado,
+   dónde quedó exactamente y cómo retomarlo. Usa el mismo expediente
+   (buildContexto) que ya alimenta el resto de los análisis de IA. */
+function formatResumenDetalladoMD(txt){
+  const encabezados=[
+    [/^\s*Qui[eé]n es y qu[eé] busca\s*:/gmi,'👤 Quién es y qué busca:'],
+    [/^\s*Qu[eé] se ha platicado hasta ahora\s*:/gmi,'💬 Qué se ha platicado hasta ahora:'],
+    [/^\s*D[oó]nde qued[oó] exactamente\s*:/gmi,'📍 Dónde quedó exactamente:'],
+    [/^\s*Peticiones y ofrecimientos pendientes\s*:/gmi,'📌 Peticiones y ofrecimientos pendientes:'],
+    [/^\s*C[oó]mo retomarlo hoy\s*:/gmi,'🔜 Cómo retomarlo hoy:'],
+    [/^\s*[ÁA]reas de oportunidad\s*:/gmi,'💡 Áreas de oportunidad:'],
+  ];
+  let out=txt;
+  encabezados.forEach(([r,l])=>{ out=out.replace(r,l); });
+  return out
+    .replace(/\*\*(.+?)\*\*/g,'<strong style="color:var(--text)">$1</strong>')
+    .replace(/^(👤|💬|📍|📌|🔜|💡)\s*(.+?):/gm,'<div style="font-weight:700;color:var(--accent-bright);margin:16px 0 6px;font-size:14.5px"><span style="font-family:\'Apple Color Emoji\',\'Segoe UI Emoji\',\'Noto Color Emoji\',\'Twemoji Mozilla\',sans-serif">$1</span> $2:</div>')
+    .replace(/^[-•]\s+(.+)$/gm,'<div style="margin:4px 0 4px 14px;padding-left:10px;border-left:2px solid var(--line)">$1</div>')
+    .replace(/\n\n/g,'<br><br>')
+    .replace(/\n/g,'<br>');
+}
+
+function abrirResumenDetallado(){
+  document.getElementById('modalResumenDetallado').classList.remove('hidden');
+  document.getElementById('resumenDetalladoNombreCliente').textContent = document.getElementById('crmNombre')?.value?.trim() || 'Cliente';
+  document.getElementById('resumenDetalladoFecha').textContent = new Date().toLocaleDateString('es-MX',{day:'numeric',month:'long',year:'numeric'});
+  generarResumenDetallado();
+}
+function cerrarResumenDetallado(){
+  document.getElementById('modalResumenDetallado').classList.add('hidden');
+}
+
+async function generarResumenDetallado(){
+  const out = document.getElementById('resumenDetalladoContenido');
+  const btnPDF = document.getElementById('btnDescargarResumenDetalladoPDF');
+  if(btnPDF) btnPDF.disabled = true;
+  out.innerHTML = '<div class="ai-loading"><div class="spinner"></div> Generando resumen con IA…</div>';
+  const prompt = `Eres el asistente personal de un vendedor automotriz en México y le ayudas a retomar rápidamente el contacto con un cliente que quizá no ha visto en un tiempo (o que simplemente quiere refrescar en qué va). NO hagas un análisis extenso de ventas — eso ya existe en otra sección. Aquí el objetivo es un RESUMEN BREVE Y PRÁCTICO, fácil de leer en segundos, como una "ficha de repaso" antes de hablar con el cliente. Responde EXACTAMENTE con esta estructura de encabezados en texto plano, sin emojis ni símbolos antes del texto (cada encabezado en su propia línea, seguido de dos puntos). Usa **negritas** para lo importante y guiones para listas cuando ayude a la lectura rápida:
+
+Quién es y qué busca: perfil breve del cliente (quién es, qué producto/vehículo quiere, presupuesto o forma de pago si se conoce).
+
+Qué se ha platicado hasta ahora: cronología muy breve (lista con guiones) de las gestiones o conversaciones más relevantes, en orden.
+
+Dónde quedó exactamente: el punto y estatus exacto en el que se dejó la conversación o negociación — la última acción realizada, su resultado, y desde cuándo no hay contacto.
+
+Peticiones y ofrecimientos pendientes: qué pidió el cliente, qué se le ofreció o prometió (descuentos, regalos, condiciones), y qué sigue sin resolverse.
+
+Cómo retomarlo hoy: sugerencia concreta y corta de qué decir o hacer al contactarlo de nuevo, incluyendo un mensaje breve entre comillas listo para usar.
+
+Áreas de oportunidad: puntos que el vendedor debe cuidar, riesgos de perder la venta, o cosas que se le podrían ofrecer y aún no se han mencionado.
+
+Expediente del cliente:
+${buildContexto()}
+
+Sé breve y directo en cada bloque (idealmente 2-4 líneas o una lista corta, salvo "Qué se ha platicado hasta ahora" que puede llevar varios puntos si hay muchas gestiones). Usa el nombre del cliente. IMPORTANTE: sin emojis en encabezados, solo texto seguido de dos puntos.`;
+  try{
+    const texto = await llamarIA(prompt, 2200);
+    out.innerHTML = formatResumenDetalladoMD(texto);
+    if(btnPDF) btnPDF.disabled = false;
+  }catch(e){
+    out.innerHTML = `<span style="color:var(--red)">${e.message||'Error al conectar con IA.'}</span>`;
+  }
+}
+
+async function descargarResumenDetalladoPDF(){
+  const btn = document.getElementById('btnDescargarResumenDetalladoPDF');
+  const txtOriginal = btn ? btn.textContent : '';
+  const el = document.getElementById('resumenDetalladoParaExportar');
+  if(!el || typeof html2canvas==='undefined' || !window.jspdf){ crmMostrarToast('No se pudo generar el PDF.'); return; }
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Generando…'; }
+  crmMostrarToast('⏳ Generando PDF...');
+  try{
+    const theme = document.documentElement.getAttribute('data-theme')||'dark';
+    const bg = theme==='light' ? '#FFFFFF' : '#0D1117';
+    const canvas = await html2canvas(el, {scale:2, backgroundColor:bg, useCORS:true});
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=210, pageH=297;
+    const imgW=pageW;
+    const imgH=canvas.height*imgW/canvas.width;
+    let heightLeft=imgH, position=0;
+    const imgData=canvas.toDataURL('image/png');
+    pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
+    heightLeft-=pageH;
+    while(heightLeft>0){
+      position = heightLeft - imgH;
+      pdf.addPage();
+      pdf.addImage(imgData,'PNG',0,position,imgW,imgH);
+      heightLeft-=pageH;
+    }
+    const nombreArchivo=(document.getElementById('crmNombre').value.trim()||'cliente').replace(/[^a-z0-9]+/gi,'_');
+    pdf.save(`Resumen_${nombreArchivo}.pdf`);
+    crmMostrarToast('✓ PDF descargado');
+  }catch(e){
+    crmMostrarToast('No se pudo generar el PDF.');
+  }
+  if(btn){ btn.disabled=false; btn.textContent=txtOriginal; }
 }
 
 /* ─── MENÚ PRINCIPAL ─── */
